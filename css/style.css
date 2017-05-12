@@ -1378,10 +1378,11 @@ pre .javascript .function {
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: #475cfa;
+  color: #11081d;
   margin-bottom: 1em;
   margin-left: 5px;
-  line-height: 1em;
+  line-height: 2em;
   text-shadow: 0 1px #fff;
   font-weight: bold;
+  font-size:1.3em;
 }
