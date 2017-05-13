@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>NSString的常用用法</title>
+    <link rel="icon" href="/favicon.png">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+<div id="container">
+    <div id="wrap">
+        <header id="header">
+            <div id="banner"></div>
+            <div id="header-outer" class="outer">
+                <div id="header-title" class="inner">
+                    <h1 id="logo-wrap">
+                        <a href="/" id="logo">欢迎来到我的个人博客</a>
+                    </h1>
+                </div>
+            </div>
+        </header>
+        <div class="outer">
+            <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+                <div class="article-meta">
+                    <a href="/MyBlog/Articles/iOS/Basic/NSString.html" class="myArticle-title">
+                        NSString的常用用法
+                    </a>
+
+                </div>
+                <div class="article-inner">
+                    <div class="article-entry" itemprop="articleBody">
+                        <p>
+                            //1、创建常量字符串。<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *astring = @"This is a String!";
+                        </p>
+                        <p>
+                            //2、创建空字符串，给予赋值。<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *astring = [[NSString alloc] init];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;astring = @"This is a String!";<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"astring:%@",astring);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *astring = [[NSString alloc] init];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"0x%.8x", astring);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;astring=@"This is a String!";<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"0x%.8x", astring);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"astring:%@",astring);
+                        </p>
+                        <p>
+                            //3、创建格式化字符串:占位符（由一个%加一个字符组成）<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int i = 1;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int j = 2;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *astring = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%d.This is %i string!",i,j]];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"astring:%@",astring);
+                        </p>
+                        <p>
+                            //4、isEqualToString方法 <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *astring01 = @"This is a String!";<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *astring02 = @"This is a String!";<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BOOL result = [astring01 isEqualToString:astring02];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"result:%d",result);
+                        </p>
+                        <p>
+                            //5、compare方法(comparer返回的三种值) <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *astring01 = @"This is a String!";<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *astring02 = @"This is a String!";<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BOOL result = [astring01 compare:astring02] == NSOrderedSame;    //NSOrderedSame判断两者内容是否相同<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"result:%d",result);<br><br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *astring01 = @"This is a String!";<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *astring02 = @"This is a String!";<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BOOL result = [astring01 compare:astring02] == NSOrderedAscending;    //NSOrderedAscending判断两对象值的大小(按字母顺序进行比较，astring02大于astring01为真)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"result:%d",result);<br><br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *astring01 = @"This is a String!";<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *astring02 = @"This is a String!";<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BOOL result = [astring01 compare:astring02] == NSOrderedDescending;    //NSOrderedDescending判断两对象值的大小(按字母顺序进行比较，astring02小于astring01为真)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"result:%d",result);
+                        </p>
+                        <p>
+                            //5、输出大写或者小写字符串 <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *string1 = @"A String";<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *string2 = @"String"; <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"string1:%@",[string1 uppercaseString]);//大写<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"string2:%@",[string2 lowercaseString]);//小写<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"string2:%@",[string2 capitalizedString]);//首字母大小
+                        </p>
+                        <p>
+                            //6、-rangeOfString: //查找字符串某处是否包含其它字符串 <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *string1 = @"This is a string";<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *string2 = @"string";<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSRange range = [string1 rangeOfString:string2];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int location = range.location;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int leight = range.length;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *astring = [[NSString alloc] initWithString:[NSString stringWithFormat:@"Location:%i,Leight:%i",location,leight]];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"astring:%@",astring);
+                        </p>
+                        <p>
+                            //7、-substringToIndex: 从字符串的开头一直截取到指定的位置，但不包括该位置的字符 <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *string1 = @"This is a string";<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *string2 = [string1 substringToIndex:3];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"string2:%@",string2);
+                        </p>
+                        <p>
+                            //8、-substringFromIndex: 以指定位置开始（包括指定位置的字符），并包括之后的全部字符 <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *string1 = @"This is a string";<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *string2 = [string1 substringFromIndex:3];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"string2:%@",string2);
+                        </p>
+                        <p>
+                            //9、-substringFromIndex: 以指定位置开始（包括指定位置的字符），并包括之后的全部字符 <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *string1 = @"This is a string";<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *string2 = [string1 substringWithRange:NSMakeRange(0, 4)];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"string2:%@",string2);
+                        </p>
+                        <p>
+                            //10、-stringWithCapacity: //按照固定长度生成空字符串 <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSMutableString *String;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String = [NSMutableString stringWithCapacity:40];
+                        </p>
+                        <p>
+                            //11、-appendString: and -appendFormat: //把一个字符串接在另一个字符串的末尾 <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSMutableString *String1 = [[NSMutableString alloc] initWithString:@"This is a NSMutableString"];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String1 appendString:@", I will be adding some character"];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String1 appendFormat:[NSString stringWithFormat:@", I will be adding some character"]];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"String1:%@",String1);
+                        </p>
+                        <p>
+                            //12、-insertString: atIndex: //在指定位置插入字符串 <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSMutableString *String1 = [[NSMutableString alloc] initWithString:@"This is a NSMutableString"];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String1 insertString:@"Hi! " atIndex:0];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String1 appendFormat:[NSString stringWithFormat:@", I will be adding some character"]];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"String1:%@",String1);
+                        </p>
+                        <p>
+                            //13、-replaceCharactersInRange: withString: //用指定字符串替换字符串中某指定位置、长度的字符串 <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSMutableString *String1 = [[NSMutableString alloc] initWithString:@"This is a NSMutableString"];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String1 replaceCharactersInRange:NSMakeRange(0, 4) withString:@"That"];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"String1:%@",String1);
+                        </p>
+                        <p>
+                            //14、-hasPrefix: //检查字符串是否以另一个字符串开头<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *String1 = @"NSStringInformation.txt";<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String1 hasPrefix:@"NSString"] = = 1 ?  NSLog(@"YES") : NSLog(@"NO");<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String1 hasSuffix:@".txt"] = = 1 ?  NSLog(@"YES") : NSLog(@"NO");
+                        </p>
+                    </div>
+                </div>
+                <nav id="article-nav">
+                    <a href="/MyBlog/Articles/iOS/Basic/Animations.html" id="article-nav-newer" class="article-nav-link-wrap">
+                        <strong class="article-nav-caption">下一篇</strong>
+                    </a>
+                </nav>
+            </article>
+            </section>
+            <aside id="sidebar">
+                <div class="widget-wrap">
+                    <h3 class="widget-title">档案</h3>
+                    <div class="widget">
+                        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/">所有文章</a></li></ul>
+                    </div>
+                </div>
+                <div class="widget-wrap">
+                    <h3 class="widget-title">最近的文章</h3>
+                    <div class="widget">
+                        <ul>
+                            <li>
+                                <a href="/MyBlog/Articles/iOS/Basic/Animations.html">iOS开发中三种简单的动画设置</a>
+                            </li>
+                            <li>
+                                <a href="/MyBlog/Articles/iOS/Basic/NSString.html">NSString的常用用法</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+
+        </div>
+        <footer id="footer">
+
+            <div class="outer">
+                <div id="footer-info" class="inner">
+                    &copy; 2015 Lin You Mu
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+    <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+    <script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>
