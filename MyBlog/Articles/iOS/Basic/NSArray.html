@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>NSArray的基本使用</title>
+    <link rel="icon" href="/favicon.png">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+<div id="container">
+    <div id="wrap">
+        <header id="header">
+            <div id="banner"></div>
+            <div id="header-outer" class="outer">
+                <div id="header-title" class="inner">
+                    <h1 id="logo-wrap">
+                        <a href="/" id="logo">欢迎来到我的个人博客</a>
+                    </h1>
+                </div>
+            </div>
+        </header>
+        <div class="outer">
+            <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+                <div class="article-meta">
+                    <a href="/MyBlog/Articles/iOS/Basic/NSString.html" class="myArticle-title">
+                        NSArray的基本使用
+                    </a>
+
+                </div>
+                <div class="article-inner">
+                    <div class="article-entry" itemprop="articleBody">
+                        <h3 id="Run-server">
+                            NSArray的一些用法
+                        </h3>
+                        <p>
+                            NSArray  只允许装OC对象，并且不能装空值，空代表数组元素的结束<br>
+                        </p>
+                        <p>
+                            代码如下:<br><br><br>
+                            #pragma mark - NSArray的基本用法<br><br>
+                            &nbsp;&nbsp;// 创建一个空数组<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSArray *array = [NSArray array];<br>
+                            &nbsp;&nbsp;// 创建有一个元素的数组<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;array = [NSArray arrayWithObject:@"123"];<br>
+                            &nbsp;&nbsp;// 创建有多个元素的数组<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;array = [NSArray arrayWIthObjects:@"a",@"b",nil ];//不能装nil空指针，空值代表数组元素结束<br>
+                            &nbsp;&nbsp;// 将一个数组赋值给一个数组<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ (instancetype)arrayWithArray:(NSArray *)array;<br>
+                            &nbsp;&nbsp;// 获取元素的个数<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int count = [array count]; //和 count = array.count; 相同，都是调用get方法<br>
+                            &nbsp;&nbsp;// 是否包含一个元素<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- (bool)containsObject:(id)anObject;<br>
+                            &nbsp;&nbsp;// 返回最后一个元素<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- (id) lastObject;<br>
+                            &nbsp;&nbsp;// 获取index位置的元素<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- (id)objectAtIndex:(NSUInteger) index;<br>
+                            &nbsp;&nbsp;// 获取元素的位置<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- (NSUInteger) indexOfObject:(id)anObject;<br>
+                            &nbsp;&nbsp;// 在range范围内查找元素的位置<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- (NSUInteger) indexofObject:(id)anObject inRange:(NSRange)range;<br>
+                            &nbsp;&nbsp;// 比较两个集合内容是否相同<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- (Bool) isEqualToArray:(NSArray *)otherArray;<br>
+                            &nbsp;&nbsp;// 返回两个集合中第一个相同的对象元素<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- (id) firstObjectCommonWithArray:(NSArray *)otherArray;<br><br>
+                            #pragma mark - NSArray的高级用法<br>
+                            &nbsp;&nbsp;//让集合里面的所有元素都执行aSelector这个方法<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- (void)makeObjectsPerformSelector:(SEL)aSelector;<br>
+                            &nbsp;&nbsp;//让集合里面的所有元素都执行aSelector这个方法,给这个方法添加参数，但是只支持一个参数<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- (void)makeObjectsPerformSelector:(SEL)aSelector withObject:(id)argument<br>
+                            &nbsp;&nbsp;//添加一个元素，返回一个新的NSArray（方法调用者本身没有发生变化）<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- (NSArray *)arrayByAddingObject:(id)anObject<br>
+                            &nbsp;&nbsp;//添加otherArray的所有元素，返回一个新的NSArray（方法着本身没有改变）<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- (NSArray *) arrayByAddingObjectsFromArray:(NSArray *) otherArray;<br>
+                            &nbsp;&nbsp;//截取range范围的数组<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- (NSArray *) subarrayWithRange:(NSRenge)range;<br>
+                            &nbsp;&nbsp;//用separator做拼接符，拼接成一个字符串<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- (NSString *) componentsJoinedByString:(NSString *)separator<br>
+                            &nbsp;&nbsp;//将NSArray持久化到文件中去<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- (Bool) writeToFile:(NSString *)path atomically:(Bool)useAuxiliaryFile<br><br>
+                            #pragma mark - NSArray的遍历
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 方法一：普通遍历(利用for循环)
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void arrayFor1(){
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSArray *array = [NSArray arrayWithObjects:@"1",@"2",@"3",nil];
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int count = array.count;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(int i=0; i<count; i++){
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id obj = [array objectAtIndex:i];
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"%i-%@",i, obj);
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 方法二：快速遍历
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void arrayFor2(){
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSArray *array = [NSArray arrayWithObjects:@"1",@"2",@"3",nil];
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int count = array.count;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int i=0;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(id obj in array){
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"%i-%@",i, obj);
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i++;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 方法三：利用block遍历
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void arrayFor3(){
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSArray *array = [NSArray arrayWithObjects:@"1",@"2",@"3",nil];
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"%zi->%@",idx, obj);
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//  *stop = YES; //改变外边的Bool，终止遍历
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}];
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+                        </p>
+
+                    </div>
+                </div>
+                <nav id="article-nav">
+                    <a href="/MyBlog/Articles/iOS/Basic/NSString.html" id="article-nav-newer-left" class="article-nav-link-wrap">
+                        <strong class="article-nav-caption">上一篇</strong>
+                    </a>
+                    <a href="/MyBlog/Articles/iOS/Basic/Animations.html" id="article-nav-newer-right" class="article-nav-link-wrap">
+                        <strong class="article-nav-caption">下一篇</strong>
+                    </a>
+                </nav>
+            </article>
+            </section>
+            <aside id="sidebar">
+                <div class="widget-wrap">
+                    <h3 class="widget-title">档案</h3>
+                    <div class="widget">
+                        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/">所有文章</a></li></ul>
+                    </div>
+                </div>
+                <div class="widget-wrap">
+                    <h3 class="widget-title">最近的文章</h3>
+                    <div class="widget">
+                        <ul>
+                            <li>
+                                <a href="/MyBlog/Articles/iOS/Basic/Animations.html">iOS开发中三种简单的动画设置</a>
+                            </li>
+                            <li>
+                                <a href="/MyBlog/Articles/iOS/Basic/NSArray.html">NSArray的基本使用</a>
+                            </li>
+                            <li>
+                                <a href="/MyBlog/Articles/iOS/Basic/NSString.html">NSString的常用用法</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+
+        </div>
+        <footer id="footer">
+
+            <div class="outer">
+                <div id="footer-info" class="inner">
+                    &copy; 2015 Lin You Mu
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+    <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+    <script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>
