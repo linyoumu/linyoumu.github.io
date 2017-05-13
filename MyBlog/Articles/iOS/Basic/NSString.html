@@ -32,11 +32,11 @@
                 <div class="article-inner">
                     <div class="article-entry" itemprop="articleBody">
                         <p>
-                            //1、创建常量字符串。<br>
+                            1、创建常量字符串。<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *astring = @"This is a String!";
                         </p>
                         <p>
-                            //2、创建空字符串，给予赋值。<br>
+                            2、创建空字符串，给予赋值。<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *astring = [[NSString alloc] init];<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;astring = @"This is a String!";<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"astring:%@",astring);<br>
@@ -47,21 +47,21 @@
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"astring:%@",astring);
                         </p>
                         <p>
-                            //3、创建格式化字符串:占位符（由一个%加一个字符组成）<br>
+                            3、创建格式化字符串:占位符（由一个%加一个字符组成）<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int i = 1;<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int j = 2;<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *astring = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%d.This is %i string!",i,j]];<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"astring:%@",astring);
                         </p>
                         <p>
-                            //4、isEqualToString方法 <br>
+                            4、isEqualToString方法 <br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *astring01 = @"This is a String!";<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *astring02 = @"This is a String!";<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BOOL result = [astring01 isEqualToString:astring02];<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"result:%d",result);
                         </p>
                         <p>
-                            //5、compare方法(comparer返回的三种值) <br>
+                            5、compare方法(comparer返回的三种值) <br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *astring01 = @"This is a String!";<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *astring02 = @"This is a String!";<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BOOL result = [astring01 compare:astring02] == NSOrderedSame;    //NSOrderedSame判断两者内容是否相同<br>
@@ -76,7 +76,7 @@
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"result:%d",result);
                         </p>
                         <p>
-                            //5、输出大写或者小写字符串 <br>
+                            6、输出大写或者小写字符串 <br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *string1 = @"A String";<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *string2 = @"String"; <br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"string1:%@",[string1 uppercaseString]);//大写<br>
@@ -84,7 +84,7 @@
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"string2:%@",[string2 capitalizedString]);//首字母大小
                         </p>
                         <p>
-                            //6、-rangeOfString: //查找字符串某处是否包含其它字符串 <br>
+                            7、-rangeOfString: //查找字符串某处是否包含其它字符串 <br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *string1 = @"This is a string";<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *string2 = @"string";<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSRange range = [string1 rangeOfString:string2];<br>
@@ -94,50 +94,50 @@
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"astring:%@",astring);
                         </p>
                         <p>
-                            //7、-substringToIndex: 从字符串的开头一直截取到指定的位置，但不包括该位置的字符 <br>
+                            8、-substringToIndex: 从字符串的开头一直截取到指定的位置，但不包括该位置的字符 <br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *string1 = @"This is a string";<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *string2 = [string1 substringToIndex:3];<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"string2:%@",string2);
                         </p>
                         <p>
-                            //8、-substringFromIndex: 以指定位置开始（包括指定位置的字符），并包括之后的全部字符 <br>
+                            9、-substringFromIndex: 以指定位置开始（包括指定位置的字符），并包括之后的全部字符 <br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *string1 = @"This is a string";<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *string2 = [string1 substringFromIndex:3];<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"string2:%@",string2);
                         </p>
                         <p>
-                            //9、-substringFromIndex: 以指定位置开始（包括指定位置的字符），并包括之后的全部字符 <br>
+                            10、-substringFromIndex: 以指定位置开始（包括指定位置的字符），并包括之后的全部字符 <br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *string1 = @"This is a string";<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *string2 = [string1 substringWithRange:NSMakeRange(0, 4)];<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"string2:%@",string2);
                         </p>
                         <p>
-                            //10、-stringWithCapacity: //按照固定长度生成空字符串 <br>
+                            11、-stringWithCapacity: //按照固定长度生成空字符串 <br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSMutableString *String;<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String = [NSMutableString stringWithCapacity:40];
                         </p>
                         <p>
-                            //11、-appendString: and -appendFormat: //把一个字符串接在另一个字符串的末尾 <br>
+                            12、-appendString: and -appendFormat: //把一个字符串接在另一个字符串的末尾 <br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSMutableString *String1 = [[NSMutableString alloc] initWithString:@"This is a NSMutableString"];<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String1 appendString:@", I will be adding some character"];<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String1 appendFormat:[NSString stringWithFormat:@", I will be adding some character"]];<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"String1:%@",String1);
                         </p>
                         <p>
-                            //12、-insertString: atIndex: //在指定位置插入字符串 <br>
+                            13、-insertString: atIndex: //在指定位置插入字符串 <br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSMutableString *String1 = [[NSMutableString alloc] initWithString:@"This is a NSMutableString"];<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String1 insertString:@"Hi! " atIndex:0];<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String1 appendFormat:[NSString stringWithFormat:@", I will be adding some character"]];<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"String1:%@",String1);
                         </p>
                         <p>
-                            //13、-replaceCharactersInRange: withString: //用指定字符串替换字符串中某指定位置、长度的字符串 <br>
+                            14、-replaceCharactersInRange: withString: //用指定字符串替换字符串中某指定位置、长度的字符串 <br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSMutableString *String1 = [[NSMutableString alloc] initWithString:@"This is a NSMutableString"];<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String1 replaceCharactersInRange:NSMakeRange(0, 4) withString:@"That"];<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"String1:%@",String1);
                         </p>
                         <p>
-                            //14、-hasPrefix: //检查字符串是否以另一个字符串开头<br>
+                            15、-hasPrefix: //检查字符串是否以另一个字符串开头<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *String1 = @"NSStringInformation.txt";<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String1 hasPrefix:@"NSString"] = = 1 ?  NSLog(@"YES") : NSLog(@"NO");<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[String1 hasSuffix:@".txt"] = = 1 ?  NSLog(@"YES") : NSLog(@"NO");
