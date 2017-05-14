@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>iOS代码块Block</title>
+    <link rel="icon" href="/favicon.png">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+<div id="container">
+    <div id="wrap">
+        <script src="/js/header.js"></script>
+        <div class="outer">
+            <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+                <div class="article-meta">
+                    <a href="/MyBlog/Articles/iOS/Basic/Block.html" class="myArticle-title">
+                        iOS代码块Block
+                    </a>
+
+                </div>
+                <div class="article-inner">
+                    <div class="article-entry" itemprop="articleBody">
+                        <h3 id="Run-server">
+                            概述
+                        </h3>
+
+                        <p>
+                            代码块Block是苹果在iOS4开始引入的对C语言的扩展,用来实现匿名函数的特性,Block是一种<br>
+                            特殊的数据类型,其可以正常定义变量、作为参数、作为返回值,特殊地,Block还可以保存一段代<br>
+                            码,在需要的时候调用,目前Block已经广泛应用于iOS开发中,常用于GCD、动画、排序及各类回调<br>
+                        </p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;注: Block的声明与赋值只是保存了一段代码段,必须调用才能执行内部代码</p>
+
+                        <h3 id="Run-server">
+                            Block变量的声明
+                        </h3>
+
+                        <p>
+                            &nbsp;&nbsp;&nbsp;Block变量的声明格式为: 返回值类型(^Block名字)(参数列表);<br><br>
+
+                            &nbsp;&nbsp;&nbsp;// 声明一个无返回值,参数为两个字符串对象,叫做aBlock的Block<br><br>
+                            &nbsp;&nbsp;&nbsp;void(^aBlock)(NSString *x, NSString *y);<br><br>
+
+                            &nbsp;&nbsp;&nbsp;// 形参变量名称可以省略,只留有变量类型即可<br>
+                            &nbsp;&nbsp;&nbsp;void(^aBlock)(NSString *, NSString *);<br>
+                        </p>
+                        <p>
+                            &nbsp;&nbsp;&nbsp;注: ^被称作"脱字符"
+                        </p>
+
+                        <h3 id="Run-server">
+                            Block变量的赋值
+                        </h3>
+
+                        <p>
+                            &nbsp;&nbsp;&nbsp;Block变量的赋值格式为: Block变量 = ^(参数列表){函数体};<br><br>
+
+                            &nbsp;&nbsp;&nbsp;aBlock = ^(NSString *x, NSString *y){<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"%@ love %@", x, y);<br>
+                            &nbsp;&nbsp;&nbsp;};<br>
+                        </p>
+                        <p>
+                            &nbsp;&nbsp;&nbsp;注: Block变量的赋值格式可以是: Block变量 = ^返回值类型(参数列表){函数体};<br>
+                            不过通常情况下都将返回值类型省略,因为编译器可以从存储代码块的变量中确定返回值的类型
+                        </p>
+
+                        <h3 id="Run-server">
+                            声明Block变量的同时进行赋值
+                        </h3>
+
+                        <p>
+                            &nbsp;&nbsp;&nbsp;int(^myBlock)(int) = ^(int num){<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return num * 7;<br>
+                            &nbsp;&nbsp;&nbsp;};<br><br>
+
+                            &nbsp;&nbsp;&nbsp;// 如果没有参数列表,在赋值时参数列表可以省略<br><br>
+                            &nbsp;&nbsp;&nbsp;void(^aVoidBlock)() = ^{<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"I am a aVoidBlock");<br>
+                            &nbsp;&nbsp;&nbsp;};<br>
+                        </p>
+                        <h3 id="Run-server">
+                            Block变量的调用
+                        </h3>
+
+                        <p>
+                            &nbsp;&nbsp;&nbsp;// 调用后控制台输出"Li Lei love Han Meimei"<br>
+                            &nbsp;&nbsp;&nbsp;aBlock(@"Li Lei",@"Han Meimei");<br><br>
+
+                            &nbsp;&nbsp;&nbsp;// 调用后控制台输出"result = 63"<br>
+                            &nbsp;&nbsp;&nbsp;NSLog(@"result = %d", myBlock(9));<br><br>
+
+                            &nbsp;&nbsp;&nbsp;// 调用后控制台输出"I am a aVoidBlock"<br>
+                            &nbsp;&nbsp;&nbsp;aVoidBlock();<br>
+                        </p>
+
+                        <h3 id="Run-server">
+                            使用typedef定义Block类型
+                        </h3>
+
+                        <p>
+                            在实际使用Block的过程中,我们可能需要重复地声明多个相同返回值相同参数列表的Block变量,<br>
+                            如果总是重复地编写一长串代码来声明变量会非常繁琐,所以我们可以使用typedef来定义Block类型<br>
+                            &nbsp;&nbsp;&nbsp;// 定义一种无返回值无参数列表的Block类型<br><br>
+                            &nbsp;&nbsp;&nbsp;typedef void(^SayHello)();<br><br>
+
+                            &nbsp;&nbsp;&nbsp;// 我们可以像OC中声明变量一样使用Block类型SayHello来声明变量<br><br>
+                            &nbsp;&nbsp;&nbsp;SayHello hello = ^(){<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"hello");<br>
+                            &nbsp;&nbsp;&nbsp;};<br><br>
+
+                            &nbsp;&nbsp;&nbsp;// 调用后控制台输出"hello"<br>
+                            &nbsp;&nbsp;&nbsp;hello();<br>
+                        </p>
+
+                        <h3 id="Run-server">
+                            Block作为函数参数
+                        </h3>
+
+                        <p>
+                            &nbsp;&nbsp;&nbsp;// 1.定义一个形参为Block的OC函数<br>
+                            &nbsp;&nbsp;&nbsp;- (void)useBlockForOC:(int(^)(int, int))aBlock<br>
+                            &nbsp;&nbsp;&nbsp;{<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"result = %d", aBlock(300,200));<br>
+                            &nbsp;&nbsp;&nbsp;}<br>
+
+                            &nbsp;&nbsp;&nbsp;// 2.声明并赋值定义一个Block变量<br>
+                            &nbsp;&nbsp;&nbsp;int(^addBlock)(int, int) = ^(int x, int y){<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return x+y;<br>
+                            &nbsp;&nbsp;&nbsp;};<br><br>
+
+                            &nbsp;&nbsp;&nbsp;// 3.以Block作为函数参数,把Block像对象一样传递<br>
+                            &nbsp;&nbsp;&nbsp;[self useBlockForOC:addBlock];<br><br>
+
+                            &nbsp;&nbsp;&nbsp;// 将第2点和第3点合并一起,以内联定义的Block作为函数参数<br>
+                            &nbsp;&nbsp;&nbsp;[self useBlockForOC:^(int x, int y){<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return x+y;<br>
+                            &nbsp;&nbsp;&nbsp;}];<br>
+                        </p>
+
+                        <h3 id="Run-server">
+                            使用typedef简化Block
+                        </h3>
+
+                        <p>
+                            &nbsp;&nbsp;&nbsp;// 1.使用typedef定义Block类型<br>
+                            &nbsp;&nbsp;&nbsp;typedef int(^MyBlock)(int, int);<br><br>
+
+                            &nbsp;&nbsp;&nbsp;// 2.定义一个形参为Block的OC函数<br>
+                            &nbsp;&nbsp;&nbsp;- (void)useBlockForOC:(MyBlock)aBlock<br>
+                            &nbsp;&nbsp;&nbsp;{<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"result = %d", aBlock(300,200));<br>
+                            &nbsp;&nbsp;&nbsp;}<br><br>
+
+                            &nbsp;&nbsp;&nbsp;// 3.声明并赋值定义一个Block变量<br>
+                            &nbsp;&nbsp;&nbsp;MyBlock addBlock = ^(int x, int y){<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return x+y;<br>
+                            &nbsp;&nbsp;&nbsp;};<br><br>
+
+                            &nbsp;&nbsp;&nbsp;// 4.以Block作为函数参数,把Block像对象一样传递<br>
+                            &nbsp;&nbsp;&nbsp;[self useBlockForOC:addBlock];<br><br>
+
+                            &nbsp;&nbsp;&nbsp;// 将第3点和第4点合并一起,以内联定义的Block作为函数参数<br>
+                            &nbsp;&nbsp;&nbsp;[self useBlockForOC:^(int x, int y){<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return x+y;<br>
+                            &nbsp;&nbsp;&nbsp;}];<br>
+                        </p>
+
+                        <h3 id="Run-server">
+                            Block内访问局部变量
+                        </h3>
+
+                        <p>
+                            &nbsp;&nbsp;&nbsp;在Block中可以访问局部变量<br>
+                            &nbsp;&nbsp;&nbsp;// 声明局部变量global<br>
+                            &nbsp;&nbsp;&nbsp;int global = 100;<br><br>
+
+                            &nbsp;&nbsp;&nbsp;void(^myBlock)() = ^{<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"global = %d", global);<br>
+                            &nbsp;&nbsp;&nbsp;};<br>
+                            &nbsp;&nbsp;&nbsp;// 调用后控制台输出"global = 100"<br>
+                            &nbsp;&nbsp;&nbsp;myBlock();<br><br>
+
+                            在声明Block之后、调用Block之前对局部变量进行修改,在调用Block时局部变量值是修改之前的旧值<br>
+                            &nbsp;&nbsp;&nbsp;// 声明局部变量global<br>
+                            &nbsp;&nbsp;&nbsp;int global = 100;<br><br>
+
+                            &nbsp;&nbsp;&nbsp;void(^myBlock)() = ^{<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"global = %d", global);<br>
+                            &nbsp;&nbsp;&nbsp;};<br>
+                            &nbsp;&nbsp;&nbsp;global = 101;<br>
+                            &nbsp;&nbsp;&nbsp;// 调用后控制台输出"global = 100"<br>
+                            &nbsp;&nbsp;&nbsp;myBlock();<br><br>
+
+                            在Block中不可以直接修改局部变量<br>
+                            &nbsp;&nbsp;&nbsp;// 声明局部变量global<br>
+                            &nbsp;&nbsp;&nbsp;int global = 100;<br><br>
+
+                            &nbsp;&nbsp;&nbsp;void(^myBlock)() = ^{<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;global ++; // 这句报错<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"global = %d", global);<br>
+                            &nbsp;&nbsp;&nbsp;};<br>
+                            &nbsp;&nbsp;&nbsp;// 调用后控制台输出"global = 100"<br>
+                            &nbsp;&nbsp;&nbsp; myBlock();
+
+                        </p>
+                    </div>
+                </div>
+                <nav id="article-nav">
+                    <a href="/MyBlog/Articles/iOS/Basic/Protocol.html" id="article-nav-newer-left" class="article-nav-link-wrap">
+                        <strong class="article-nav-caption">上一篇</strong>
+                    </a>
+                </nav>
+            </article>
+            </section>
+            <script src="/js/recentArticle.js"></script>
+
+        </div>
+        <script src="/js/footer.js"></script>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+    <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+    <script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>
