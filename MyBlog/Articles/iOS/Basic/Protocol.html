@@ -22,11 +22,6 @@
                 <div class="article-inner">
                     <div class="article-entry" itemprop="articleBody">
                         <p>
-                            最近工作中遇到一个比较迷惑的事情，在我利用runtime获取类的属性的时候，由于类实现<br>
-                            了一个自定义协议，导致遍历出来的属性中包含了NSObject协议中的property。查来查去，<br>
-                            只是知道和protocol有关。晚上问了下朋友（iOS大神），结果被他一句点破。发现这部分<br>
-                            知识点遗漏了一点。<br><br>
-
                             protocol类似java中的interface，主要是用来定义一套对象之间的通信规则。protocol<br>
                             也是我们设计时常用的一个东西，相对于直接继承的方式，protocol则偏向于组合模式。因<br>
                             为在设计对象的时候，如果基类东西很多，而不同的子类又不一定都需要基类的东西，或者在<br>
