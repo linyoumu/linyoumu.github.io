@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>@synthesize和@dynamic的区别</title>
+    <link rel="icon" href="/favicon.png">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+<div id="container">
+    <div id="wrap">
+        <script src="/js/header.js"></script>
+        <div class="outer">
+            <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+                <div class="article-meta">
+                    <a href="/MyBlog/Articles/iOS/Basic/Property.html" class="myArticle-title">
+                        @synthesize和@dynamic的区别
+                    </a>
+                </div>
+                <div class="article-inner">
+                    <div class="article-entry" itemprop="articleBody">
+                        <p>
+                            iOS中@synthesize和@dynamic的区别在于：<br><br>
+                            @synthesize ：系统自动生成getter和setter属性声明<br>
+                            @dynamic    ：开发者自已提供相应的属性声明<br><br>
+                            示例代码：<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//在.h文件<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@interface Person : Object   <br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@property (nonatomic, retain) NSString * name;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@property (nonatomic, retain) NSNumber * status;<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@end<br><br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//在.m文件<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@implementation Person<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@dynamic name;  <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@dynamic status;<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- (void) add:(Person*)data {<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Person *p = [[Person alloc] init]; <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p.name = data.name; <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p.image = data.image; <br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (p.name) { <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"person=%@", data);   <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@end<br><br><br>
+                        </p>
+                    </div>
+                </div>
+                <nav id="article-nav">
+                    <a href="/MyBlog/Articles/iOS/Basic/Property.html" id="article-nav-newer-left" class="article-nav-link-wrap">
+                        <strong class="article-nav-caption">上一篇</strong>
+                    </a>
+                </nav>
+            </article>
+            </section>
+            <script src="/js/recentArticle.js"></script>
+
+        </div>
+        <script src="/js/footer.js"></script>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+    <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+    <script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>

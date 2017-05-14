@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>不可变字典和可变字典</title>
+    <link rel="icon" href="/favicon.png">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+<div id="container">
+    <div id="wrap">
+        <script src="/js/header.js"></script>
+        <div class="outer">
+            <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+                <div class="article-meta">
+                    <a href="/MyBlog/Articles/iOS/Basic/NSDictionary.html" class="myArticle-title">
+                        不可变字典和可变字典
+                    </a>
+                </div>
+                <div class="article-inner">
+                    <div class="article-entry" itemprop="articleBody">
+                        <p>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//key 和 value 都属于(id)对象类型<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//key常用字符串NSString来表示<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//存储数值型 一般可用 NSString<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//int  age -> @(age)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//[dic[name] intValue];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// @()--> 转成NSNumber 类型<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//intValue<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//value可以使任意对象(NSString  NSArrray , dog  )<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//NSDictionary 一旦创建不能修改增加删除<br><br>
+                            #pragma mark 字典的创建<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSDictionary * dic = [[NSDictionary alloc]initWithObjectsAndKeys:<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@"value1",@"key1",<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@"value2",@"key2",<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@"value2",@"key3",nil];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"%@",dic);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSDictionary * dic1 = [NSDictionary dictionaryWithObjectsAndKeys:@"value1",@"key1", nil];<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//用字典创建字典<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSDictionary * dic2 = [[NSDictionary alloc]initWithDictionary:dic];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"%@",dic2);<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//xcode4.6<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//格式: key : value 多个元素之间用,分隔<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//用NSLog打印字典是不支持汉字的转码<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// \U5bd2\U4ed2;<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSDictionary * dic3 =<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@{@"key1":@"value1",<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@"key2":@"value2",<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@"key3":@"value3",<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@"key4":@"value2"<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br><br>
+
+                            #pragma mark 查看键的个数<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSUInteger  num = [dic2 count];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"%lu",num);<br><br>
+
+                            #pragma mark 通过key找value<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString * str =  [dic3 objectForKey:@"key1"];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//xcode4.6<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString * str2 = dic3[@"key2"];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"%@",str);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"%@",str2);<br><br>
+
+                            #pragma mark  获取所有key 所有value<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSArray * keyArray  =  [dic3 allKeys];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSArray * valueArray = [dic3 allValues];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"keys = %@",keyArray);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"values = %@",valueArray);<br><br>
+
+                            #pragma mark 查看一个value对应多个key<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSArray * array =  [dic3  allKeysForObject:@"value2"];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"%@",array);<br><br>
+
+                            #pragma mark 创建可变字典<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSMutableDictionary * mutDic = [[NSMutableDictionary alloc] init];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSDictionary * dic4 =<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@{@"key1":@"value1",<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@"key2":@"value2",<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@"key3":@"value3",<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@"key4":@"value2"<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSMutableDictionary * mutDic2 = [[NSMutableDictionary alloc]initWithDictionary:dic4];<br><br>
+
+                            #pragma mark 增加<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//key不重复是增加键值对<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[mutDic2 setObject:@"value3"<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;forKey:@"key5"];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//保证Key不重复 key必须唯一<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//通过查询key的obj 是否为 ==NULL<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//if ([mutDic2 objectForKey:@"key5"]== NULL) {<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//}<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSDictionary * dic5 = @{@"key_1":@"value1",<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@"key_2":@"value2"};<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[mutDic2 addEntriesFromDictionary:dic5];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"%@",mutDic2);<br><br>
+
+                            #pragma mark 删除<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//通过key删除值<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[mutDic2 removeObjectForKey:@"key_1"];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"%@",mutDic2);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSArray * array2 = @[@"key_2",@"key2",@"key4"];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[mutDic2 removeObjectsForKeys:array2];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"%@",mutDic2);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//[mutDic2 removeAllObjects];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//NSLog(@"%@",mutDic2);<br><br>
+
+                            #pragma mark 修改<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//key 已存在是修改当前value的值<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[mutDic2 setObject:@"hhhh" forKey:@"key1"];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"%@",mutDic2);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//完全覆盖掉当前字典中所有的值<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[mutDic2 setDictionary:dic2];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"%@",mutDic2);<br>
+                        </p>
+                    </div>
+                </div>
+                <nav id="article-nav">
+                    <a href="/MyBlog/Articles/iOS/Basic/NSArray.html" id="article-nav-newer-left" class="article-nav-link-wrap">
+                        <strong class="article-nav-caption">上一篇</strong>
+                    </a>
+                    <a href="/MyBlog/Articles/iOS/Basic/Property.html" id="article-nav-newer-right" class="article-nav-link-wrap">
+                        <strong class="article-nav-caption">下一篇</strong>
+                    </a>
+                </nav>
+            </article>
+            </section>
+            <script src="/js/recentArticle.js"></script>
+
+        </div>
+        <script src="/js/footer.js"></script>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+    <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+    <script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>

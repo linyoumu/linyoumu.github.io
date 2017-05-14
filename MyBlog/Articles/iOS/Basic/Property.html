@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>变量定义使用</title>
+    <link rel="icon" href="/favicon.png">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+<div id="container">
+    <div id="wrap">
+        <script src="/js/header.js"></script>
+        <div class="outer">
+            <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+                <div class="article-meta">
+                    <a href="/MyBlog/Articles/iOS/Basic/Property.html" class="myArticle-title">
+                        变量定义使用
+                    </a>
+                </div>
+                <div class="article-inner">
+                    <div class="article-entry" itemprop="articleBody">
+                        <p>
+                            还是以例子来说明吧。新建一个ViewController类，Xcode为我们自动生成了两个文件：ViewController.h 和 ViewController.m<br>
+                            1、成员变量<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//在.h文件定义<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@interface ViewController : UIViewController { <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 我们称myTest1为成员变量<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BOOL myTest1; <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@end<br><br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//在.m文件中使用<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@implementation ViewController <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- (void)viewDidLoad {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;myTest1 = NO; // 不支持self.myTest1  或  [self myTest1] 的用法 <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@end<br><br><br>
+
+                            成员变量不使用 @synthesize，这个属性是私有属性，不断给它赋值时不会改变引用计数，<br>
+                            成员变量默认是protected，一般情况下，非子类对象无法访问。<br><br><br>
+
+                            2、类扩展的成员变量<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//在.h文件<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@interface ViewController : UIViewController { <br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@end<br><br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//在.m文件<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 类扩展都是放在.m文件中@implementation的上方，否则会抱错<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@interface ViewController () {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 类扩展的成员变量<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BOOL myTest2;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@end<br><br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@implementation ViewController<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- (void)viewDidLoad {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;myTest2 = YES; // 用法与1相同 <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BOOL myTest2;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@end<br><br><br>
+                            其实这种表达方式与1是一样的，区别在于更好的隐藏了.h文件的私有信息。<br><br>
+
+                            3、属性变量<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//在.h文件<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@interface ViewController : UIViewController <br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 属性变量，若不使用 @synthesize 只表示是public属性<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@property (nonatomic, copy) NSString *str1;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@end<br><br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//在.m文件<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@implementation ViewController<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@synthesize str1 = _str1; // 合成getter和setter，放在@implementation内<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- (void)viewDidLoad {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 不存在的用法，直接报错 <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;str1 = @"abc";<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 正确用法1  <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_str1 = @"abc";<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 正确用法2  <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *astr = [self str1];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"%@", astr); <br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 正确用法3 <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.str1 = @"123"; <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@end<br><br><br>
+
+                            4、类扩展的成员变量<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//在.h文件<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@interface ViewController : UIViewController <br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@end<br><br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//在.m文件<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@interface ViewController () <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 类扩展的属性变量<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@property (nonatomic, copy) NSString *str1;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@end<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@implementation ViewController<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@synthesize str1 = _str1; // 没意义<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- (void)viewDidLoad {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 错误的用法 <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;str1 = @"345";<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 正确用法  <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.str1 = @"abc";<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 正确用法 <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_str1 = @"123"; <br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 正确用法 <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *aStr = [self str1]; <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@end<br><br><br>
+                            没有@synthesize其实作用一样，因为str1没有经过.h对开公开。类扩展中定义的@property的作用无非是使用self.str1 和 [self  str1]  更方便些。<br><br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#import "ViewController.h"<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@implementation ViewController {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *str2; // 也是成员变量，只是放在@implemetation中的变量无法被子类继承<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 报错<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@synthesize str2 = _str2;<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- (void)viewDidLoad {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 正确用法<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;str2 = @"234";<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 报错<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_str2 = @"345";<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 报错<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.str2 = @"";<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@end<br>
+                        </p>
+                    </div>
+                </div>
+                <nav id="article-nav">
+                    <a href="/MyBlog/Articles/iOS/Basic/NSDictionary.html" id="article-nav-newer-left" class="article-nav-link-wrap">
+                        <strong class="article-nav-caption">上一篇</strong>
+                    </a>
+                    <a href="/MyBlog/Articles/iOS/Basic/SynthesizeWithDynamic.html" id="article-nav-newer-right" class="article-nav-link-wrap">
+                        <strong class="article-nav-caption">下一篇</strong>
+                    </a>
+                </nav>
+            </article>
+            </section>
+            <script src="/js/recentArticle.js"></script>
+
+        </div>
+        <script src="/js/footer.js"></script>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+    <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+    <script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>

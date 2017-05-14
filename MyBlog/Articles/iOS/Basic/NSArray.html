@@ -29,7 +29,7 @@
                             NSArray  只允许装OC对象，并且不能装空值，空代表数组元素的结束<br>
                         </p>
                         <p>
-                            代码如下:<br><br><br>
+                            代码如下:<br>
                             #pragma mark - NSArray的基本用法<br><br>
                             &nbsp;&nbsp;// 创建一个空数组<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSArray *array = [NSArray array];<br>
@@ -55,7 +55,7 @@
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- (Bool) isEqualToArray:(NSArray *)otherArray;<br>
                             &nbsp;&nbsp;// 返回两个集合中第一个相同的对象元素<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- (id) firstObjectCommonWithArray:(NSArray *)otherArray;<br><br>
-                            #pragma mark - NSArray的高级用法<br>
+                            #pragma mark - NSArray的高级用法<br><br>
                             &nbsp;&nbsp;//让集合里面的所有元素都执行aSelector这个方法<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- (void)makeObjectsPerformSelector:(SEL)aSelector;<br>
                             &nbsp;&nbsp;//让集合里面的所有元素都执行aSelector这个方法,给这个方法添加参数，但是只支持一个参数<br>
@@ -70,34 +70,34 @@
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- (NSString *) componentsJoinedByString:(NSString *)separator<br>
                             &nbsp;&nbsp;//将NSArray持久化到文件中去<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- (Bool) writeToFile:(NSString *)path atomically:(Bool)useAuxiliaryFile<br><br>
-                            #pragma mark - NSArray的遍历
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 方法一：普通遍历(利用for循环)
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void arrayFor1(){
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSArray *array = [NSArray arrayWithObjects:@"1",@"2",@"3",nil];
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int count = array.count;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(int i=0; i<count; i++){
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id obj = [array objectAtIndex:i];
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"%i-%@",i, obj);
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 方法二：快速遍历
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void arrayFor2(){
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSArray *array = [NSArray arrayWithObjects:@"1",@"2",@"3",nil];
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int count = array.count;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int i=0;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(id obj in array){
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"%i-%@",i, obj);
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i++;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 方法三：利用block遍历
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void arrayFor3(){
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSArray *array = [NSArray arrayWithObjects:@"1",@"2",@"3",nil];
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"%zi->%@",idx, obj);
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//  *stop = YES; //改变外边的Bool，终止遍历
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}];
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+                            #pragma mark - NSArray的遍历<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 方法一：普通遍历(利用for循环)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void arrayFor1(){<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSArray *array = [NSArray arrayWithObjects:@"1",@"2",@"3",nil];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int count = array.count;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(int i=0; i<count; i++){<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id obj = [array objectAtIndex:i];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"%i-%@",i, obj);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 方法二：快速遍历<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void arrayFor2(){<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSArray *array = [NSArray arrayWithObjects:@"1",@"2",@"3",nil];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int count = array.count;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int i=0;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(id obj in array){<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"%i-%@",i, obj);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i++;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 方法三：利用block遍历<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void arrayFor3(){<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSArray *array = [NSArray arrayWithObjects:@"1",@"2",@"3",nil];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"%zi->%@",idx, obj);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//  *stop = YES; //改变外边的Bool，终止遍历<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
                         </p>
 
                     </div>
@@ -106,7 +106,7 @@
                     <a href="/MyBlog/Articles/iOS/Basic/NSString.html" id="article-nav-newer-left" class="article-nav-link-wrap">
                         <strong class="article-nav-caption">上一篇</strong>
                     </a>
-                    <a href="/MyBlog/Articles/iOS/Basic/Animations.html" id="article-nav-newer-right" class="article-nav-link-wrap">
+                    <a href="/MyBlog/Articles/iOS/Basic/NSDictionary.html" id="article-nav-newer-right" class="article-nav-link-wrap">
                         <strong class="article-nav-caption">下一篇</strong>
                     </a>
                 </nav>
