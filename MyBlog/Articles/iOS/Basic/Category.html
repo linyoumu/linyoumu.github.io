@@ -38,14 +38,9 @@
                             我们新建一个类（一般的起名规则是 原始类名+自己起一个名字）比如说给NSString添加url相关方法。我们起名NSString+URL<br>
                             类名的写法：【原始类名：（自己起的名字）】<br>
                             .h文件如下<br><br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#import <Foundation/Foundation.h><br><br>
-
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@interface NSString(URL)<br><br>
-
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-(NSString *)URLEncodedString;<br><br>
-
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-(NSString *)URLEncodedString;<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-(NSString *)URLDecodedString;<br><br>
-
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@end<br><br><br>
 
                             我们给他添加了两个方法<br>
@@ -54,9 +49,7 @@
                             我们再来看.m文件<br><br>
 
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#import "NSString+URL.h"<br><br>
-
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@implementation NSString(URL)<br><br>
-
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@implementation NSString(URL)<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-(NSString *)URLEncodedString<br><br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// CharactersToBeEscaped = @":/?&=;+!@#$()~',*";<br>
@@ -70,31 +63,22 @@
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kCFStringEncodingUTF8));<br><br>
 
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return encodedString;<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
-
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-(NSString *)URLDecodedString<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
-
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *decodedString=(__bridge_transfer NSString *)CFURLCreateStringByReplacingPercentEscapesUsingEncoding(NULL, (__bridge CFStringRef)self, CFSTR(""), CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding));<br>
-
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return decodedString;<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
-
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@end<br><br>
 
                             我们看到 除过类名写法特殊以外其他方法的实现等 和一般类的写发都相同<br><br>
-
                             这个时候我们就给NSString 类添加了两个新的方法。那么如何使用了？<br>
                             在我们需要使用的类中 记得导入我们新建的类目<br><br>
-
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#import "NSString+URL.h"<br><br>
-
                             然后我们就可以在导入了 类目的类中 用NSString 的对象调用 URLEncodedString（）； URLDecodedString（）；这两个方法了 ，就好像NSString 本身就有这两个方法一样<br><br>
-
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *readyEcodeStr=@"adsfa asdfa s+asdf";//准备urlecode的字符串<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *ecodeStr=[self URLEncodedString:readyEcodeStr];<br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"readyEcodeStr=%@  ecodeStr=%@",readyEcodeStr,ecodeStr);<br>
-
                             我们 看到上边的NSString对象 readyEcodeStr 调用方法URLEncodedString 方法和普通的调用没什么两样<br><br>
                         </p>
                     </div>
