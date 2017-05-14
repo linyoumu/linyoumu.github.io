@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>类目</title>
+    <link rel="icon" href="/favicon.png">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+<div id="container">
+    <div id="wrap">
+        <script src="/js/header.js"></script>
+        <div class="outer">
+            <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+                <div class="article-meta">
+                    <a href="/MyBlog/Articles/iOS/Basic/Category.html" class="myArticle-title">
+                        类目
+                    </a>
+                </div>
+                <div class="article-inner">
+                    <div class="article-entry" itemprop="articleBody">
+                        <p>
+                            首先我们解释一下类目是什么<br>
+                            iOS中类目是为给已经存在的类添加新的方法。（但是不能添加实例变量）<br>
+                            也就是说 我们已经有一个类了 ，但是我们发现这个类目前所提供的方法，满足不了我们的需求，我们需要新的方法，但是我们有不想或者不能动这个类的原始写法，此时类目就可以实现不用动这个类的情况下 为他添加新的方法。<br>
+                            比如说：<br>
+                            假如，我们把人看作一个类，我们对人的定义包括吃饭，睡觉，穿衣等等。 他的方法包括了 如何吃饭，如何穿衣，如何睡觉等等<br>
+                            但是，有一天汽车出现了，我们发现我们之前对人的定义没有 开汽车这个方法，但是大家对人的定义都已经打包了。不能再去改人这个类的源代码了。<br>
+                            这时候我们可以通过类目来给人添加一个开汽车的方法，此时我们不需要修改人的属性，人还是一个脑袋，两只胳膊，两条腿，但是人的方法多了一个开汽车。<br><br>
+
+                            一般在系统提供的类中会使用到，比如说NSString 我们只能看到.h方法，看不到.m方法。<br>
+                            我们要想给它添加一个方法，可是操作不了.m的。此时就可以使用类目来实现。<br><br>
+
+                            下边我们以一个例子来看一下。<br>
+                            比如说NSString 我们想给他添加一个urlecode urldecode两个方法<br>
+                            我们新建一个类（一般的起名规则是 原始类名+自己起一个名字）比如说给NSString添加url相关方法。我们起名NSString+URL<br>
+                            类名的写法：【原始类名：（自己起的名字）】<br>
+                            .h文件如下<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#import <Foundation/Foundation.h><br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@interface NSString(URL)<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-(NSString *)URLEncodedString;<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-(NSString *)URLDecodedString;<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@end<br><br><br>
+
+                            我们给他添加了两个方法<br>
+                            URLEncodedString（）；<br>
+                            URLDecodedString（）；<br>
+                            我们再来看.m文件<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#import "NSString+URL.h"<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@implementation NSString(URL)<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-(NSString *)URLEncodedString<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// CharactersToBeEscaped = @":/?&=;+!@#$()~',*";<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// CharactersToLeaveUnescaped = @"[].";<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *encodedString = (NSString *)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(CFStringRef)self,<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NULL,<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(CFStringRef)@"!*'();:@&=+$,/?%#[]",<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kCFStringEncodingUTF8));<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return encodedString;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-(NSString *)URLDecodedString<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *decodedString=(__bridge_transfer NSString *)CFURLCreateStringByReplacingPercentEscapesUsingEncoding(NULL, (__bridge CFStringRef)self, CFSTR(""), CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding));<br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return decodedString;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@end<br><br>
+
+                            我们看到 除过类名写法特殊以外其他方法的实现等 和一般类的写发都相同<br><br>
+
+                            这个时候我们就给NSString 类添加了两个新的方法。那么如何使用了？<br>
+                            在我们需要使用的类中 记得导入我们新建的类目<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#import "NSString+URL.h"<br><br>
+
+                            然后我们就可以在导入了 类目的类中 用NSString 的对象调用 URLEncodedString（）； URLDecodedString（）；这两个方法了 ，就好像NSString 本身就有这两个方法一样<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *readyEcodeStr=@"adsfa asdfa s+asdf";//准备urlecode的字符串<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString *ecodeStr=[self URLEncodedString:readyEcodeStr];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"readyEcodeStr=%@  ecodeStr=%@",readyEcodeStr,ecodeStr);<br>
+
+                            我们 看到上边的NSString对象 readyEcodeStr 调用方法URLEncodedString 方法和普通的调用没什么两样<br><br>
+                        </p>
+                    </div>
+                </div>
+                <nav id="article-nav">
+                    <a href="/MyBlog/Articles/iOS/Basic/SynthesizeWithDynamic.html" id="article-nav-newer-left" class="article-nav-link-wrap">
+                        <strong class="article-nav-caption">上一篇</strong>
+                    </a>
+                </nav>
+            </article>
+            </section>
+            <script src="/js/recentArticle.js"></script>
+
+        </div>
+        <script src="/js/footer.js"></script>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+    <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+    <script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>
