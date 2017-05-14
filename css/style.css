@@ -1387,7 +1387,7 @@ pre .javascript .function {
 .myArticle-title{
 
   text-decoration: none;
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
   letter-spacing: 2px;
   color: #1b6eff;
   margin-bottom: 1em;
