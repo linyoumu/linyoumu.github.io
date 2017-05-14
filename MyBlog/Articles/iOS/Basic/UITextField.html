@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>UITextField的常用方法</title>
+    <link rel="icon" href="/favicon.png">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+<div id="container">
+    <div id="wrap">
+        <script src="/js/header.js"></script>
+        <div class="outer">
+            <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+                <div class="article-meta">
+                    <a href="/MyBlog/Articles/iOS/Basic/UITextField.html" class="myArticle-title">
+                        UITextField的常用方法
+                    </a>
+
+                </div>
+                <div class="article-inner">
+                    <div class="article-entry" itemprop="articleBody">
+                        <p>
+                            　// 创建方法<br>
+                            　　UITextField *textField = [[UITextField alloc] init];<br>
+                            　　textField.frame = CGRectMake(30, 30, 260, 35);　　 // 设置位置　<br><br>
+                            　　textField.backgroundColor = [UIColor grayColor]; 　　// 设置背景颜色<br>
+
+                            　　textField.alpha = 1.0; 　　// 设置透明度，范围从0.0-1.0之间<br>
+
+                            　　textField.textColor = [UIColor redColor]; 　　// 设置文字的颜色<br>
+
+                            　　textField.text = @"默认的文字";　　 // 设置默认的文字　<br>　
+
+                            　　textField.clearsOnBeginEditing = YES;       // 当第二次输入的时候，清空上一次的内容<br>
+
+                            　　textField.placeholder = @"这是提示文字"; 　　// 显示提示文件，当输入文字时将自动消失　<br>　
+
+                            　　textField.font = [UIFont boldSystemFontOfSize:25.0f]; 　　// 设置字体的大小<br>
+                            　　textField.textAlignment = NSTextAlignmentCenter; 　　// 设置文字的对其方式<br><br>
+
+                            　　// 对其的样式如下<br>
+                            //    typedef NS_ENUM(NSInteger, NSTextAlignment) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        NSTextAlignmentLeft      = 0,    // Visually left aligned<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//#if TARGET_OS_IPHONE<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        NSTextAlignmentCenter    = 1,    // Visually centered<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        NSTextAlignmentRight     = 2,    // Visually right aligned<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//#else<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        NSTextAlignmentRight     = 1,    // Visually right aligned<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        NSTextAlignmentCenter    = 2,    // Visually centered<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//#endif<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        NSTextAlignmentJustified = 3,    // Fully-justified. The last line in a paragraph is natural-aligned.<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        NSTextAlignmentNatural   = 4,    // Indicates the default alignment for script<br>
+                            //    } NS_ENUM_AVAILABLE_IOS(6_0);<br><br>
+
+
+
+                            　// 设置textField的样式<br>
+
+                            　　textField.borderStyle = UITextBorderStyleRoundedRect;　　// 设置输入框的样式<br>
+
+                            　　textField.minimumFontSize = 20.0f;　　 // 设置自动缩小显示的最小字体大小<br>
+
+                            　　textField.tag = 1001;　　 // 设置textField的标签，主要用在委托方法中<br>
+
+                            　　textField.secureTextEntry = NO; 　　// 设置是否以密码的圆点形式显示<br>
+
+                            　　textField.autocorrectionType = YES; 　　// 设置是否启动自动提醒更新功能<br>
+
+                            　　textField.returnKeyType = UIReturnKeyDefault;　　 // 设置弹出的键盘带形式与带的按键<br><br>
+
+                            　　// 以下是弹出的键盘的带按钮的全部样式<br>
+
+                            //    typedef NS_ENUM(NSInteger, UIReturnKeyType) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UIReturnKeyDefault, // 默认的样式<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UIReturnKeyGo, // 带一个go按钮<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UIReturnKeyGoogle, // 带一个Search按钮，使用google搜索<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UIReturnKeyJoin, // 带一个Join按钮，登录时使用<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UIReturnKeyNext, // 带一个Next按钮，进入下一个输入框<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UIReturnKeyRoute, // 带一个Route按钮（路线）<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UIReturnKeySearch, // 带一个Search按钮（搜索）<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UIReturnKeySend, // 带一个Send按钮（发送）<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UIReturnKeyYahoo, // 带一个Search，使用yahoo搜索（搜索）<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UIReturnKeyDone, // 带一个Done按钮（完成）<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UIReturnKeyEmergencyCall, // 带一个emergency call按钮（紧急电话）<br>
+                            //    };<br><br>
+
+                            textField.keyboardType = UIKeyboardTypeNamePhonePad; 　　// 弹出的键盘的样式<br>
+
+                            // 以下是所有弹出的键盘的样式<br>
+                            //    typedef NS_ENUM(NSInteger, UIKeyboardType) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UIKeyboardTypeDefault,                // Default type for the current input method.<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UIKeyboardTypeASCIICapable,           // Displays a keyboard which can enter ASCII characters, non-ASCII keyboards remain active<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UIKeyboardTypeNumbersAndPunctuation,  // Numbers and assorted punctuation.<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UIKeyboardTypeURL,                    // A type optimized for URL entry (shows . / .com prominently).<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UIKeyboardTypeNumberPad,              // A number pad (0-9). Suitable for PIN entry.<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UIKeyboardTypePhonePad,               // A phone pad (1-9, *, 0, #, with letters under the numbers).<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UIKeyboardTypeNamePhonePad,           // A type optimized for entering a person's name or phone number.<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UIKeyboardTypeEmailAddress,           // A type optimized for multiple email address entry (shows space @ . prominently).<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//#if __IPHONE_4_1 <= __IPHONE_OS_VERSION_MAX_ALLOWED<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UIKeyboardTypeDecimalPad,             // A number pad with a decimal point.<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//#endif<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//#if __IPHONE_5_0 <= __IPHONE_OS_VERSION_MAX_ALLOWED<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UIKeyboardTypeTwitter,                // A type optimized for twitter text entry (easy access to @ #)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//#endif<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UIKeyboardTypeAlphabet = UIKeyboardTypeASCIICapable, // Deprecated<br>
+                            //    };<br><br>
+
+                            　　textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;　　 // 输入的对其方法<br>
+                            　　textField.autoresizingMask = UIViewAutoresizingFlexibleHeight; 　　// 自动适应高度<br>
+                            　　textField.clearButtonMode = UITextFieldViewModeWhileEditing; 　　// 编辑的时候会显示出删除全部的小X<br><br>
+
+                            // 出现删除全部小X的时间<br>
+                            //    typedef enum {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UITextFieldViewModeNever　// 重不出现<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UITextFieldViewModeWhileEditing, // 编辑时出现<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UITextFieldViewModeUnlessEditing,　// 除了编辑外都出现<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UITextFieldViewModeAlways 　// 一直出现<br>
+                            //    } UITextFieldViewMode;<br><br>
+
+                            //首字母是否大写<br>
+                            　　textField.autocapitalizationType = UITextAutocapitalizationTypeNone;<br>
+
+                            // 以下是字母大写的几种情况<br>
+                            //    typedef enum {
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UITextAutocapitalizationTypeNone, // 不自动大写<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UITextAutocapitalizationTypeWords,　// 单词首字母大写<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UITextAutocapitalizationTypeSentences,　// 句子的首字母大写<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UITextAutocapitalizationTypeAllCharacters, // 所有字母都大写<br>
+                            //    } UITextAutocapitalizationType;<br><br>
+
+                            //键盘外观<br>
+                            　　textField.keyboardAppearance = UIKeyboardAppearanceAlert;<br>
+                            //    typedef enum {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UIKeyboardAppearanceDefault， // 默认外观，浅灰色<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UIKeyboardAppearanceAlert，　 　// 深灰 石墨色<br>
+                            //    } UIReturnKeyType;<br><br>
+
+                            //最右侧加图片是以下代码　 左侧类似<br>
+                            　　UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ic_action_stat_share.png"]];<br>
+                            // textField.rightView = image;<br>
+                            // textField.rightViewMode = UITextFieldViewModeAlways;<br>
+                            　　textField.leftView = image;<br>
+                            　　textField.leftViewMode = UITextFieldViewModeAlways;<br><br>
+
+                            //    typedef enum {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UITextFieldViewModeNever,<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UITextFieldViewModeWhileEditing,<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UITextFieldViewModeUnlessEditing,<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//        UITextFieldViewModeAlways<br>
+                            //    } UITextFieldViewMode;<br><br>
+
+                            // 要想设置委托，就需要实现协议，需要在.h文件中添加协议<br>
+                            　　textField.delegate = self; 　　// 设置委托<br><br>
+
+                            // 添加到view上<br>
+                            　　[self.view addSubview:textField];<br><br>
+
+                            //当开始点击textField会调用的方法<br>
+                            -(void)textFieldDidBeginEditing:(UITextField *)textField {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"开始编辑");<br>
+                            }<br><br>
+
+                            //当textField编辑结束时调用的方法<br>
+                            -(void)textFieldDidEndEditing:(UITextField *)textField {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"结束编辑");<br>
+                            }<br><br>
+
+                            //按下Done按钮的调用方法，我们让键盘消失<br>
+                            -(BOOL)textFieldShouldReturn:(UITextField *)textField{<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[textField resignFirstResponder];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return YES;<br>
+                            }
+                        </p>
+                    </div>
+                </div>
+                <nav id="article-nav">
+                    <a href="/MyBlog/Articles/iOS/Basic/UILabel.html" id="article-nav-newer-left" class="article-nav-link-wrap">
+                        <strong class="article-nav-caption">上一篇</strong>
+                    </a>
+                </nav>
+            </article>
+            </section>
+            <script src="/js/recentArticle.js"></script>
+
+        </div>
+        <script src="/js/footer.js"></script>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+    <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+    <script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>

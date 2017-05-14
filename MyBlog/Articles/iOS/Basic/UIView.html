@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>UIView 基本属性用法</title>
+    <link rel="icon" href="/favicon.png">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+<div id="container">
+    <div id="wrap">
+        <script src="/js/header.js"></script>
+        <div class="outer">
+            <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+                <div class="article-meta">
+                    <a href="/MyBlog/Articles/iOS/Basic/UIView.html" class="myArticle-title">
+                        UIView 基本属性用法
+                    </a>
+
+                </div>
+                <div class="article-inner">
+                    <div class="article-entry" itemprop="articleBody">
+                        <p>
+                            1.创建UIView<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UIView * redView = [[UIView alloc] initWithFrame:CGRectMake(10, 100, 200, 100)];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UIView * blueView = [[UIView alloc] init];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//把blueView粘贴到了redView上<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[redView addSubview:blueView];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//redView 就是blueView 的父视图<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//修改父视图属性 对子视图产生影响<br><br>
+
+                            2.设置隐藏<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;redView.hidden = YES;//父视图隐藏子视图也会隐藏<br><br>
+
+                            3.如果子视图超出父视图范围是否裁剪子视图  默认是NO<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;redView.clipsToBounds = YES;<br><br>
+
+                            4.是否可以和用户进行交互,默认为YES<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;redView.userInteractionEnabled = YES;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UIView 默认 YES<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果可一个用户交互那么这个视图 可以接收点击，子视图也可以接收点击事件<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;谁在在上方谁想接受点击 最上方的会拦截<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果设置为NO 子视图和父视图都不能接受点击事件，那么这个点击就会向下层传递知道能被接受事件的控件<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;接收 如果最后没有控件接受这个事件 事件将会被抛弃<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UILabel UIIImageView userInteractionEnabled默认是NO，不可以和用户进行交互<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果button 粘贴到UILabel 和UIIImageView上 button是不能被点击<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果想要能点击button 就要把UILabel 和 UIIImageView 的userInteractionEnabled改为YES<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/<br><br>
+
+                            5.确定父子视图关系之后我们就可以获取所有的子视图<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSArray * subViews = redView.subviews;<br><br>
+
+                            6.获取子视图的父视图<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UIView * superView = blueView.superview;<br><br>
+
+                            7.判断一个视图是否是另外一个视图的子视图<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[button isDescendantOfView:redView];<br><br>
+
+                            8.在指定的索引位置插入一个子视图(这个函数也会把子视图粘贴到父视图上)<br>
+                            如果指定的索引超出了 父视图对应的索引值 那么就会把这个子视图插在 最上层<br>
+                            索引0 对应的就是最底层<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[self.view insertSubview:label4 atIndex:10];<br><br>
+
+                            9.在指定的某个子视图下方插入一个新的子视图<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[self.view insertSubview:label4 belowSubview:label1];<br><br>
+
+                            10.在指定的某个子视图上方插入一个新的子视图<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[self.view insertSubview:label4 aboveSubview:label1];<br><br>
+
+                            11.父视图 把指定的子视图 放到最前方<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[self.view bringSubviewToFront:label4];<br><br>
+
+                            12.父视图 把指定的两个视图进行交换<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[self.view exchangeSubviewAtIndex:0 withSubviewAtIndex:2];<br><br>
+
+                            13.父视图 把指定的子视图放到最底层<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[self.view sendSubviewToBack:label4];<br><br>
+
+                            14.可以通过设置中心点位置<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;blueView.center = CGPointMake(100, 100);<br><br>
+
+                            15.通过bounds 改变 视图的边框大小<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;blueView.bounds = CGRectMake(0, 0, 100, 100);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//bounds 前两项一般是 0 0<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;frame 和 bounds 区别<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.frame 子视图相对于父视图的坐标系的坐标<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.bounds 前两项的坐标是相对于自己坐标系的坐标<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.如果把bounds 中的坐标改变了 那么就会影响自己的坐标系，那么最终能影响子视图<br><br>
+
+                            16.修改view的bounds会将redView的坐标系改变<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;redView.bounds = CGRectMake(-50, -50, 200, 100);<br><br>
+
+                            17.view.transform<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.CGAffineTransformMakeRotation 设置视图的旋转角度（这个角度相对最原始的位置）<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;imagebutton.transform = CGAffineTransformMakeRotation(M_PI/4);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.CGAffineTransformRotate函数相对于当前imagebutton.transform 旋转的角度<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;imagebutton.transform = CGAffineTransformRotate(imagebutton.transform, M_PI/4);<br><br>
+
+                            18.CGAffineTransformMakeScale可以实现 放大 缩小 上下翻转 左右翻转<br>
+                            都是相对最原始的状态进行变换<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CGAffineTransformMakeScale(x, y);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x 控制x 方向的大小  1 原始大小 >1 x方向放大  <1 缩小<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y 控制 y方向 大小   1  原始大小 >1 y纵向放大  < 1缩小<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x 是负数 表示相对于原始的位置 左右翻转 翻转180度<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x 是正数    原始的位置<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y 负数  相对于原始的位置  上下翻转<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y 正数 就是最原始的位置<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;imagebutton.transform = CGAffineTransformMakeScale(-2, 2);<br><br>
+
+                            19.动画<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[UIView animateWithDuration:0.25 animations:^{//执行的第一个动画<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} completion:^(BOOL finished) {//第一个动画结束时执行<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}];<br><br>
+
+                            20.设置父子视图自适应/停靠模式<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_redView.autoresizesSubviews = YES;//允许子视图伴随父视图自动变化<br><br>
+
+                            21.设置子视图的自适应模式<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;blueView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight|<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin|<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UIViewAutoresizingFlexibleBottomMargin;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UIViewAutoresizingFlexibleLeftMargin   = 1 << 0,<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;父子视图的左边距 会伴随父视图的宽度 增加而增加 减少而减少<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UIViewAutoresizingFlexibleWidth        = 1 << 1,<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//子视图的宽度会伴随父视图的宽度增加而增减 减少而减少<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UIViewAutoresizingFlexibleRightMargin  = 1 << 2,<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;父子视图的右边距 会伴随父视图的宽度 增加而增加 减少而减少<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UIViewAutoresizingFlexibleTopMargin    = 1 << 3,<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;父子视图的上边距 会伴随父视图的宽度 增加而增加 减少而减少<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UIViewAutoresizingFlexibleHeight       = 1 << 4,<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//子视图的高度会伴随父视图的高度增加而增减 减少而减少<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UIViewAutoresizingFlexibleBottomMargin = 1 << 5<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;父子视图的下边距 会伴随父视图的宽度 增加而增加 减少而减少<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/<br>
+
+                        </p>
+                    </div>
+                </div>
+                <nav id="article-nav">
+                    <a href="/MyBlog/Articles/iOS/Basic/Block.html" id="article-nav-newer-left" class="article-nav-link-wrap">
+                        <strong class="article-nav-caption">上一篇</strong>
+                    </a>
+                </nav>
+            </article>
+            </section>
+            <script src="/js/recentArticle.js"></script>
+
+        </div>
+        <script src="/js/footer.js"></script>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+    <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+    <script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>
