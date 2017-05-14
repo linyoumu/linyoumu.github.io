@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>UIPageControl基本用法</title>
+    <link rel="icon" href="/favicon.png">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+<div id="container">
+    <div id="wrap">
+        <script src="/js/header.js"></script>
+        <div class="outer">
+            <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+                <div class="article-meta">
+                    <a href="/MyBlog/Articles/iOS/Basic/UIPageControl.html" class="myArticle-title">
+                        UIPageControl基本用法
+                    </a>
+
+                </div>
+                <div class="article-inner">
+                    <div class="article-entry" itemprop="articleBody">
+                        <p>
+                            // UIPageControl的常用方法<br><br>
+                            UIPageControl *onePageControl = [[UIPageControl alloc] init];<br><br>
+                            onePageControl.frame = CGRectMake(10, 100, 300, 30); // 设置位置<br><br>
+                            onePageControl.backgroundColor = [UIColor redColor]; // 设置背景色<br><br>
+                            onePageControl.pageIndicatorTintColor = [UIColor whiteColor]; // 未选中的点的颜色<br><br>
+                            onePageControl.currentPageIndicatorTintColor = [UIColor blueColor]; // 选中的点的颜色<br><br>
+                            onePageControl.currentPage = 2; // 当前第几个点 默认0<br><br>
+                            onePageControl.hidesForSinglePage = YES; // 如果页面只有1个的时候，指示器自动消失<br><br>
+                            onePageControl.defersCurrentPageDisplay = NO; // 当你改变页面时，指示器是不会改变的，只有当你给updateCurrentPageDisplay发送消息才会改变现实， 默认是NO<br><br>
+                            onePageControl.numberOfPages = 8; // 设置总共有多少个小点，也就是有多少个页面<br><br>
+                            [self.view addSubview:onePageControl]; // 添加到View上
+                        </p>
+                    </div>
+                </div>
+                <nav id="article-nav">
+                    <a href="/MyBlog/Articles/iOS/Basic/UISlider.html" id="article-nav-newer-left" class="article-nav-link-wrap">
+                        <strong class="article-nav-caption">上一篇</strong>
+                    </a>
+                </nav>
+            </article>
+            </section>
+            <script src="/js/recentArticle.js"></script>
+
+        </div>
+        <script src="/js/footer.js"></script>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+    <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+    <script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>

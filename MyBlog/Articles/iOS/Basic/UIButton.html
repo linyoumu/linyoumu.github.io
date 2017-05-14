@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>UIButton基本用法</title>
+    <link rel="icon" href="/favicon.png">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+<div id="container">
+    <div id="wrap">
+        <script src="/js/header.js"></script>
+        <div class="outer">
+            <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+                <div class="article-meta">
+                    <a href="/MyBlog/Articles/iOS/Basic/UIButton.html" class="myArticle-title">
+                        UIButton基本用法
+                    </a>
+
+                </div>
+                <div class="article-inner">
+                    <div class="article-entry" itemprop="articleBody">
+                        <p>
+                            #import "ViewController.h"<br><br>
+
+                            @interface ViewController ()<br><br>
+
+                            @property (strong, nonatomic) UIButton *btn;<br><br>
+
+                            @end<br><br>
+
+                            @implementation ViewController<br><br>
+
+                            - (void)viewDidLoad {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[super viewDidLoad];<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//初始化按钮，设置按钮类型<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.btn = [UIButton buttonWithType:UIButtonTypeSystem];<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type:<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UIButtonTypeCustom = 0, // 自定义类型<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UIButtonTypeSystem NS_ENUM_AVAILABLE_IOS(7_0),  // 系统类型<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UIButtonTypeDetailDisclosure,//详细描述样式，圆圈中间加个i<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UIButtonTypeInfoLight, //浅色的详细描述样式<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UIButtonTypeInfoDark,//深色的详细描述样式<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UIButtonTypeContactAdd,//加号样式<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UIButtonTypeRoundedRect = UIButtonTypeSystem,   // 圆角矩形<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//设置按钮位置和尺寸<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.btn.frame = CGRectMake(50, 50, 300, 50);<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//设置按钮文字标题<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[self.btn setTitle:@"我是一个按钮" forState:UIControlStateNormal];<br><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;State:前三个较为常用<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UIControlStateNormal //正常状态下<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UIControlStateHighlighted //高亮状态下，按钮按下还未抬起的时候<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UIControlStateDisabled  //按钮禁用状态下，不能使用<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UIControlStateSelected  //选中状态下<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UIControlStateApplication //当应用程序标志时<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UIControlStateReserved  //为内部框架预留<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//设置按钮文字颜色<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[self.btn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//设置背景图片（需要注意按钮类型最好为自定义，系统类型的会使图片变暗）<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//    [self.btn setImage:[UIImage imageNamed:@"tupian"] forState:UIControlStateNormal];<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//设置按钮文字大小<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.btn.titleLabel.font = [UIFont systemFontOfSize:20];<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//设按钮背景颜色<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.btn.backgroundColor = [UIColor cyanColor];<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//设置按钮文字阴影颜色<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[self.btn setTitleShadowColor:[UIColor yellowColor] forState:UIControlStateNormal];<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//默认情况下，在按钮被禁用时，图像会被画的颜色深一些。要禁用此功能，可以将这个属性设置为NO<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.btn.adjustsImageWhenHighlighted = NO;<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//默认情况下，按钮在被禁用时，图像会被画的颜色淡一些。要禁用此功能，可以将这个属性设置为NO<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.btn.adjustsImageWhenDisabled = NO;<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//下面的这个属性设置为yes的状态下，按钮按下会发光，这可以用于信息按钮或者有些重要的按钮<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.btn.showsTouchWhenHighlighted = YES;<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//按钮响应点击事件，最常用的方法：第一个参数是目标对象，一般都是self； 第二个参数是一个SEL类型的方法；第三个参数是按钮点击事件<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[self.btn addTarget:self action:@selector(Method) forControlEvents:UIControlEventTouchUpInside];<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//将控件添加到当前视图上<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[self.view addSubview:self.btn];<br><br>
+                            }<br><br>
+
+                            - (void)Method<br>
+                            {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"随笔~~~~");<br>
+                            }<br><br>
+
+                            /*如果自定义按钮类，可以重写下面方法，定制自己需要的按钮<br>
+                            - (CGRect)backgroundRectForBounds:(CGRect)bounds; //指定背景边界<br>
+                            - (CGRect)contentRectForBounds:(CGRect)bounds; //指定内容边界<br>
+                            - (CGRect)titleRectForContentRect:(CGRect)contentRect; //指定文字标题边界<br>
+                            - (CGRect)imageRectForContentRect:(CGRect)contentRect; //指定按钮图像边界<br>
+                            */<br><br>
+
+                            - (void)didReceiveMemoryWarning {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[super didReceiveMemoryWarning];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Dispose of any resources that can be recreated.<br>
+                            }<br><br>
+
+                            @end
+                        </p>
+                    </div>
+                </div>
+                <nav id="article-nav">
+                    <a href="/MyBlog/Articles/iOS/Basic/UITextField.html" id="article-nav-newer-left" class="article-nav-link-wrap">
+                        <strong class="article-nav-caption">上一篇</strong>
+                    </a>
+                    <a href="/MyBlog/Articles/iOS/Basic/UIImageView.html" id="article-nav-newer-right" class="article-nav-link-wrap">
+                        <strong class="article-nav-caption">下一篇</strong>
+                    </a>
+                </nav>
+            </article>
+            </section>
+            <script src="/js/recentArticle.js"></script>
+
+        </div>
+        <script src="/js/footer.js"></script>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+    <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+    <script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>

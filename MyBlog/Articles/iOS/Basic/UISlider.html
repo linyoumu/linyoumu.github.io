@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>UISlider基本用法</title>
+    <link rel="icon" href="/favicon.png">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+<div id="container">
+    <div id="wrap">
+        <script src="/js/header.js"></script>
+        <div class="outer">
+            <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+                <div class="article-meta">
+                    <a href="/MyBlog/Articles/iOS/Basic/UISlider.html" class="myArticle-title">
+                        UISlider基本用法
+                    </a>
+
+                </div>
+                <div class="article-inner">
+                    <div class="article-entry" itemprop="articleBody">
+                        <p>
+                            UISlider *oneSlider = [[UISlider alloc] init];<br><br>
+                            oneSlider.frame = CGRectMake(10, 20, 300, 30); // 设置位置和大小 注意：UISlider的高度可以随便设置，因为是不会变的<br><br>
+                            oneSlider.value = 30; // 初始值<br><br>
+                            oneSlider.minimumValue = 0; // 最小值<br><br>
+                            oneSlider.maximumValue = 100; // 最大值<br><br>
+                            oneSlider.backgroundColor = [UIColor blueColor]; // 设置背景颜色<br><br>
+                            oneSlider.alpha = 0.9; // 设置透明度<br><br>
+                            oneSlider.tag = 1001; // 设置标签，常用在委托中<br><br>
+                            [oneSlider addTarget:self action:@selector(oneSliderValueChange:)forControlEvents:UIControlEventValueChanged]; // 设置响应oneSlider的响应方法<br><br>
+                            // 自定义UISlider<br><br>
+                            oneSlider.backgroundColor = [UIColor clearColor]; // 先清除背景色<br><br>
+                            // [oneSlider setMinimumTrackImage:[UIImage imageNamed:@"min.png"] forState:UIControlStateNormal];<br><br>
+                            [oneSlider setMaximumTrackImage:[UIImage imageNamed:@"max.png"]forState:UIControlStateNormal];<br><br>
+                            // 添加到view<br><br>
+                            [self.view addSubview:oneSlider];
+                        </p>
+                    </div>
+                </div>
+                <nav id="article-nav">
+                    <a href="/MyBlog/Articles/iOS/Basic/UISwitch.html" id="article-nav-newer-left" class="article-nav-link-wrap">
+                        <strong class="article-nav-caption">上一篇</strong>
+                    </a>
+                    <a href="/MyBlog/Articles/iOS/Basic/UISwitch.html" id="article-nav-newer-right" class="article-nav-link-wrap">
+                        <strong class="article-nav-caption">下一篇</strong>
+                    </a>
+                </nav>
+            </article>
+            </section>
+            <script src="/js/recentArticle.js"></script>
+
+        </div>
+        <script src="/js/footer.js"></script>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+    <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+    <script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>

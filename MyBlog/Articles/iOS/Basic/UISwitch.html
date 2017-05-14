@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>UISwitch基本用法</title>
+    <link rel="icon" href="/favicon.png">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+<div id="container">
+    <div id="wrap">
+        <script src="/js/header.js"></script>
+        <div class="outer">
+            <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+                <div class="article-meta">
+                    <a href="/MyBlog/Articles/iOS/Basic/UISwitch.html" class="myArticle-title">
+                        UISwitch基本用法
+                    </a>
+
+                </div>
+                <div class="article-inner">
+                    <div class="article-entry" itemprop="articleBody">
+                        <p>
+                            UISwitch *oneSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(20, 20, 0, 0)]; // 默认尺寸为79 * 27。<br><br>
+
+                            oneSwitch.backgroundColor = [UIColor greenColor]; // 设置背景色<br><br>
+
+                            oneSwitch.alpha = 1.0; // 设置透明度 范围在0.0-1.0之间 0.0是完全透明<br><br>
+
+                            oneSwitch.onTintColor = [UIColor redColor]; // 在oneSwitch开启的状态显示的颜色 默认是blueColor<br><br>
+
+                            oneSwitch.tintColor = [UIColor purpleColor]; // 设置关闭状态的颜色<br><br>
+
+                            oneSwitch.thumbTintColor = [UIColor blueColor]; // 设置开关上左右滑动的小圆点的颜色<br><br>
+
+                            // oneSwitch.on = YES; // // 设置初始状态 直接设置为on，你不回观察到它的变化<br><br>
+
+                            [oneSwitch setOn:YES animated:YES]; // 设置初始状态，与上面的不同是当你看到这个控件的时候再开始设置为on，你会观察到他的变化<br><br>
+
+                            oneSwitch.onImage = [UIImage imageNamed:@"min.png"]; // 打开状态显示的图片<br><br>
+
+                            oneSwitch.offImage = [UIImage imageNamed:@"max.png"]; // 关闭状态下的图片<br><br>
+
+                            [oneSwitch addTarget:self action:@selector(oneSwitchValueChanged:)forControlEvents:UIControlEventValueChanged]; // 添加事件监听器的方法<br><br>
+
+                            // 添加到view<br>
+                            [self.view addSubview:oneSwitch];<br><br>
+
+                            #pragma mark - 实现UISwitch监听的方法<br>
+                            - (void)oneSwitchValueChanged:(UISwitch *) sender {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"%@", sender.isOn ? @"ON" : @"OFF");<br>
+                            }
+                        </p>
+                    </div>
+                </div>
+                <nav id="article-nav">
+                    <a href="/MyBlog/Articles/iOS/Basic/UIImageView.html" id="article-nav-newer-left" class="article-nav-link-wrap">
+                        <strong class="article-nav-caption">上一篇</strong>
+                    </a>
+                    <a href="/MyBlog/Articles/iOS/Basic/UISwitch.html" id="article-nav-newer-right" class="article-nav-link-wrap">
+                        <strong class="article-nav-caption">下一篇</strong>
+                    </a>
+                </nav>
+            </article>
+            </section>
+            <script src="/js/recentArticle.js"></script>
+
+        </div>
+        <script src="/js/footer.js"></script>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+    <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+    <script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>
