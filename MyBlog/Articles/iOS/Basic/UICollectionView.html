@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>UIPageControl基本用法</title>
+    <link rel="icon" href="/favicon.png">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+<div id="container">
+    <div id="wrap">
+        <script src="/js/header.js"></script>
+        <div class="outer">
+            <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+                <div class="article-meta">
+                    <a href="/MyBlog/Articles/iOS/Basic/UICollectionView.html" class="myArticle-title">
+                        UICollectionView基本用法
+                    </a>
+
+                </div>
+                <div class="article-inner">
+                    <div class="article-entry" itemprop="articleBody">
+                        <p>
+                            在iOS开发中经常会用到UICollectionView，和UITableView同样即成UIScrollView 但是操作起来比UITableVIew要麻烦一些 ，有些地方需要注意，一下是UICollectionView基础详解。<br>
+                            //<br>
+                            //  ViewController.m<br>
+                            //  Collection<br><br><br>
+
+
+                            #import "ViewController.h"<br>
+                            #import "CollectionViewCell.h"<br>
+                            #import "CollectionViewCell1.h"<br>
+                            #import "CollectionReusableView.h"<br>
+                            @interface ViewController ()<UICollectionViewDelegate,UICollectionViewDataSource><br>
+                            @property(nonatomic,strong)UICollectionView *collectionView;<br>
+                            @end<br><br>
+
+                            @implementation ViewController<br><br>
+
+                            - (void)viewDidLoad {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[super viewDidLoad];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//此处必须要有创见一个UICollectionViewFlowLayout的对象<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc]init];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//同一行相邻两个cell的最小间距<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;layout.minimumInteritemSpacing = 5;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//最小两行之间的间距<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;layout.minimumLineSpacing = 5;<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_collectionView=[[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, 375, 667) collectionViewLayout:layout];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_collectionView.backgroundColor=[UIColor whiteColor];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_collectionView.delegate=self;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_collectionView.dataSource=self;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//这个是横向滑动<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//layout.scrollDirection=UICollectionViewScrollDirectionHorizontal;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[self.view addSubview:_collectionView];<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*这是重点 必须注册cell<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//这种是xib建的cell 需要这么注册<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UINib *cellNib=[UINib nibWithNibName:@"CollectionViewCell" bundle:nil];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[_collectionView registerNib:cellNib forCellWithReuseIdentifier:@"CollectionViewCell"];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//这种是自定义cell不带xib的注册<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//   [_collectionView registerClass:[CollectionViewCell1 class] forCellWithReuseIdentifier:@"myheheIdentifier"];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//这种是原生cell的注册<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//    [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//这是头部与脚部的注册<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UINib *cellNib1=[UINib nibWithNibName:@"CollectionReusableView" bundle:nil];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[_collectionView registerNib:cellNib1 forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"CollectionReusableView"];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[_collectionView registerNib:cellNib1 forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"CollectionReusableView"];<br>
+                            }
+                            //一共有多少个组<br>
+                            -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 1;<br>
+                            }<br><br>
+                            //每一组有多少个cell<br>
+                            -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 10;<br>
+                            }<br><br>
+                            //每一个cell是什么<br>
+                            -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CollectionViewCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionViewCell" forIndexPath:indexPath];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cell.label.text=[NSString stringWithFormat:@"%ld",indexPath.section*100+indexPath.row];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cell.backgroundColor=[UIColor groupTableViewBackgroundColor];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return cell;<br>
+                            }<br><br>
+                            //头部和脚部的加载<br>
+                            -(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UICollectionReusableView *view=[collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"CollectionReusableView" forIndexPath:indexPath];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(110, 20, 100, 30)];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label.text=@"头";<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}else{<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label.text=@"脚";<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[view addSubview:label];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return view;<br>
+                            }<br><br>
+                            //每一个分组的上左下右间距<br>
+                            -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section<br>
+                            {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return UIEdgeInsetsMake(5, 5, 5, 5);<br>
+                            }<br><br>
+                            //头部试图的大小<br>
+                            -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return CGSizeMake(50, 60);<br>
+                            }<br>
+                            //脚部试图的大小<br><br>
+                            - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section<br>
+                            {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return CGSizeMake(50, 60);<br>
+                            }<br><br>
+                            //定义每一个cell的大小<br>
+                            - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+                            {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return CGSizeMake(115, 100);<br>
+                            }<br><br>
+
+                            //cell的点击事件<br>
+                            -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//cell被电击后移动的动画<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[collectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionTop];<br>
+                            }<br><br>
+                            @end
+                        </p>
+                    </div>
+                </div>
+                <nav id="article-nav">
+                    <a href="/MyBlog/Articles/iOS/Basic/UIScrollView.html" id="article-nav-newer-left" class="article-nav-link-wrap">
+                        <strong class="article-nav-caption">上一篇</strong>
+                    </a>
+                </nav>
+            </article>
+            </section>
+            <script src="/js/recentArticle.js"></script>
+
+        </div>
+        <script src="/js/footer.js"></script>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+    <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+    <script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>

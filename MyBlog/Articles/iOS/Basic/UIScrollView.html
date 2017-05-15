@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>UIPageControl基本用法</title>
+    <link rel="icon" href="/favicon.png">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+<div id="container">
+    <div id="wrap">
+        <script src="/js/header.js"></script>
+        <div class="outer">
+            <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+                <div class="article-meta">
+                    <a href="/MyBlog/Articles/iOS/Basic/UIScrollView.html" class="myArticle-title">
+                        UIScrollView基本用法
+                    </a>
+
+                </div>
+                <div class="article-inner">
+                    <div class="article-entry" itemprop="articleBody">
+                        <p>
+                            - (void)viewDidLoad<br>
+                            {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[super viewDidLoad];<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scrollView.backgroundColor = [UIColor redColor];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 是否支持滑动最顶端<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//    scrollView.scrollsToTop = NO;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scrollView.delegate = self;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 设置内容大小<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scrollView.contentSize = CGSizeMake(320, 460*10);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 是否反弹<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//    scrollView.bounces = NO;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 是否分页<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//    scrollView.pagingEnabled = YES;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 是否滚动<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//    scrollView.scrollEnabled = NO;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//    scrollView.showsHorizontalScrollIndicator = NO;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 设置indicator风格<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//    scrollView.indicatorStyle = UIScrollViewIndicatorStyleWhite;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 设置内容的边缘和Indicators边缘<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//    scrollView.contentInset = UIEdgeInsetsMake(0, 50, 50, 0);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//    scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 50, 0, 0);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 提示用户,Indicators flash<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[scrollView flashScrollIndicators];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 是否同时运动,lock<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scrollView.directionalLockEnabled = YES;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[self.view addSubview:scrollView];<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 200, 320, 40)];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label.backgroundColor = [UIColor yellowColor];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label.text = @"学习scrolleview";<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[scrollView addSubview:label];<br>
+
+                            }<br><br>
+
+                            #pragma mark -<br>
+                            /*<br>
+                            // 返回一个放大或者缩小的视图<br>
+                            - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView<br>
+                            {<br><br>
+
+                            }<br><br>
+                            // 开始放大或者缩小<br>
+                            - (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:<br>
+                            (UIView *)view<br>
+                            {<br><br>
+
+                            }<br><br>
+
+                            // 缩放结束时<br>
+                            - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(float)scale<br>
+                            {<br><br>
+
+                            }<br><br>
+
+                            // 视图已经放大或缩小<br>
+                            - (void)scrollViewDidZoom:(UIScrollView *)scrollView<br>
+                            {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"scrollViewDidScrollToTop");<br>
+                            }<br>
+                            */<br><br>
+
+                            // 是否支持滑动至顶部<br>
+                            - (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView<br>
+                            {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return YES;<br>
+                            }<br><br>
+
+                            // 滑动到顶部时调用该方法<br>
+                            - (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView<br>
+                            {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"scrollViewDidScrollToTop");<br>
+                            }<br><br>
+
+                            // scrollView 已经滑动<br>
+                            - (void)scrollViewDidScroll:(UIScrollView *)scrollView<br>
+                            {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"scrollViewDidScroll");<br>
+                            }<br><br>
+
+                            // scrollView 开始拖动<br>
+                            - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView<br>
+                            {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"scrollViewWillBeginDragging");<br>
+                            }<br><br>
+
+                            // scrollView 结束拖动<br>
+                            - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate<br>
+                            {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"scrollViewDidEndDragging");<br>
+                            }<br><br>
+
+                            // scrollView 开始减速（以下两个方法注意与以上两个方法加以区别）<br>
+                            - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView<br>
+                            {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"scrollViewWillBeginDecelerating");<br>
+                            }<br><br>
+
+                            // scrollview 减速停止<br>
+                            - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView<br>
+                            {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"scrollViewDidEndDecelerating");<br>
+                            }
+                        </p>
+                    </div>
+                </div>
+                <nav id="article-nav">
+                    <a href="/MyBlog/Articles/iOS/Basic/UIPageControl.html" id="article-nav-newer-left" class="article-nav-link-wrap">
+                        <strong class="article-nav-caption">上一篇</strong>
+                    </a>
+                    <a href="/MyBlog/Articles/iOS/Basic/ UICollectionView.html" id="article-nav-newer-right" class="article-nav-link-wrap">
+                        <strong class="article-nav-caption">下一篇</strong>
+                    </a>
+                </nav>
+            </article>
+            </section>
+            <script src="/js/recentArticle.js"></script>
+
+        </div>
+        <script src="/js/footer.js"></script>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+    <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+    <script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>
