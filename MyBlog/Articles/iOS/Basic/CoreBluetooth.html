@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>UIWebView 与 WKWebView 基本使用</title>
+    <title>智能交互 -  项目开发过程(蓝牙)</title>
     <link rel="icon" href="/favicon.png">
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/css/style.css">
@@ -15,8 +15,8 @@
         <div class="outer">
             <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
                 <div class="article-meta">
-                    <a href="/MyBlog/Articles/iOS/Basic/UIWebViewAndWKWebView.html" class="myArticle-title">
-                        UIWebView 与 WKWebView基本使用
+                    <a href="/MyBlog/Articles/iOS/Basic/CoreBluetooth.html" class="myArticle-title">
+                        智能交互 -  项目开发过程(蓝牙)
                     </a>
 
                 </div>
@@ -36,20 +36,217 @@
 
                         <p>
                             我模拟了一份通讯协议的资料,凑合着看吧<br>
-                            当然,实际情况的指令会多的多<br>
+                            当然,实际情况的指令会多的多
                         </p>
                         <div>
-                            <img src="/css/images/lanyaxieyi.png">
+                            <img src="images/lanyaxieyi.png">
                         </div>
-                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;就这样就已经整整个baidu的页面展示到app上</p>
+                        <p>
+                            序号 : 指令的序号(没啥意义)<br>
+                            指令名称 : 就是给指令定义一个名字,一般可以作为储存 本地的Key<br>
+                            指令 : 实际操作电脑版接收的数据<br>
+                            验证指令 : 根据一个验证算法得出的数据.<br>
+                            备注 : 告诉你这个是干嘛的.
+                        </p>
+
+                        <h3 id="Run-server">
+                            二、开始连接
+                        </h3>
+                        <p>
+                            将电路板通电,然后它就处于可被检测状态.<br>
+                            作为App来说,首先需要检测iphone是否处于蓝牙开启状态
+                        </p>
+                        <h4 id="Run-server">
+                            2.1、创建Central管理器
+                        </h4>
+                        <p>
+                            // 创建Central管理器,这里我弄成单例<br>
+                            +(LinBlueToothEngine *)shareInstance<br>
+                            {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;static dispatch_once_t pred = 0;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;__strong static LinBlueToothEngine *_sharedObject = nil;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;dispatch_once(&pred, ^{<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_sharedObject = [[LinBlueToothEngine alloc] init];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;});<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;return _sharedObject;<br>
+                            }
+                        </p>
+                        <h4 id="Run-server">
+                            2.2、检测蓝牙状态
+                        </h4>
+                        <p>
+                            // 当创建Central管理器成功后,系统会自动调用该方法<br>
+                            // 该方法的作用是检测蓝牙开启状态<br>
+                            - (void)centralManagerDidUpdateState:(CBCentralManager *)central<br>
+                            {<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;// 具体又几种状态的,这里忽略<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;switch ([central state])<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case CBCentralManagerStatePoweredOn:<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_state = @"正常打开了";<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_bluetoothPowerOn = YES;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 注意这句, 调用CoreBluetooth框架 CBCentralManager类的<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//scanForPeripheralsWithServices: options: 方法<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[self.centralManager scanForPeripheralsWithServices:nil options:nil];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case CBCentralManagerStateUnknown:<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"蓝牙此时状态: %@", _state);<br>
+                            }
+                        </p>
+                        <h4 id="Run-server">
+                            2.3、确保蓝牙打开,才能扫描设备,扫描设备方法,在这里过滤你想连接的设备
+                        </h4>
+                        <p>
+                            //搜索成功的回调
+                            - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI{
+                            &nbsp;&nbsp;&nbsp;&nbsp;//BLUETOOTH_DEVICE_NAME 为设备名的宏定义
+                            &nbsp;&nbsp;&nbsp;&nbsp;if ([peripheral.name isEqualToString:BLUETOOTH_DEVICE_NAME]) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;// 保存peripheral
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.deviceModel.peripheral = peripheral;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;//执行搜索成功的block
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;!self.scanningToAroundYES ? : self.scanningToAroundYES(peripheral.name);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+
+                            }
+                        </p>
+
+                        <h4 id="Run-server">
+                            2.4、这里主要注意, connectPeripheral: options:方法, 是连接蓝牙的方法
+                        </h4>
+                        <p>
+                            //连接蓝牙设备<br>
+                            -(void)startconnectService{<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;[self.centralManager connectPeripheral:self.deviceModel.peripheral options:@{CBConnectPeripheralOptionNotifyOnConnectionKey :@YES}];<br>
+
+                            }
+                        </p>
+
+                        <h4 id="Run-server">
+                            2.5、连接成功,失败都又相应的回调方法,下面列出的时当成功连接的时候方法
+                        </h4>
+                        <p>
+                            //外设连接成功<br>
+                            - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral{<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;if ([peripheral.name isEqualToString:BLUETOOTH_DEVICE_NAME]) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (peripheral == self.deviceModel.peripheral) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.deviceModel.peripheral.delegate = self;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[self.deviceModel.peripheral discoverServices:nil];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            }
+                        </p>
+
+                        <h4 id="Run-server">
+                            2.6、当peripheral找到service之后, 就会就回调用peripheral: didDiscoverServices:
+                        </h4>
+                        <p>
+                            //发现外设的service<br>
+                            - (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error{<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;if (error){<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;!self.connentionFailure ? :self.connentionFailure();<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;if ([peripheral.name isEqualToString:BLUETOOTH_DEVICE_NAME]){<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (CBService *service in peripheral.services){<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ([service.UUID isEqual:[CBUUID UUIDWithString:BLUETOOTH_CBUUID]]){<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[peripheral discoverCharacteristics:nil forService:service];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            }
+                        </p>
+
+                        <h4 id="Run-server">
+                            2.7、当然,寻找 characteristics 也有成功与失败的回调方法, 下面列出的时当发现characteristics时候的方法
+                        </h4>
+                        <p>
+                            //// 外设发现service的特征
+                            - (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error{<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;if (error) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;if ([peripheral.name isEqualToString:BLUETOOTH_DEVICE_NAME]){<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (peripheral == self.deviceModel.peripheral) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (CBCharacteristic *characteristic in service.characteristics) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:WRITE_CHARACTERISTIC]]) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"写入特征");<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.deviceModel.characteristcs = characteristic;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}else if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:READ_CHARACTERISTIC]]){<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"通知特征");<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[self.deviceModel.peripheral setNotifyValue:YES forCharacteristic:characteristic];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;!self.connectionSuccess ? : self.connectionSuccess ();<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            }
+                        </p>
+
+                        <h4 id="Run-server">
+                            2.8、connectionSuccess 这个block 连接之后
+                        </h4>
+                        <p>
+                            //设备连接成功的Block<br>
+                            [self.blueToothEngine setConnectionSuccess:^{<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;weakSelf.infoLabel.text = @"连接成功";<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"设备已连接");<br>
+                            }];
+                        </p>
+
+                        <h3 id="Run-server">
+                            3、传输数据
+                        </h3>
+                        <p>
+                            characteristic 有几种属性<br>
+                            Read : 只读<br>
+                            Write Without Response : 写数据不接收回执<br>
+                            Write : 只写<br>
+                            Notify : 通知(不需要对方回复)<br>
+                            Indicate : 通知(需要回复)<br><br>
+                            这个项目中,只用到了write 与 notify<br><br>
+
+                            发送指令<br>
+                            - (IBAction)sendCommand:(id)sender {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;NSString *command = @"02******";<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;//将16进制的字符串转16位Data<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;NSData *data = [command stringHexToBytesData];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;[self.blueToothEngine sendWriteData:data];<br>
+                            }<br><br>
+
+                            - (void)sendWriteData:(NSData *)data{<br>
+                            [self.deviceModel.peripheral writeValue:data forCharacteristic:self.deviceModel.characteristcs type:CBCharacteristicWriteWithResponse];<br><br>
+
+                            }<br><br>
+                            接收电路板回来的信息<br>
+                            - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error{
+                            &nbsp;&nbsp;&nbsp;&nbsp;if (error) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;if ([peripheral.name isEqualToString:BLUETOOTH_DEVICE_NAME]) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (peripheral == self.deviceModel.peripheral) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//解析数据
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSString * resultString = [[NSString stringWithHexData:characteristic.value] stringUpperCase];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//将数据返回页面
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;!self.dataReportingBluetooth ? : self.dataReportingBluetooth(resultString);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            }
+                        </p>
+                        <a href="https://github.com/linyoumu/BlueProject">
+                            <strong class="article-nav-caption">demo地址</strong>
+                        </a>
 
                     </div>
                 </div>
                 <nav id="article-nav">
-                    <a href="/MyBlog/Articles/iOS/Basic/Animations.html" id="article-nav-newer-left" class="article-nav-link-wrap">
+                    <a href="/MyBlog/Articles/iOS/Basic/HttpForIOS.html" id="article-nav-newer-left" class="article-nav-link-wrap">
                         <strong class="article-nav-caption">上一篇</strong>
                     </a>
-                    <a href="/MyBlog/Articles/iOS/Basic/HttpForIOS.html" id="article-nav-newer-right" class="article-nav-link-wrap">
+                    <a href="/MyBlog/Articles/iOS/Basic/WifiSmarkDevice.html" id="article-nav-newer-right" class="article-nav-link-wrap">
                         <strong class="article-nav-caption">下一篇</strong>
                     </a>
                 </nav>
