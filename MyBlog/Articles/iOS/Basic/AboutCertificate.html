@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>证书相关</title>
+    <link rel="icon" href="/favicon.png">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+<div id="container">
+    <div id="wrap">
+        <script src="/js/header.js"></script>
+        <div class="outer">
+            <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+                <div class="article-meta">
+                    <a href="/MyBlog/Articles/iOS/Basic/AboutCertificate.html" class="myArticle-title">
+                        证书相关
+                    </a>
+
+                </div>
+                <div class="article-inner">
+                    <div class="article-entry" itemprop="articleBody">
+                        <p>
+                            对于iOS开发者来说，apple开发者账号肯定不会陌生。在开发中我们离不开它。下面我简单的为大家介绍一下关于iOS开发中证书的相关内容
+                        </p>
+                        <h3 id="Run-server">
+                            一、简述
+                        </h3>
+                        <p>
+                            1、开发者证书（分为开发和发布两种，类型为iOS Development,ios Distribution），<br>
+                            这个是最基础的，不论是真机调试，还是上传到appstore都是需要的，是一个基证书，用来证明自己开发者身份的；<br>
+                            2、appID,这是每一个应用的独立标识，在设置项中可以配置该应用的权限，比如是否用到了PassBook,GameCenter,<br>
+                            以及更常见的push服务，如果选中了push服务，那么就可以创建生成下面第3条所提到的推送证书，所以，在所有和推<br>
+                            送相关的配置中，首先要做的就是先开通支持推送服务的appID;<br>
+                            3、推送证书（分为开发和发布两种，类型分别为APNs Development ios,APNs Distribution ios）,该证书在<br>
+                            appID配置中创建生成，和开发者证书一样，安装到开发电脑上；<br>
+                            4、Provisioning Profiles,这个东西是很有苹果特色的一个东西，我一般称之为PP文件，该文件将appID,开发者<br>
+                            证书，硬件Device绑定到一块儿，在开发者中心配置好后可以添加到Xcode上，也可以直接在Xcode上连接开发者中心<br>
+                            生成，真机调试时需要在PP文件中添加真机的udid；是真机调试和必架必备；
+                        </p>
+
+                        <h3 id="Run-server">
+                            二、证书的制作
+                        </h3>
+
+                        <p>
+                            如果要制作证书，那么就点击certificates相关
+                        </p>
+                        <div>
+                            <img src="images/CertificatesImage1.png">
+                        </div>
+                        <p>
+                            ->点击上图中加号<br><br>
+
+                            由于从Xcode7之后不用证书都可以真机调试，那么我们这里就以发布版证书为例，<br><br>
+
+                            ->在Production选择App Store and Ad Hoc<br><br>
+
+                            连续continue两次后<br><br>
+
+                            需要添加CSR文件。<br><br>
+
+                            那么我们需要在mac上制作csr文件，制作方法如下<br><br>
+
+                            ->打开mac的钥匙串访问
+                        </p>
+                        <div>
+                            <img src="images/CertificatesImage2.png">
+                        </div>
+
+                        <p>
+                            ->选择存储到磁盘，保存完成后，再刚才的choose file选择刚才生成的文件<br><br>
+
+                            然后continue，done就完成了（不用着急download）<br><br>
+
+                            这时候在production就可以看到刚才生成的证书了
+                        </p>
+                        <div>
+                            <img src="images/CertificatesImage3.png">
+                        </div>
+
+                        <p>
+                            ->添加app ID<br><br>
+
+                            点击aped 再点击右上角的加号<br><br>
+
+                            然后在下面的选项选择需要开通的服务<br><br>
+
+                            选择done后完成<br><br>
+
+                            ->创建Xcode需要的profile<br><br>
+
+                            选择Distribution,这里是创建发布到App Store的证书
+                        </p>
+                        <div>
+                            <img src="images/CertificatesImage4.png">
+                        </div>
+
+                        <p>
+                            选择第一个continue，就会声场profile文件，完成后download 下来<br><br>
+
+                            还有前面的证书也download，<br><br>
+
+                            然后双击，就会自动安装；安装完成后在钥匙串就可以看到刚才添加的新证书，<br><br>
+
+                            双击profile文件后，就会安装到Xcode，在Xcode build setting->code signing就可以选择profile
+                        </p>
+                        <div>
+                            <img src="images/CertificatesImage5.png">
+                        </div>
+                    </div>
+                </div>
+                <nav id="article-nav">
+                    <a href="/MyBlog/Articles/iOS/Basic/WifiSmarkDevice.html" id="article-nav-newer-left" class="article-nav-link-wrap">
+                        <strong class="article-nav-caption">上一篇</strong>
+                    </a>
+                    <a href="/MyBlog/Articles/iOS/Basic/ProcedurePack.html" id="article-nav-newer-right" class="article-nav-link-wrap">
+                        <strong class="article-nav-caption">下一篇</strong>
+                    </a>
+                </nav>
+            </article>
+            </section>
+            <script src="/js/recentArticle.js"></script>
+
+        </div>
+        <script src="/js/footer.js"></script>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+    <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+    <script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>

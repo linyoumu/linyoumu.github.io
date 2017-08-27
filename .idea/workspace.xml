@@ -22,32 +22,12 @@
     <favorites_list name="linyoumu.github.io.git" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="footer.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/footer.js">
+    <leaf>
+      <file leaf-file-name="AboutCertificate.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/AboutCertificate.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="3" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="36" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="WifiSmarkDevice.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/WifiSmarkDevice.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="25" column="66" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="66" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="header.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/header.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="36" selection-start-line="1" selection-start-column="36" selection-end-line="1" selection-end-column="36" />
+            <state relative-caret-position="538">
+              <caret line="104" column="0" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -56,11 +36,31 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-4022">
-              <caret line="18" column="80" selection-start-line="18" selection-start-column="80" selection-end-line="18" selection-end-column="80" />
+            <state relative-caret-position="495">
+              <caret line="33" column="32" selection-start-line="33" selection-start-column="28" selection-end-line="33" selection-end-column="32" />
               <folding>
-                <element signature="n#article#5;n#section#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+                <element signature="n#article#7;n#section#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProcedurePack.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/ProcedurePack.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="375">
+              <caret line="25" column="75" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="75" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WifiSmarkDevice.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/WifiSmarkDevice.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="502">
+              <caret line="78" column="77" selection-start-line="78" selection-start-column="77" selection-end-line="78" selection-end-column="77" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -103,12 +103,14 @@
         <option value="$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/UIWebViewAndWKWebView.html" />
         <option value="$PROJECT_DIR$/js/footer.js" />
         <option value="$PROJECT_DIR$/js/header.js" />
-        <option value="$PROJECT_DIR$/js/recentArticle.js" />
         <option value="$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/HttpForIOS.html" />
         <option value="$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/images/WifiSmarkDevice.html" />
-        <option value="$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/WifiSmarkDevice.html" />
         <option value="$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/CoreBluetooth.html" />
+        <option value="$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/WifiSmarkDevice.html" />
+        <option value="$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/AboutCertificate.html" />
+        <option value="$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/ProcedurePack.html" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/js/recentArticle.js" />
       </list>
     </option>
   </component>
@@ -119,9 +121,9 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="98" />
-    <option name="y" value="24" />
-    <option name="width" value="1469" />
+    <option name="x" value="393" />
+    <option name="y" value="58" />
+    <option name="width" value="1822" />
     <option name="height" value="1004" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -149,7 +151,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -219,62 +220,13 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="fancybox" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="linyoumu.github.io.git" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="linyoumu.github.io.git" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="linyoumu.github.io.git" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="linyoumu.github.io.git" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="images" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="linyoumu.github.io.git" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="linyoumu.github.io.git" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fonts" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -376,17 +328,19 @@
       <workItem from="1494858236139" duration="1733000" />
       <workItem from="1496154740169" duration="22000" />
       <workItem from="1503802180381" duration="11427000" />
+      <workItem from="1503814388890" duration="52000" />
+      <workItem from="1503823399162" duration="3317000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35296000" />
+    <option name="totallyTimeSpent" value="38665000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="98" y="24" width="1469" height="1004" extended-state="0" />
+    <frame x="393" y="58" width="1822" height="1004" extended-state="1" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23757659" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19154775" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -420,28 +374,12 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/Animations.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="810">
-          <caret line="54" column="80" selection-start-line="54" selection-start-column="80" selection-end-line="54" selection-end-column="80" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/NSArray.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1305">
-          <caret line="87" column="108" selection-start-line="87" selection-start-column="108" selection-end-line="87" selection-end-column="108" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#article#5;n#section#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#article#7;n#section#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -451,7 +389,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="13" column="21" selection-start-line="13" selection-start-column="21" selection-end-line="13" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -459,7 +396,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="13" column="21" selection-start-line="13" selection-start-column="21" selection-end-line="13" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -467,7 +403,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2655">
           <caret line="177" column="0" selection-start-line="177" selection-start-column="0" selection-end-line="177" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -476,7 +411,7 @@
         <state relative-caret-position="1245">
           <caret line="83" column="50" selection-start-line="83" selection-start-column="50" selection-end-line="83" selection-end-column="50" />
           <folding>
-            <element signature="n#article#5;n#section#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#article#7;n#section#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -488,7 +423,7 @@
         <state relative-caret-position="150">
           <caret line="10" column="45" selection-start-line="10" selection-start-column="45" selection-end-line="10" selection-end-column="45" />
           <folding>
-            <element signature="n#article#5;n#section#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#article#7;n#section#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -524,7 +459,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1305">
           <caret line="87" column="108" selection-start-line="87" selection-start-column="108" selection-end-line="87" selection-end-column="108" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -532,7 +466,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2205">
           <caret line="147" column="45" selection-start-line="147" selection-start-column="8" selection-end-line="147" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -540,7 +473,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
           <caret line="27" column="28" selection-start-line="27" selection-start-column="28" selection-end-line="27" selection-end-column="64" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -548,7 +480,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="645">
           <caret line="43" column="102" selection-start-line="43" selection-start-column="102" selection-end-line="43" selection-end-column="102" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -556,7 +487,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1905">
           <caret line="127" column="28" selection-start-line="127" selection-start-column="28" selection-end-line="127" selection-end-column="64" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -564,7 +494,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1230">
           <caret line="82" column="44" selection-start-line="82" selection-start-column="44" selection-end-line="82" selection-end-column="44" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -572,15 +501,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="508">
           <caret line="213" column="20" selection-start-line="213" selection-start-column="20" selection-end-line="215" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/recentArticle.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="36" selection-start-line="1" selection-start-column="36" selection-end-line="1" selection-end-column="36" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -588,7 +508,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="20295">
           <caret line="1353" column="15" selection-start-line="1353" selection-start-column="15" selection-end-line="1353" selection-end-column="15" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -596,25 +515,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="628">
           <caret line="346" column="14" selection-start-line="0" selection-start-column="0" selection-end-line="359" selection-end-column="7" />
-          <folding>
-            <element signature="e#1607#1613#0" expanded="true" />
-            <element signature="e#6985#6991#0" expanded="true" />
-            <element signature="e#10479#10485#0" expanded="true" />
-            <element signature="e#12730#12736#0" expanded="true" />
-            <element signature="e#13072#13078#0" expanded="true" />
-            <element signature="e#13206#13212#0" expanded="true" />
-            <element signature="e#13603#13609#0" expanded="true" />
-            <element signature="e#13738#13744#0" expanded="true" />
-            <element signature="e#14019#14025#0" expanded="true" />
-            <element signature="e#14391#14397#0" expanded="true" />
-            <element signature="e#14503#14509#0" expanded="true" />
-            <element signature="e#14834#14840#0" expanded="true" />
-            <element signature="e#15224#15230#0" expanded="true" />
-            <element signature="e#15404#15410#0" expanded="true" />
-            <element signature="e#15772#15778#0" expanded="true" />
-            <element signature="e#15976#15982#0" expanded="true" />
-            <element signature="e#16276#16282#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -622,30 +522,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="36" selection-start-line="1" selection-start-column="36" selection-end-line="1" selection-end-column="36" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/images/WifiSmarkDevice.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/images/WifiSmarkDevice.html" />
     <entry file="file://$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/CoreBluetooth.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="538">
           <caret line="241" column="0" selection-start-line="241" selection-start-column="0" selection-end-line="241" selection-end-column="0" />
-          <folding>
-            <element signature="e#4623#4629#0" expanded="true" />
-            <element signature="e#5724#5730#0" expanded="true" />
-            <element signature="e#6656#6662#0" expanded="true" />
-            <element signature="e#6662#6668#0" expanded="true" />
-            <element signature="e#6668#6674#0" expanded="true" />
-            <element signature="e#6674#6680#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -653,7 +537,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="63" column="28" selection-start-line="63" selection-start-column="28" selection-end-line="63" selection-end-column="52" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -661,7 +544,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-788">
           <caret line="29" column="34" selection-start-line="29" selection-start-column="34" selection-end-line="29" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -669,7 +551,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="538">
           <caret line="166" column="22" selection-start-line="166" selection-start-column="22" selection-end-line="166" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -677,24 +558,47 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="3" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="36" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/WifiSmarkDevice.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="25" column="66" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="66" />
+        <state relative-caret-position="502">
+          <caret line="78" column="77" selection-start-line="78" selection-start-column="77" selection-end-line="78" selection-end-column="77" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/ProcedurePack.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="75" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="75" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/AboutCertificate.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="538">
+          <caret line="104" column="0" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/recentArticle.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="116" selection-start-line="18" selection-start-column="116" selection-end-line="18" selection-end-column="116" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4022">
-          <caret line="18" column="80" selection-start-line="18" selection-start-column="80" selection-end-line="18" selection-end-column="80" />
+        <state relative-caret-position="495">
+          <caret line="33" column="32" selection-start-line="33" selection-start-column="28" selection-end-line="33" selection-end-column="32" />
           <folding>
-            <element signature="n#article#5;n#section#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#article#7;n#section#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
