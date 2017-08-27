@@ -23,14 +23,60 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="40" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="40" />
+            <state relative-caret-position="-195">
+              <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
               <folding>
                 <element signature="n#article#3;n#section#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CoreBluetooth.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/CoreBluetooth.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="435">
+              <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+              <folding>
+                <element signature="e#1676#1682#0" expanded="true" />
+                <element signature="e#1682#1688#0" expanded="true" />
+                <element signature="e#1688#1694#0" expanded="true" />
+                <element signature="e#1694#1700#0" expanded="true" />
+                <element signature="e#1700#1706#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HttpForIOS.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/HttpForIOS.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="478">
+              <caret line="162" column="74" selection-start-line="162" selection-start-column="74" selection-end-line="162" selection-end-column="74" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="footer.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/footer.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="1" column="3" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="36" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="header.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/header.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="1" column="36" selection-start-line="1" selection-start-column="36" selection-end-line="1" selection-end-column="36" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -64,8 +110,6 @@
         <option value="$PROJECT_DIR$/public/header.html" />
         <option value="$PROJECT_DIR$/public/RecentArticle.html" />
         <option value="$PROJECT_DIR$/header.html" />
-        <option value="$PROJECT_DIR$/js/header.js" />
-        <option value="$PROJECT_DIR$/js/footer.js" />
         <option value="$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/NSString.html" />
         <option value="$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/NSArray.html" />
         <option value="$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/UIPageControl.html" />
@@ -73,9 +117,12 @@
         <option value="$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/UICollectionView.html" />
         <option value="$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/Animations.html" />
         <option value="$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/UIWebViewAndWKWebView.html" />
-        <option value="$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/HttpForIOS.html" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/js/footer.js" />
+        <option value="$PROJECT_DIR$/js/header.js" />
         <option value="$PROJECT_DIR$/js/recentArticle.js" />
+        <option value="$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/CoreBluetooth.html" />
+        <option value="$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/HttpForIOS.html" />
       </list>
     </option>
   </component>
@@ -86,10 +133,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="81" />
-    <option name="y" value="30" />
-    <option name="width" value="1427" />
-    <option name="height" value="1034" />
+    <option name="x" value="222" />
+    <option name="y" value="52" />
+    <option name="width" value="1469" />
+    <option name="height" value="1004" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -342,18 +389,18 @@
       <workItem from="1494688057878" duration="4581000" />
       <workItem from="1494858236139" duration="1733000" />
       <workItem from="1496154740169" duration="22000" />
-      <workItem from="1503802180381" duration="4389000" />
+      <workItem from="1503802180381" duration="6515000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28258000" />
+    <option name="totallyTimeSpent" value="30384000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="81" y="30" width="1427" height="1034" extended-state="0" />
+    <frame x="222" y="52" width="1469" height="1004" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24456902" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23757659" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -387,14 +434,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/NSArray.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1305">
-          <caret line="87" column="108" selection-start-line="87" selection-start-column="108" selection-end-line="87" selection-end-column="108" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/NSString.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2205">
@@ -498,13 +537,6 @@
     <entry file="file://$PROJECT_DIR$/2017/01/03/testBoke/index.html" />
     <entry file="file://$PROJECT_DIR$/archives/2017/01/index.html" />
     <entry file="file://$PROJECT_DIR$/archives/2017/index.html" />
-    <entry file="file://$PROJECT_DIR$/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="1353" column="21" selection-start-line="1353" selection-start-column="21" selection-end-line="1353" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/archives/index.html" />
     <entry file="file://$PROJECT_DIR$/2017/01/03/MyNewPost/index.html" />
     <entry file="file://$PROJECT_DIR$/2017/01/03/testBoke/index.html" />
@@ -566,38 +598,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/footer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="38" selection-start-line="7" selection-start-column="38" selection-end-line="7" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/header.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="38" selection-start-line="12" selection-start-column="38" selection-end-line="12" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/script.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="34" selection-start-line="29" selection-start-column="34" selection-end-line="29" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/recentArticle.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="113" selection-start-line="15" selection-start-column="113" selection-end-line="15" selection-end-column="113" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/Animations.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="810">
@@ -614,18 +614,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/HttpForIOS.html">
+    <entry file="file://$PROJECT_DIR$/js/recentArticle.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="29" column="80" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="80" />
+        <state relative-caret-position="15">
+          <caret line="1" column="36" selection-start-line="1" selection-start-column="36" selection-end-line="1" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20295">
+          <caret line="1353" column="15" selection-start-line="1353" selection-start-column="15" selection-end-line="1353" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/script.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="29" column="34" selection-start-line="29" selection-start-column="34" selection-end-line="29" selection-end-column="34" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/UIWebViewAndWKWebView.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="508">
-          <caret line="338" column="71" selection-start-line="338" selection-start-column="71" selection-end-line="338" selection-end-column="71" />
+        <state relative-caret-position="628">
+          <caret line="346" column="14" selection-start-line="0" selection-start-column="0" selection-end-line="359" selection-end-column="7" />
           <folding>
             <element signature="e#1607#1613#0" expanded="true" />
             <element signature="e#6985#6991#0" expanded="true" />
@@ -648,13 +664,51 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/js/footer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="3" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/header.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="36" selection-start-line="1" selection-start-column="36" selection-end-line="1" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="40" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="40" />
+        <state relative-caret-position="-195">
+          <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
           <folding>
             <element signature="n#article#3;n#section#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/CoreBluetooth.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+          <folding>
+            <element signature="e#1676#1682#0" expanded="true" />
+            <element signature="e#1682#1688#0" expanded="true" />
+            <element signature="e#1688#1694#0" expanded="true" />
+            <element signature="e#1694#1700#0" expanded="true" />
+            <element signature="e#1700#1706#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MyBlog/Articles/iOS/Basic/HttpForIOS.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="478">
+          <caret line="162" column="74" selection-start-line="162" selection-start-column="74" selection-end-line="162" selection-end-column="74" />
+          <folding />
         </state>
       </provider>
     </entry>

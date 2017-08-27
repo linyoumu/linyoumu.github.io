@@ -1,5 +1,5 @@
 /**
- * Created by linapple on 2017/5/13.
+ * Created by linapple on 2016/1/13.
  */
 document.writeln("<header id=\'header\'>");
 document.writeln("            <div id=\'banner\'></div>");
