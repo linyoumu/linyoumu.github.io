@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>UIWebView 与 WKWebView 基本使用</title>
+    <link rel="icon" href="/favicon.png">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+<div id="container">
+    <div id="wrap">
+        <script src="/js/header.js"></script>
+        <div class="outer">
+            <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+                <div class="article-meta">
+                    <a href="/MyBlog/Articles/iOS/Basic/UIWebViewAndWKWebView.html" class="myArticle-title">
+                        UIWebView 与 WKWebView基本使用
+                    </a>
+
+                </div>
+                <div class="article-inner">
+                    <div class="article-entry" itemprop="articleBody">
+
+                        <h3 id="Run-server">
+                            一、UIWebView的基本使用方法
+                        </h3>
+
+                        <p>
+                            代码示例：<br>
+                            UIWebView *webView = [[UIWebView alloc] initWithFrame:[UIScreen mainScreen].bounds];<br>
+                            self.view = webView;<br>
+                            NSURL *url = [NSURL URLWithString:@"https://www.baidu.com"];<br>
+                            NSURLRequest *request = [NSURLRequest requestWithURL:url];<br>
+                            [webView loadRequest:request];<br>
+                        </p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;就这样就已经整整个baidu的页面展示到app上</p>
+
+                        <h4 id="Run-server">
+                            1、UIWebView的属性
+                        </h4>
+
+                        <p>
+                            // 代理属性 重点需要知道代理方法的使用<br>
+                            @property (nullable, nonatomic, assign) id <UIWebViewDelegate> delegate;<br><br>
+
+                            // 这个是webView内部的scrollView 只读,但是利用这个属性,设置scrollView的代理,就可以控制整个webView的滚动事件<br>
+                            @property(nonatomic, readonly, strong) UIScrollView *scrollView;<br><br>
+
+                            // webView的请求,这个属性一般在整个加载完成后才能拿到<br>
+                            @property (nullable, nonatomic, readonly, strong) NSURLRequest *request;<br><br>
+
+                            // A Boolean value indicating whether the receiver can move backward. (read-only)<br>
+                            // If YES, able to move backward; otherwise, NO.<br>
+                            // 如果这个属性为YES,才能后退<br>
+                            @property (nonatomic, readonly, getter=canGoBack) BOOL canGoBack;<br><br>
+
+                            // A Boolean value indicating whether the receiver can move forward. (read-only)<br>
+                            // If YES, able to move forward; otherwise, NO.<br>
+                            // 如果这个属性为YES,才能前进<br>
+                            @property (nonatomic, readonly, getter=canGoForward) BOOL canGoForward;<br><br>
+
+                            // A Boolean value indicating whether the receiver is done loading content. (read-only)<br>
+                            // If YES, the receiver is still loading content; otherwise, NO.<br>
+                            // 这个属性很好用,如果为YES证明webView还在加载数据,所有数据加载完毕后,webView就会为No<br>
+                            @property (nonatomic, readonly, getter=isLoading) BOOL loading;<br><br>
+
+                            //A Boolean value determining whether the webpage scales to fit the view and the user can change the scale.<br>
+                            //If YES, the webpage is scaled to fit and the user can zoom in and zoom out. If NO, user zooming is disabled. The default value is NO.<br>
+                            // YES代表网页可以缩放,NO代表不可以缩放<br>
+                            @property (nonatomic) BOOL scalesPageToFit;<br><br>
+
+                            // 设置某些数据变为链接形式，这个枚举可以设置如电话号，地址，邮箱等转化为链接<br>
+                            @property (nonatomic) UIDataDetectorTypes dataDetectorTypes NS_AVAILABLE_IOS(3_0);<br><br>
+
+                            // iPhone Safari defaults to NO. iPad Safari defaults to YES<br>
+                            // 设置是否使用内联播放器播放视频<br>
+                            @property (nonatomic) BOOL allowsInlineMediaPlayback NS_AVAILABLE_IOS(4_0);<br><br>
+
+                            // iPhone and iPad Safari both default to YES<br>
+                            // 设置视频是否自动播放<br>
+                            @property (nonatomic) BOOL mediaPlaybackRequiresUserAction NS_AVAILABLE_IOS(4_0);<br><br>
+
+                            // iPhone and iPad Safari both default to YES<br>
+                            // 设置音频播放是否支持ari play功能<br>
+                            @property (nonatomic) BOOL mediaPlaybackAllowsAirPlay NS_AVAILABLE_IOS(5_0);<br><br>
+
+                            // iPhone and iPad Safari both default to NO<br>
+                            // 设置是否将数据加载入内存后渲染界面<br>
+                            @property (nonatomic) BOOL suppressesIncrementalRendering NS_AVAILABLE_IOS(6_0);<br><br>
+
+                            // default is YES<br>
+                            // 设置用户是否能打开keyboard交互<br>
+                            @property (nonatomic) BOOL keyboardDisplayRequiresUserAction NS_AVAILABLE_IOS(6_0);<br><br>
+
+                            /* IOS7 */ 以后的新特性<br>
+                            // 这个属性用来设置一种模式，当网页的大小超出view时，将网页以翻页的效果展示，枚举如下：<br>
+                            @property (nonatomic) UIWebPaginationMode paginationMode NS_AVAILABLE_IOS(7_0);<br>
+                            typedef NS_ENUM(NSInteger, UIWebPaginationMode) {<br>
+                            UIWebPaginationModeUnpaginated, //不使用翻页效果<br>
+                            UIWebPaginationModeLeftToRight, //将网页超出部分分页，从左向右进行翻页<br>
+                            UIWebPaginationModeTopToBottom, //将网页超出部分分页，从上向下进行翻页<br>
+                            UIWebPaginationModeBottomToTop, //将网页超出部分分页，从下向上进行翻页<br>
+                            UIWebPaginationModeRightToLeft //将网页超出部分分页，从右向左进行翻页<br><br>
+                            };
+
+                            // This property determines whether certain CSS properties regarding column- and page-breaking are honored or ignored.<br>
+                            // 这个属性决定CSS的属性分页是可用还是忽略。默认是UIWebPaginationBreakingModePage<br>
+                            @property (nonatomic) UIWebPaginationBreakingMode paginationBreakingMode NS_AVAILABLE_IOS(7_0);<br><br>
+
+                            // 设置每一页的长度<br>
+                            @property (nonatomic) CGFloat pageLength NS_AVAILABLE_IOS(7_0);<br><br>
+
+                            // 设置每一页的间距<br>
+                            @property (nonatomic) CGFloat gapBetweenPages NS_AVAILABLE_IOS(7_0);<br><br>
+
+                            // 获取页数<br>
+                            @property (nonatomic, readonly) NSUInteger pageCount NS_AVAILABLE_IOS(7_0);<br><br>
+
+
+                        </p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;还有一些属性请详细翻苹果文档</p>
+
+                        <h4 id="Run-server">
+                            2、UIWebView的代理方法
+                        </h4>
+
+                        <p>
+                            UIWebView的代理方法是用的最多的方法,并且一般来说,相对Web页面作处理都在这相应的4个方法中：<br>
+                            分别解释一下方法的调用情况<br><br>
+
+                            // Sent before a web view begins loading a frame.请求发送前都会调用该方法,返回NO则不处理这个请求<br>
+                            - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType;<br><br>
+
+                            // Sent after a web view starts loading a frame. 请求发送之后开始接收响应之前会调用这个方法<br>
+                            - (void)webViewDidStartLoad:(UIWebView *)webView;<br><br>
+
+                            // Sent after a web view finishes loading a frame. 请求发送之后,并且服务器已经返回响应之后调用该方法<br>
+                            - (void)webViewDidFinishLoad:(UIWebView *)webView;<br><br>
+
+                            // Sent if a web view failed to load a frame. 网页请求失败则会调用该方法<br>
+                            - (void)webView:(UIWebView *)webView didFailLoadWithError:(nullable NSError *)error;<br>
+
+                        </p>
+
+                        <h4 id="Run-server">
+                            3、UIWebView的对象方法
+                        </h4>
+
+                        <p>
+                            // 加载Data数据创建一个webView<br>
+                            - (void)loadData:(NSData *)data MIMEType:(NSString *)MIMEType textEncodingName:(NSString *)encodingName baseURL:(NSURL *)baseURL<br><br>
+
+                            // 加载本地HTML创建一个webView<br>
+                            - (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL<br><br>
+
+                            // 加载一个请求创建一个webView<br>
+                            - (void)loadRequest:(NSURLRequest *)request<br><br>
+
+                            // 刷新网页<br>
+                            - (void)reload;<br><br>
+
+                            // 停止网页加载内容<br>
+                            - (void)stopLoading;<br><br>
+
+                            // 后退<br>
+                            - (void)goBack;<br><br>
+
+                            // 前进<br>
+                            - (void)goForward;<br><br>
+
+                            // 执行JS方法<br>
+                            - (NSString *)stringByEvaluatingJavaScriptFromString:(NSString *)script<br>
+                        </p>
+
+                        <h3 id="Run-server">
+                            二、WKWebView的基本使用方法
+                        </h3>
+
+                        <p>
+                            WKWebView的简介 :<br>
+                            从文档中可以看到,这个是IOS8之后新增的一个类,也是苹果推崇的一个新的类<br><br>
+                            其实和UIWebView的用法没什么区别<br>
+                            但是WKWebView相对于UIWebView强大了很多，内存的消耗相对少了，所提供的接口也丰富了。<br>
+                            推荐使用<br>
+                            多了一部操作就是需要包含webkit框架<br>
+                            @import webkit<br><br>
+
+                            WKWebView *webView = [[WKWebView alloc] initWithFrame:[UIScreen mainScreen].bounds];<br>
+                            self.view = webView;<br>
+                            NSURL *url = [NSURL URLWithString:@"https://www.baidu.com"];<br>
+                            NSURLRequest *request = [NSURLRequest requestWithURL:url];<br>
+                            [webView loadRequest:request];<br>
+
+
+                        </p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;就这样就已经整整个baidu的页面展示到app上</p>
+
+
+                        <h4 id="Run-server">
+                            1、WKWebView的属性
+                        </h4>
+
+                        <p>
+                            // UIWebView 中会自动保存Cookie，如果登录了一次下次再次进入的时候,会记住登录状态<br>
+                            // 在WKWebView中，新增一个configuration属性,  configuration 让WKWebView知道登录状态，<br>
+                            // configuration 可以通过已有的Cookie进行设置，也可以通过保存上一次的configuration进行设置<br>
+                            // WKWebViewConfiguration类中也有一些相应的属性<br>
+                            @property (nonatomic, readonly, copy) WKWebViewConfiguration *configuration;<br><br>
+
+                            // The methods of the WKNavigationDelegate protocol help you track the progress of the web site's main frame navigations and decide load policy for main frame and subframe navigations.<br>
+                            // WKWebView中,加入了网站导航的概念,这个对象决定主框架导航加载方法协议。<br>
+                            @property (nullable, nonatomic, weak) id <WKNavigationDelegate> navigationDelegate;<br><br>
+
+                            // The WKUIDelegate class provides methods for presenting native user interface<br>
+                            elements on behalf of a webpage.<br>
+                            // WKWebView中,加入了网站窗口的概念,这个对象决了webView窗口的一些方法协议。<br>
+                            @property (nullable, nonatomic, weak) id <WKUIDelegate> UIDelegate;<br><br>
+
+                                A WKBackForwardList object is a list of webpages previously visited in a web view that can be reached by going back or forward.<br>
+                                // WKWebView中,加入了网站列表的概念,这个WEBBackForwardList对象是以前在Web视图访问的网页，可以通过去后退或前进<br>
+                                @property (nonatomic, readonly, strong) WKBackForwardList *backForwardList;<br>
+
+
+                        </p>
+
+                        <h4 id="Run-server">
+                            2、WKWebView的代理方法
+                        </h4>
+
+                        <p>
+                             有一些方法和UIWebView是基本一直的,但是因为返回了navigation,所能用到的属性多了很多,另外多了一些方法,将请求与相应的整个过程<br><br>
+                            - (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView{<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"webViewWebContentProcessDidTerminate:  当Web视图的网页内容被终止时调用。");<br>
+                            }<br><br><br>
+
+
+                            - (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation<br>
+                            {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"webView:didFinishNavigation:  响应渲染完成后调用该方法   webView : %@  -- navigation : %@  \n\n",webView,navigation);<br>
+                            }<br><br><br>
+
+
+                            - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(null_unspecified WKNavigation *)navigation<br>
+                            {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"webView:didStartProvisionalNavigation:  开始请求  \n\n");<br>
+                            }<br><br>
+
+                            - (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"webView:didCommitNavigation:   响应的内容到达主页面的时候响应,刚准备开始渲染页面应用 \n\n");<br>
+                            }<br><br>
+
+
+                            // error<br>
+                            - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 类似 UIWebView 的- webView:didFailLoadWithError:<br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"webView:didFailProvisionalNavigation:withError: 启动时加载数据发生错误就会调用这个方法。  \n\n");<br>
+                            }<br><br>
+
+
+
+                            - (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error{<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"webView:didFailNavigation: 当一个正在提交的页面在跳转过程中出现错误时调用这个方法。  \n\n");<br>
+                            }<br><br>
+
+
+
+                            - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler{<br><br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"请求前会先进入这个方法  webView:decidePolicyForNavigationActiondecisionHandler: %@   \n\n  ",navigationAction.request);<br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;decisionHandler(WKNavigationActionPolicyAllow);<br>
+
+                            }<br><br>
+
+                            - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler{<br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"返回响应前先会调用这个方法  并且已经能接收到响应webView:decidePolicyForNavigationResponse:decisionHandler: Response?%@  \n\n",navigationResponse.response);<br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;decisionHandler(WKNavigationResponsePolicyAllow);<br>
+                            }<br><br>
+
+
+
+                            - (void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(WKNavigation *)navigation{<br>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@"webView:didReceiveServerRedirectForProvisionalNavigation: 重定向的时候就会调用  \n\n");<br>
+                            }<br><br>
+
+
+                        </p>
+
+                        <h4 id="Run-server">
+                            3、WKWebView的对象方法
+                        </h4>
+
+                        <p>
+                            这些方法,基本上和UIWebView中的使用用法是一致的,所以<br><br>
+                            // 这是加载网页最常用的一种方式，通过一个网页URL来加载一个WKWebView，这个URL可以是远程的也可以是本地的，例如我加载百度的主页<br>
+                            - (nullable WKNavigation *)loadRequest:(NSURLRequest *)request;<br><br>
+
+                            // 根据一个文件,加载一个WKWebView<br>
+                            - (nullable WKNavigation *)loadFileURL:(NSURL *)URL allowingReadAccessToURL:(NSURL *)readAccessURL NS_AVAILABLE(10_11, 9_0);<br><br>
+
+                            // 这个方法需要将html文件读取为字符串从而加载为WKWebView，其中baseURL是我们自己设置的一个路径，用于寻找html文件中引用的图片等素材。<br>
+                            - (nullable WKNavigation *)loadHTMLString:(NSString *)string baseURL:(nullable NSURL *)baseURL;<br><br>
+
+                            // 这个方式使用的比较少，但也更加自由，其中data是文件数据，MIMEType是文件类型，characterEncodingName是编码类型，baseURL是素材资源路径<br>
+                            - (nullable WKNavigation *)loadData:(NSData *)data MIMEType:(NSString *)MIMEType characterEncodingName:(NSString *)characterEncodingName baseURL:(NSURL *)baseURL NS_AVAILABLE(10_11, 9_0);<br>
+
+
+
+                        </p>
+
+                        <h4 id="Run-server">
+                            4、基本使用
+                        </h4>
+
+                        <p>
+                            下面会总结一些我在开发过程中遇到的坑,和解决问题的一些思路,不过在此之前我发现,<br>
+                            如果要webView玩得好,有以下几点的只是也需要掌握好,因为我认为在H5崛起的今天,源<br>
+                            生App和H5的交互之间会产生比较大改变,而且源生与H5之间的混编,越来越被重视.所以 :<br><br>
+
+                            1、源生技术,特别是有关于webView这一块的API要非常熟练,<br>
+                            2、js语法, js的语法需要熟练,特别是操作document的几个常用js,标签需要用得滚瓜烂熟.<br>
+                            3、要非常了解网络请求 - 响应的机制,理解请求头,响应头,等等.HTTP的整套协议<br>
+                        </p>
+
+                    </div>
+                </div>
+                <nav id="article-nav">
+                    <a href="/MyBlog/Articles/iOS/Basic/Animations.html" id="article-nav-newer-left" class="article-nav-link-wrap">
+                        <strong class="article-nav-caption">上一篇</strong>
+                    </a>
+                    <a href="/MyBlog/Articles/iOS/Basic/HttpForIOS.html" id="article-nav-newer-right" class="article-nav-link-wrap">
+                        <strong class="article-nav-caption">下一篇</strong>
+                    </a>
+                </nav>
+            </article>
+            </section>
+            <script src="/js/recentArticle.js"></script>
+
+        </div>
+        <script src="/js/footer.js"></script>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+    <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+    <script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>

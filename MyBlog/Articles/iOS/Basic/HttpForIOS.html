@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Http for iOS</title>
+    <link rel="icon" href="/favicon.png">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+<div id="container">
+    <div id="wrap">
+        <script src="/js/header.js"></script>
+        <div class="outer">
+            <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+                <div class="article-meta">
+                    <a href="/MyBlog/Articles/iOS/Basic/HttpForIOS.html" class="myArticle-title">
+                        Http for iOS
+                    </a>
+
+                </div>
+                <div class="article-inner">
+                    <div class="article-entry" itemprop="articleBody">
+                        <h3 id="Run-server">
+                            一、HTTP是什么?
+                        </h3>
+
+                        <p>
+                            HTTP本质上是一种协议，全称是Hypertext Transfer Protocol，即超文本传输协议。从<br>
+                            名字上可以看出该协议用于规定客户端与服务端之间的传输规则，所传输的内容不局限于<br>
+                            文本(其实可以传输任意类型的数据)。
+                            HTTP是一个应用层协议，由请求和响应构成，是一个标准的客户端服务器模型。HTTP是<br>
+                            一个无状态的协议。
+                        </p>
+
+                        <h3 id="Run-server">
+                            二、Http请求是什么?
+                        </h3>
+
+                        <p>
+                            你的app需要数据的时候,就需要去获取数据,问服务器拿数据就是通过发送请求以告诉服务器你想要什么,那么这里面包含的信息需要遵守Http的协议,统称为请求行
+                        </p>
+
+                        <h4 id="Run-server">
+                            1、请求行
+                        </h4>
+
+                        <p>
+                            请求行包含请求方法(Method)、请求统一资源标识符(URI)、HTTP版本号<br>
+                            例如请求百度的Logo图片<br>
+                            Method:GET URL:https://m.baidu.com/static/search/baiduapp_icon.png/ HTTP1.1<br><br>
+
+                            请求方法就是我们所熟悉的POST、GET、HEAD、PUT <br>
+                            URI就是URL中排除掉Host剩下的部分，也就是资源在服务器本地上的路径<br>
+                            HTTP版本号，目前主流的版本是1.1(1999年开始采用)，最新的版本是2.0(2015年5月发布)。不同版本之间差异下面会再展开<br>
+                            在IOS中 :<br>
+                            HTTP请求在iOS中用NSURLRequest与NSMutableRequest表示；HTTP响应用NSHTTPURLResponse表示。<br>
+
+
+                        </p>
+
+                        <h4 id="Run-server">
+                            2、请求头
+                        </h4>
+
+                        <p>
+                            Host: 目标服务器的网络地址<br>
+                            Accept: 让服务端知道客户端所能接收的数据类型，如text/html /<br>
+                            Content-Type: body中的数据类型，如application/json; charset=UTF-8<br>
+                            Accept-Language: 客户端的语言环境，如zh-cn<br>
+                            Accept-Encoding: 客户端支持的数据压缩格式，如gzip<br>
+                            User-Agent: 客户端的软件环境，我们可以更改该字段为自己客户端的名字，比如百度<br>
+                            User-Agent : Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1<br>
+                            Connection: keep-alive，该字段是从HTTP1.1才开始有的，用来告诉服务端这是一个持久连接，“请服务端不要在发出响应后立即断开TCP连接”。关于该字段的更多解释将在后面的HTTP版本简介中展开。<br>
+                            Content-Length: body的长度，如果body为空则该字段值为0。该字段一般在POST请求中才会有。<br>
+                            Cookie: 记录者用户信息的保存在本地的用户数据，如果有会被自动附上<br>
+                        </p>
+
+                        <h4 id="Run-server">
+                            3、请求体
+                        </h4>
+
+                        <p>
+                            真正需要发给服务端的数据，在使用POST-multipart上传请求中请求体就是上传文件的二进制NSData类型数据；在GET请求中请求体为空；在普通的POST请求中请求体就是一些表单数据。
+                        </p>
+
+                        <h3 id="Run-server">
+                            三、Http响应是什么?
+                        </h3>
+
+                        <p>
+                            响应与请求一样,客户端将请求发送到服务器后,服务器会根据请求的内容返回"内容",这个"内容"就叫做响应<br>
+                            响应由响应状态,响应头,响应实体组成<br>
+                        </p>
+                        <h4 id="Run-server">
+                            1、响应状态
+                        </h4>
+
+                        <p>
+                            下面这个是典型的响应状态<br>
+                            HTTP/1.1 200 OK<br>
+                        </p>
+                        <h4 id="Run-server">
+                            2、响应头
+                        </h4>
+
+                        <p>
+                            响应头和请求头基本一样K<br>
+                        </p>
+                        <h4 id="Run-server">
+                            3、响应实体
+                        </h4>
+
+                        <p>
+                            请求体也是一样.<br>
+                        </p>
+
+                        <h3 id="Run-server">
+                            四、HTTP的请求与响应之间是如何连接的?
+                        </h3>
+
+                        <p>
+                            HTTP 1.1(主流版本)比之前的版本多了几种新特性<br><br>
+
+                            1、增加请求头跟响应头,用于自定义整个链接过程中的一些行为<br>
+                            2、支持持久连接。客户端通过请求头中指定Connection为keep-alive告知服务端不要在<br>
+                                完成响应后立即释放连接。HTTP是基于TCP的，在HTTP 1.1中一次TCP连接可以处理多次<br>
+                                HTTP请求<br>
+                            3、客户端异步请求。打断请求与请求之间依赖关系，更好地利用资源,增加效率,有点类似多线程的异步处理。<br>
+
+
+                        </p>
+
+                        <h3 id="Run-server">
+                            五、区分好Http 与 Socket
+                        </h3>
+
+                        <p>
+                            1、HTTP是短连接,尽管HTTP1.1开始支持持久连接，但仍无法保证始终连接。因为有超时的机制, 特定时间之后链接建立的链接即会超时, 超时之后TCP链接自动发送断开链接请求并且断开链接.<br>
+                            2、HTTP采用“请求-响应”机制，在客户端还没发送消息给服务端前，服务端无法推送消息给客户端。必须满足客户端发送消息在前，服务端回复在后。,也就是说, "没请求,没交流"<br>
+                            3、HTTP连接的是服务器与客户端之间的 点对多关系, 多个客户端对同一服务器发出请求, 然后服务器根据请求将相应返回给相应的客户端<br>
+                            4、Socket(基于TCP协议的)是长连接,长连接的意思是指,连接时间长,Socket连接一旦建立TCP三次握手，除非一方主动断开，否则连接状态一直保持。<br>
+                            5、Socket有两种模式,流式Socket（SOCK_STREAM）和数据报式Socket（SOCK_DGRAM）。流式是一种面向连接的Socket，针对于面向连接的TCP服务应用；数据报式Socket是一种无连接的Socket，对应于无连接的UDP服务应用。基于TCP协议的socket连接同样需要通过三次握手建立连接，是可靠的；基于UDP协议的socket连接不需要建立连接的过程，不过对方能不能收到都会发送过去，是不可靠的，大多数的即时通讯IM都是后者。<br>
+                            6、Socket连接的是更多就是点对点的关系了, Socket数据结构中包含这五种信息,(通信协议、本地协议地址、本地主机端口、远端主机地址和远端协议端口), 所以更多的是一种 点对点的关系。<br>
+
+                        </p>
+
+                        <h3 id="Run-server">
+                            六、补充
+                        </h3>
+
+                        <p>
+                            在IOS的体系中,建立Http连接的,一般用源生的NSURLConnection,(IOS7之后,用的NSURLSession),当然更多的是用AFNetWorking框架来发送请求<br>
+                            如果建立Socket连接,一般用CocoaAsyncSocket.<br>
+                        </p>
+                    </div>
+                </div>
+                <nav id="article-nav">
+                    <a href="/MyBlog/Articles/iOS/Basic/UIWebViewAndWKWebView.html" id="article-nav-newer-left" class="article-nav-link-wrap">
+                        <strong class="article-nav-caption">上一篇</strong>
+                    </a>
+                    <a href="/MyBlog/Articles/iOS/Basic/UIWebViewAndWKWebView.html" id="article-nav-newer-right" class="article-nav-link-wrap">
+                        <strong class="article-nav-caption">下一篇</strong>
+                    </a>
+                </nav>
+            </article>
+            </section>
+            <script src="/js/recentArticle.js"></script>
+
+        </div>
+        <script src="/js/footer.js"></script>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+    <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+    <script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>
