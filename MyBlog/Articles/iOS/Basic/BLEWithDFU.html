@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>iOS之BLE DFU升级</title>
+    <link rel="icon" href="/favicon.png">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+<div id="container">
+    <div id="wrap">
+        <script src="/js/header.js"></script>
+        <div class="outer">
+            <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+                <div class="article-meta">
+                    <a href="/MyBlog/Articles/iOS/Basic/BLEWithDFU.html" class="myArticle-title">
+                        iOS之BLE DFU升级
+                    </a>
+
+                </div>
+
+                <div class="article-inner">
+                    <div class="article-entry" itemprop="articleBody">
+                        <p>
+                            最近给产品做了DFU升级<br>
+                            其实DFU升级是app端和驱动这边共同完成的，这个协议是自己定义的，<br>
+                            所以每个公司的升级都不一样，但从根本上看都是一样的，就是把升级包<br>
+                            发给固件，然后进行升级，下面就来简单的说下我们这边的步骤。
+                        </p>
+                        <h3 id="Run-server">
+                            一、发送升级指令
+                        </h3>
+
+                        <p>
+                            就是给固件发送一个指令，告诉固件，进入升级模式，当然在这之前有<br>
+                            的公司会先发送一个查询固件的版本，然后对比当前版本和最新版，看<br>
+                            是否需要升级，如果需要，再发送升级指令。这时，固件一般会断开蓝牙，切换成升级模式。
+                        </p>
+
+                        <h3 id="Run-server">
+                            二、发送升级包
+                        </h3>
+
+                        <p>
+                            当固件切换完模式以后，需要重新连接蓝牙;这一步就是将升级包发送给固件了，<br>
+                            由于蓝牙每次发送数据大小的限制，升级包一般都要分多次发送，每次发送一部分。
+                        </p>
+
+                        <h3 id="Run-server">
+                            三、校验重启
+                        </h3>
+
+                        <p>
+                            当整个升级包都发送给固件以后，固件就会进行升级，升级完成之后固件就可以<br>
+                            重启，把模式切换回正常使用模式了。对此，整个升级就完成了，还是前面说的，<br>
+                            升级是和驱动这边共同完成的，双方定义如何升级，但总的都是获取升级包，发送给固件，固件进行升级这样。
+                        </p>
+
+                        <p>
+                            注意:有的公司会把升级包放到服务器，也有的公司会在更新App时将固件升级包放到App里，毕竟固件升级的频率还是很低的,能不升级则尽量不要升级。
+                        </p>
+                    </div>
+                </div>
+
+                <nav id="article-nav">
+                    <a href="/MyBlog/Articles/iOS/Basic/ProcedurePack.html" id="article-nav-newer-left" class="article-nav-link-wrap">
+                        <strong class="article-nav-caption">上一篇</strong>
+                    </a>
+                </nav>
+            </article>
+            </section>
+            <script src="/js/recentArticle.js"></script>
+
+        </div>
+        <script src="/js/footer.js"></script>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+    <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+    <script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>
