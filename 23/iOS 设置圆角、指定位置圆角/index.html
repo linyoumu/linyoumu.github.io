@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   
   
-  <title>Hexo使用攻略-添加分类及标签 | 欢迎来到我的个人博客</title>
+  <title>iOS 设置圆角、指定位置圆角 | 欢迎来到我的个人博客</title>
   <meta name="author" content="勿忘初心" />
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -16,19 +16,17 @@
   
     <meta name="keywords" content="" />
   
-  <meta name="description" content="本教程针对的是Mac环境下，kratos-rebirth主题的文章分类和标签设置，其他主题也应该是类似的。添加成功后会在侧边栏或导航栏生成“分类”和“标签”这两个选项，看下图：  1、创建“分类”选项1.1 生成“分类”页并添加tpye属性打开命令行，进入博客所在文件夹。执行命令 1$ hexo new page categories  成功后会提示： 1INFO  Created: ~&#x2F;Docu">
+  <meta name="description" content="1. 使用UIView.layer.cornerRadius 进行圆角设置12view.layer.cornerRadius &#x3D; 20;view.layer. masksToBounds &#x3D; YES; &#x2F;&#x2F; 部分UIView需要设置这个属性  此处view.layer. masksToBounds &#x3D; YES; 会触发离屏渲染，如果在UITableViewCell和UICollectionView">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo使用攻略-添加分类及标签">
-<meta property="og:url" content="http://example.com/21/Hexo%E4%BD%BF%E7%94%A8%E6%94%BB%E7%95%A5-%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E5%8F%8A%E6%A0%87%E7%AD%BE/index.html">
+<meta property="og:title" content="iOS 设置圆角、指定位置圆角">
+<meta property="og:url" content="http://example.com/23/iOS%20%E8%AE%BE%E7%BD%AE%E5%9C%86%E8%A7%92%E3%80%81%E6%8C%87%E5%AE%9A%E4%BD%8D%E7%BD%AE%E5%9C%86%E8%A7%92/index.html">
 <meta property="og:site_name" content="欢迎来到我的个人博客">
-<meta property="og:description" content="本教程针对的是Mac环境下，kratos-rebirth主题的文章分类和标签设置，其他主题也应该是类似的。添加成功后会在侧边栏或导航栏生成“分类”和“标签”这两个选项，看下图：  1、创建“分类”选项1.1 生成“分类”页并添加tpye属性打开命令行，进入博客所在文件夹。执行命令 1$ hexo new page categories  成功后会提示： 1INFO  Created: ~&#x2F;Docu">
+<meta property="og:description" content="1. 使用UIView.layer.cornerRadius 进行圆角设置12view.layer.cornerRadius &#x3D; 20;view.layer. masksToBounds &#x3D; YES; &#x2F;&#x2F; 部分UIView需要设置这个属性  此处view.layer. masksToBounds &#x3D; YES; 会触发离屏渲染，如果在UITableViewCell和UICollectionView">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/images/category-tags.png">
-<meta property="article:published_time" content="2017-05-21T12:26:01.000Z">
-<meta property="article:modified_time" content="2022-09-20T09:28:11.000Z">
+<meta property="article:published_time" content="2018-10-23T12:59:50.000Z">
+<meta property="article:modified_time" content="2023-04-06T15:56:26.119Z">
 <meta property="article:author" content="勿忘初心">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/category-tags.png">
   
   <!-- 站点验证相关 -->
   
@@ -133,15 +131,15 @@
 
             <article itemscope itemtype="https://schema.org/Article">
     
-    <link itemprop="mainEntityOfPage" href="http://example.com/21/Hexo%E4%BD%BF%E7%94%A8%E6%94%BB%E7%95%A5-%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E5%8F%8A%E6%A0%87%E7%AD%BE/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/23/iOS%20%E8%AE%BE%E7%BD%AE%E5%9C%86%E8%A7%92%E3%80%81%E6%8C%87%E5%AE%9A%E4%BD%8D%E7%BD%AE%E5%9C%86%E8%A7%92/">
     <div class="kratos-hentry kratos-post-inner clearfix">
         <header class="kratos-entry-header">
             
-                <h1 class="kratos-entry-title text-center" itemprop="name headline">Hexo使用攻略-添加分类及标签</h1>
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">iOS 设置圆角、指定位置圆角</h1>
             
             
             <ul class="kratos-post-meta text-center">
-                <li><time datetime="2017-05-21T12:26:01.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2017-05-21</time></li>
+                <li><time datetime="2018-10-23T12:59:50.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2018-10-23</time></li>
                 <li itemprop="author" itemscope itemtype="https://schema.org/Person">
                     <i class="fa fa-user"></i> 作者 <span itemprop="name">勿忘初心</span>
                 </li>
@@ -149,7 +147,7 @@
                     <i class="fa fa-edit"></i> 
                     
                     
-                        ~1.59K
+                        ~2.86K
                     
                     字
                 </li>
@@ -160,51 +158,34 @@
             
             <div id="expire-alert" class="alert alert-warning hidden" role="alert">
                 <div class="icon"><i class="fa fa-warning"></i></div>
-                <div class="text"><p>本文最后编辑于 <time datetime="1663666091000"></time> 前，其中的内容可能需要更新。</p></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1680796586119"></time> 前，其中的内容可能需要更新。</p></div>
             </div>
             
             
             
             <hr />
-            <div itemprop="articleBody"><p>本教程针对的是Mac环境下，kratos-rebirth主题的文章分类和标签设置，其他主题也应该是类似的。添加成功后会在侧边栏或导航栏生成“分类”和“标签”这两个选项，看下图：</p>
-<p><img src="/../images/category-tags.png"></p>
-<h3 id="1、创建“分类”选项"><a href="#1、创建“分类”选项" class="headerlink" title="1、创建“分类”选项"></a>1、创建“分类”选项</h3><h4 id="1-1-生成“分类”页并添加tpye属性"><a href="#1-1-生成“分类”页并添加tpye属性" class="headerlink" title="1.1 生成“分类”页并添加tpye属性"></a>1.1 生成“分类”页并添加tpye属性</h4><p>打开命令行，进入博客所在文件夹。执行命令</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo <span class="keyword">new</span> page categories</span><br></pre></td></tr></table></figure>
+            <div itemprop="articleBody"><h2 id="1-使用UIView-layer-cornerRadius-进行圆角设置"><a href="#1-使用UIView-layer-cornerRadius-进行圆角设置" class="headerlink" title="1. 使用UIView.layer.cornerRadius 进行圆角设置"></a>1. 使用<code>UIView.layer.cornerRadius</code> 进行圆角设置</h2><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">view.layer.cornerRadius = <span class="number">20</span>;</span><br><span class="line">view.layer. masksToBounds = <span class="literal">YES</span>; <span class="comment">// 部分UIView需要设置这个属性</span></span><br></pre></td></tr></table></figure>
 
-<p>成功后会提示：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INFO  Created: ~/Documents/Blog/source/categories/index.md</span><br></pre></td></tr></table></figure>
+<p>此处<code>view.layer. masksToBounds = YES;</code> 会触发离屏渲染，如果在UITableViewCell和UICollectionViewCell中使用，严重的会掉帧、不流畅</p>
+<h2 id="2-使用贝塞尔曲线画圆角及指定位置圆角"><a href="#2-使用贝塞尔曲线画圆角及指定位置圆角" class="headerlink" title="2.使用贝塞尔曲线画圆角及指定位置圆角"></a>2.使用贝塞尔曲线画圆角及指定位置圆角</h2><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">CGFloat</span> radius = <span class="number">20</span>; <span class="comment">// 圆角大小</span></span><br><span class="line"><span class="built_in">UIRectCorner</span> corner = <span class="built_in">UIRectCornerAllCorners</span>; <span class="comment">// 圆角位置，全部位置</span></span><br><span class="line"><span class="built_in">UIBezierPath</span> * path = [<span class="built_in">UIBezierPath</span> bezierPathWithRoundedRect:view.bounds byRoundingCorners:corner cornerRadii:<span class="built_in">CGSizeMake</span>(radius, radius)];</span><br><span class="line"><span class="built_in">CAShapeLayer</span> *maskLayer = [[<span class="built_in">CAShapeLayer</span> alloc] init];</span><br><span class="line">maskLayer.frame = view.bounds;</span><br><span class="line">maskLayer.path = path.CGPath;</span><br><span class="line">view.layer.mask = maskLayer;</span><br></pre></td></tr></table></figure>
 
-<p>根据上面的路径，找到<code>index.md</code>这个文件，打开后默认内容是这样的：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: 文章分类</span><br><span class="line"><span class="built_in">date</span>: 2017-06-19 19:40:54</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<p>UIRectCorner 的定义如下</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_OPTIONS</span>(<span class="built_in">NSUInteger</span>, <span class="built_in">UIRectCorner</span>) &#123;</span><br><span class="line">    <span class="built_in">UIRectCornerTopLeft</span>     = <span class="number">1</span> &lt;&lt; <span class="number">0</span>, <span class="comment">// 左上</span></span><br><span class="line">    <span class="built_in">UIRectCornerTopRight</span>    = <span class="number">1</span> &lt;&lt; <span class="number">1</span>, <span class="comment">// 右上</span></span><br><span class="line">    <span class="built_in">UIRectCornerBottomLeft</span>  = <span class="number">1</span> &lt;&lt; <span class="number">2</span>, <span class="comment">// 左下</span></span><br><span class="line">    <span class="built_in">UIRectCornerBottomRight</span> = <span class="number">1</span> &lt;&lt; <span class="number">3</span>, <span class="comment">// 右下</span></span><br><span class="line">    <span class="built_in">UIRectCornerAllCorners</span>  = ~<span class="number">0</span>UL <span class="comment">// 全部位置</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<p>添加<code>type: &quot;categories&quot;</code>到内容中，添加后是这样的：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: 文章分类</span><br><span class="line"><span class="built_in">date</span>: 2017-06-19 19:40:54</span><br><span class="line"><span class="built_in">type</span>: <span class="string">&quot;categories&quot;</span></span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<p>UIRectCorner 可以使用位运算进行圆角设置，如：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIRectCorner</span> corner = <span class="built_in">UIRectCornerTopRight</span> | <span class="built_in">UIRectCornerBottomRight</span>; <span class="comment">// 右上和右下进行圆角</span></span><br></pre></td></tr></table></figure>
 
-<p>保存并关闭文件。</p>
-<h4 id="1-2-给文章添加“categories”属性"><a href="#1-2-给文章添加“categories”属性" class="headerlink" title="1.2 给文章添加“categories”属性"></a>1.2 给文章添加“categories”属性</h4><p>打开需要添加分类的文章，为其添加categories属性。下方的<code>categories: iOS知识点</code>表示添加这篇文章到“iOS知识点”这个分类。注意：hexo一篇文章只能属于一个分类，也就是说如果在“- iOS知识点”下方添加“-xxx”，hexo不会产生两个分类，而是把分类嵌套（即该文章属于 “- iOS知识点”下的 “-xxx ”分类）。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: NSString的使用</span><br><span class="line"><span class="built_in">date</span>: 2017-6-19 20:01:57</span><br><span class="line">categories: </span><br><span class="line">- iOS知识点</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<p>圆角加边框</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">CGFloat</span> radius = <span class="number">20</span>; <span class="comment">// 圆角大小</span></span><br><span class="line"><span class="built_in">UIRectCorner</span> corner = <span class="built_in">UIRectCornerAllCorners</span>; <span class="comment">// 圆角位置，全部位置</span></span><br><span class="line"><span class="built_in">UIBezierPath</span> * path = [<span class="built_in">UIBezierPath</span> bezierPathWithRoundedRect:view.bounds byRoundingCorners:corner cornerRadii:<span class="built_in">CGSizeMake</span>(radius, radius)];</span><br><span class="line"><span class="built_in">CAShapeLayer</span> *maskLayer = [[<span class="built_in">CAShapeLayer</span> alloc] init];</span><br><span class="line">maskLayer.frame = view.bounds;</span><br><span class="line">maskLayer.path = path.CGPath;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 带边框则两个颜色不要设置成一样即可</span></span><br><span class="line">maskLayer.strokeColor = [<span class="built_in">UIColor</span> redColor].CGColor;</span><br><span class="line">maskLayer.fillColor = [<span class="built_in">UIColor</span> yellowColor].CGColor;</span><br><span class="line">[view.layer addSublayer:maskLayer];</span><br></pre></td></tr></table></figure>
 
-<p>至此，成功给文章添加分类，点击首页的“分类”可以看到该分类下的所有文章。当然，只有添加了<code>categories: xxx</code>的文章才会被收录到首页的“分类”中。</p>
-<h3 id="2、创建“标签”选项"><a href="#2、创建“标签”选项" class="headerlink" title="2、创建“标签”选项"></a>2、创建“标签”选项</h3><h4 id="2-1-生成“标签”页并添加tpye属性"><a href="#2-1-生成“标签”页并添加tpye属性" class="headerlink" title="2.1 生成“标签”页并添加tpye属性"></a>2.1 生成“标签”页并添加tpye属性</h4><p>打开命令行，进入博客所在文件夹。执行命令</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo <span class="keyword">new</span> page tags</span><br></pre></td></tr></table></figure>
+<h2 id="3-iOS11-新特性——改善view圆角"><a href="#3-iOS11-新特性——改善view圆角" class="headerlink" title="3.iOS11 新特性——改善view圆角"></a>3.iOS11 新特性——改善view圆角</h2><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="meta">@available(iOS 11.0, *)</span>) &#123;</span><br><span class="line">        view.layer.cornerRadius = radius;</span><br><span class="line">        view.layer.maskedCorners = kCALayerMinXMinYCorner; <span class="comment">// 左上圆角</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>成功后会提示：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INFO  Created: ~/Documents/Blog/source/tags/index.md</span><br></pre></td></tr></table></figure>
+<p>CACornerMask的定义如下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_OPTIONS</span> (<span class="built_in">NSUInteger</span>, <span class="built_in">CACornerMask</span>)</span><br><span class="line">&#123;</span><br><span class="line">  kCALayerMinXMinYCorner = <span class="number">1</span>U &lt;&lt; <span class="number">0</span>, <span class="comment">// 左上</span></span><br><span class="line">  kCALayerMaxXMinYCorner = <span class="number">1</span>U &lt;&lt; <span class="number">1</span>, 右上</span><br><span class="line">  kCALayerMinXMaxYCorner = <span class="number">1</span>U &lt;&lt; <span class="number">2</span>, <span class="comment">// 左下</span></span><br><span class="line">  kCALayerMaxXMaxYCorner = <span class="number">1</span>U &lt;&lt; <span class="number">3</span>, <span class="comment">// 右下</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">CACornerMask</span> 如同上面的<span class="built_in">UIRectCorner</span> 可以使用位运算进行圆角设置</span><br></pre></td></tr></table></figure>
 
-<p>根据上面的路径，找到<code>index.md</code>这个文件，打开后默认内容是这样的：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: 标签</span><br><span class="line"><span class="built_in">date</span>: 2017-6-19 20:11:34</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<h2 id="4-对UIView进行自定义圆角分类"><a href="#4-对UIView进行自定义圆角分类" class="headerlink" title="4.对UIView进行自定义圆角分类"></a>4.对UIView进行自定义圆角分类</h2><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">UIView</span> (<span class="title">ACSLayer</span>)</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> 圆角</span></span><br><span class="line"><span class="comment"> 使用自动布局，需要在layoutsubviews 中使用</span></span><br><span class="line"><span class="comment"> @param radius 圆角尺寸</span></span><br><span class="line"><span class="comment"> @param corner 圆角位置</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">- (<span class="type">void</span>)acs_radiusWithRadius:(<span class="built_in">CGFloat</span>)radius corner:(<span class="built_in">UIRectCorner</span>)corner &#123;</span><br><span class="line">    <span class="keyword">if</span> (@available(iOS <span class="number">11.0</span>, *)) &#123;</span><br><span class="line">        <span class="keyword">self</span>.layer.cornerRadius = radius;</span><br><span class="line">        <span class="keyword">self</span>.layer.maskedCorners = (<span class="built_in">CACornerMask</span>)corner;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">UIBezierPath</span> * path = [<span class="built_in">UIBezierPath</span> bezierPathWithRoundedRect:<span class="keyword">self</span>.bounds byRoundingCorners:corner cornerRadii:<span class="built_in">CGSizeMake</span>(radius, radius)];</span><br><span class="line">        <span class="built_in">CAShapeLayer</span> *maskLayer = [[<span class="built_in">CAShapeLayer</span> alloc] init];</span><br><span class="line">        maskLayer.frame = <span class="keyword">self</span>.bounds;</span><br><span class="line">        maskLayer.path = path.CGPath;</span><br><span class="line">        <span class="keyword">self</span>.layer.mask = maskLayer;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
 
-<p>添加<code>type: &quot;tags&quot;</code>到内容中，添加后是这样的：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: 文章标签</span><br><span class="line"><span class="built_in">date</span>: 2017-6-19 20:11:34</span><br><span class="line"><span class="built_in">type</span>: <span class="string">&quot;tags&quot;</span></span><br><span class="line">---</span><br></pre></td></tr></table></figure>
-
-<p>保存并关闭文件。</p>
-<h4 id="2-2-给文章添加“tags”属性"><a href="#2-2-给文章添加“tags”属性" class="headerlink" title="2.2 给文章添加“tags”属性"></a>2.2 给文章添加“tags”属性</h4><p>打开需要添加标签的文章，为其添加tags属性。下方的<code>tags:</code>下方的<code>- iOS</code> 就是这篇文章的标签了</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: NSString的使用</span><br><span class="line">date: 2017-6-19 20:01:57</span><br><span class="line">categories: </span><br><span class="line">- iOS知识点</span><br><span class="line">tags:</span><br><span class="line">- iOS</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
-
-<p>至此，成功给文章添加分类，点击首页的“标签”可以看到该标签下的所有文章。当然，只有添加了<code>tags: xxx</code>的文章才会被收录到首页的“标签”中。</p>
-<p>细心的朋友可能已经发现，这两个的设置几乎一模一样！是的，没错，思路都是一样的。所以我们可以打开scaffolds&#x2F;post.md文件，在tages:上面加入categories:,保存后，之后执行<code>hexo new 文章名</code>命令生成的文件，页面里就有<code>categories:</code>项了。</p>
-<p>scaffolds目录下，是新建页面的模板，执行新建命令时，是根据这里的模板页来完成的，所以可以在这里根据你自己的需求添加一些默认值。</p>
-<p>教程结束，赶紧去设置吧</p>
+<p>此方法在iOS 11 中使用iOS 11中的maskedCorners进行圆角设置，如是iOS 11 以下则使用贝塞尔曲线画圆角。</p>
 </div>
         </div>
         
@@ -258,7 +239,7 @@
     <script type="text/javascript">
         $(()=>{
             new QRCode("wechat-qr", {
-                text: "http://example.com/21/Hexo%E4%BD%BF%E7%94%A8%E6%94%BB%E7%95%A5-%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E5%8F%8A%E6%A0%87%E7%AD%BE/",
+                text: "http://example.com/23/iOS%20%E8%AE%BE%E7%BD%AE%E5%9C%86%E8%A7%92%E3%80%81%E6%8C%87%E5%AE%9A%E4%BD%8D%E7%BD%AE%E5%9C%86%E8%A7%92/",
                 width: 150,
                 height: 150,
                 correctLevel : QRCode.CorrectLevel.H
@@ -270,11 +251,9 @@
             const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
             const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
             const twitterBase   = "https://twitter.com/intent/tweet?";
-            const hostUrl       = "http://example.com/21/Hexo%E4%BD%BF%E7%94%A8%E6%94%BB%E7%95%A5-%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E5%8F%8A%E6%A0%87%E7%AD%BE/";
-            const title         = "「Hexo使用攻略-添加分类及标签」";
-            const excerpt       = `本教程针对的是Mac环境下，kratos-rebirth主题的文章分类和标签设置，其他主题也应该是类似的。添加成功后会在侧边栏或导航栏生成“分类”和“标签”这两个选项，看下图：
-
-1、创建“分类”选项1.1 生成“分类”页并添加tpy...`;
+            const hostUrl       = "http://example.com/23/iOS%20%E8%AE%BE%E7%BD%AE%E5%9C%86%E8%A7%92%E3%80%81%E6%8C%87%E5%AE%9A%E4%BD%8D%E7%BD%AE%E5%9C%86%E8%A7%92/";
+            const title         = "「iOS 设置圆角、指定位置圆角」";
+            const excerpt       = `1. 使用UIView.layer.cornerRadius 进行圆角设置12view.layer.cornerRadius = 20;view.layer. masksToBounds = YES; // 部分UIView需要设置这...`;
             let _URL;
             switch (dest) {
                 case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
@@ -302,9 +281,13 @@
     
         <nav class="navigation post-navigation clearfix" role="navigation">
             
+            <div class="nav-previous clearfix">
+                <a title=" 调试技巧" href="/23/调试技巧/">&lt; 上一篇</a>
+            </div>
+            
             
             <div class="nav-next clearfix">
-                <a title=" 搭建自己个人博客" href="/22/搭建自己个人博客/">下一篇 &gt;</a>
+                <a title=" 数据安全及加密" href="/23/数据安全及加密/">下一篇 &gt;</a>
             </div>
             
         </nav>
