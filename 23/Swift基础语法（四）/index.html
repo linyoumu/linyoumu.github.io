@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  
+  
+  <title>Swift基础语法（四） | 欢迎来到我的个人博客</title>
+  <meta name="author" content="勿忘初心" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="Swift" />
+  
+  <meta name="description" content="一、闭包Swift 中闭包的概念就像是Objective-C中的block。OC中的block类似于匿名函数，闭包是用来定义函数， 同时闭包可以嵌套和作为参数传递。 在 Swift 中，函数也只不过是一种特殊的闭包。Swift 中的闭包有很多优化的地方： 1234567891 根据上下文推断参数和返回值的类型2 从单行表达式闭包中隐式返回 可以省略return3 可以使用简化的参数如 $0 $1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swift基础语法（四）">
+<meta property="og:url" content="http://example.com/23/Swift%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%EF%BC%88%E5%9B%9B%EF%BC%89/index.html">
+<meta property="og:site_name" content="欢迎来到我的个人博客">
+<meta property="og:description" content="一、闭包Swift 中闭包的概念就像是Objective-C中的block。OC中的block类似于匿名函数，闭包是用来定义函数， 同时闭包可以嵌套和作为参数传递。 在 Swift 中，函数也只不过是一种特殊的闭包。Swift 中的闭包有很多优化的地方： 1234567891 根据上下文推断参数和返回值的类型2 从单行表达式闭包中隐式返回 可以省略return3 可以使用简化的参数如 $0 $1">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-03-23T12:10:45.000Z">
+<meta property="article:modified_time" content="2022-09-22T08:01:53.000Z">
+<meta property="article:author" content="勿忘初心">
+<meta property="article:tag" content="Swift">
+<meta name="twitter:card" content="summary">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+    <link rel="stylesheet" href="/vendors/aplayer@1.10.1/dist/APlayer.min.css"></script>
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+    <script src="/vendors/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">欢迎来到我的个人博客</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>欢迎来到我的个人博客</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="http://example.com/23/Swift%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%EF%BC%88%E5%9B%9B%EF%BC%89/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">Swift基础语法（四）</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2018-03-23T12:10:45.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2018-03-23</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">勿忘初心</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~7.18K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1663833713000"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            
+            <hr />
+            <div itemprop="articleBody"><h2 id="一、闭包"><a href="#一、闭包" class="headerlink" title="一、闭包"></a>一、闭包</h2><p><strong>Swift 中闭包的概念就像是Objective-C中的block。OC中的block类似于匿名函数，闭包是用来定义函数， 同时闭包可以嵌套和作为参数传递。 在 Swift 中，函数也只不过是一种特殊的闭包。<br>Swift 中的闭包有很多优化的地方：</strong></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> 根据上下文推断参数和返回值的类型</span><br><span class="line"><span class="number">2</span> 从单行表达式闭包中隐式返回 可以省略<span class="keyword">return</span></span><br><span class="line"><span class="number">3</span> 可以使用简化的参数如 <span class="variable">$0</span> <span class="variable">$1</span> 意为从<span class="number">0</span>或者<span class="number">1</span>开始</span><br><span class="line"><span class="number">4</span> 提供了尾随闭包的语法</span><br><span class="line"></span><br><span class="line"><span class="comment">//语法   parameters参数 return 隐藏了</span></span><br><span class="line"><span class="comment">//&#123;(parameters) -&gt; return type in</span></span><br><span class="line"><span class="comment">//    parameters</span></span><br><span class="line"><span class="comment">//&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>各种格式下的闭包</strong></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//最简单的闭包//省略in的</span></span><br><span class="line"><span class="keyword">let</span> b <span class="operator">=</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;这也是闭包&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line">b() <span class="comment">//执行</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//有参数和返回值的闭包</span></span><br><span class="line"><span class="keyword">let</span> countNum <span class="operator">=</span> &#123;(num1:<span class="type">Int</span>,num2:<span class="type">Int</span>)-&gt;<span class="type">Int</span> <span class="keyword">in</span></span><br><span class="line">    <span class="keyword">return</span> num1<span class="operator">+</span>num2;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> count1 <span class="operator">=</span> <span class="keyword">self</span>.countNum(<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;count1: <span class="subst">\(count1)</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 有参数无返回值的闭包</span></span><br><span class="line"><span class="keyword">let</span> countNum <span class="operator">=</span> &#123;(num1:<span class="type">Int</span>,num2:<span class="type">Int</span>)-&gt; () <span class="keyword">in</span></span><br><span class="line">        <span class="keyword">let</span> aa  <span class="operator">=</span> num1<span class="operator">+</span>num2;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;count2: <span class="subst">\(aa)</span>&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line">countNum(<span class="number">222</span>,<span class="number">333</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//没有参数有返回值的闭包 </span></span><br><span class="line"><span class="keyword">let</span> countNum11 <span class="operator">=</span> &#123;()-&gt; <span class="type">Int</span> <span class="keyword">in</span> </span><br><span class="line">        <span class="keyword">self</span>.global <span class="operator">=</span> <span class="number">800</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">self</span>.global<span class="operator">!</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> newValue <span class="operator">=</span> countNum11()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;count3: <span class="subst">\(newValue)</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">闭包的调用都带有 （）<span class="comment">//这个表示执行</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>@noescape 和 @escaping</strong></p>
+<blockquote>
+<p><strong>简单的介绍就是如果这个闭包是在这个函数结束前内被调用，就是非逃逸的即noescape。</strong><br><strong>如果这个闭包是在函数执行完后才被调用，调用的地方超过了这函数的范围，所以叫逃逸闭包。</strong></p>
+<p><strong>举个例子</strong><br><strong>就是我们常用的masonry或者snapkit的添加约束的方法就是非逃逸的。因为这闭包马上就执行了。</strong><br><strong>网络请求请求结束后的回调的闭包则是逃逸的，因为发起请求后过了一段时间后这个闭包才执行。</strong><br><strong>比如这个Alamofire里的处理返回json的completionHandler闭包，就是逃逸的。</strong></p>
+</blockquote>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">loadData &#123; (result) <span class="keyword">in</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;获取json信息<span class="subst">\(result)</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">func</span> <span class="title function_">loadData</span>(<span class="params">completion</span>:  <span class="keyword">@escaping</span> (<span class="keyword">_</span> result: [<span class="type">String</span>])-&gt;()) -&gt; () &#123;</span><br><span class="line">    <span class="type">DispatchQueue</span>.global().async &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;耗时操作<span class="subst">\(Thread.current)</span>&quot;</span>)</span><br><span class="line">        <span class="type">Thread</span>.sleep(forTimeInterval: <span class="number">1.0</span>);</span><br><span class="line">        <span class="keyword">let</span> json<span class="operator">=</span>[<span class="string">&quot;12&quot;</span>,<span class="string">&quot;23&quot;</span>,<span class="string">&quot;34&quot;</span>]</span><br><span class="line">        <span class="type">DispatchQueue</span>.main.async(execute: &#123;</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;主线程<span class="subst">\(Thread.current)</span>&quot;</span>)</span><br><span class="line">            completion(json)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>定义闭包属性的问题</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">在Swift中，如果在某个类中定义一个属性，那么这个属性必须要初始化，否者会报错，</span><br><span class="line">如果暂时不想初始化，那么可以在后面写上一个 ? 号</span><br><span class="line"></span><br><span class="line">但是在定义闭包的属性时，一定要注意，以下这种写法是最常见的一种错误写法：</span><br><span class="line">  <span class="comment">/** 当前写法代表闭包的返回值可以是nil，而不是初始化的闭包 */</span></span><br><span class="line">  <span class="keyword">var</span> finished: () -&gt; ()?</span><br><span class="line">  <span class="comment">/** 正确写法：需要在整个闭包的后面加问号 */</span></span><br><span class="line">  <span class="keyword">var</span> finished: (() -&gt; ())?</span><br></pre></td></tr></table></figure>
+
+<p><strong>闭包的循环引用问题</strong></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">在<span class="type">Swift开发中，有一个原则就是能不写self就不写self，但是在闭包中必须写上self；</span></span><br><span class="line">这是因为闭包是用来保存一段代码，而且系统也不知道这段代码具体的调用时间，</span><br><span class="line">所以为了保证闭包中的对象不被释放，需要 <span class="keyword">self</span> 进行一次强引用；这其实和<span class="type">Block中的原理差不多</span><span class="operator">。</span></span><br><span class="line"></span><br><span class="line">所以以后看到<span class="keyword">self</span>基本上都和闭包有关系<span class="operator">。</span>（这也是闭包中循环引用来源的原因）</span><br><span class="line"></span><br><span class="line">下面我举一个简单的关于闭包循环引用的例子：</span><br><span class="line"></span><br><span class="line">你定义了两个控制器：<span class="type">OneController和TwoController，OneController只是负责push出TwoController</span>,</span><br><span class="line">我们在<span class="type">TwoController中进行一些关于闭包的操作，然后在pop返回的时候查看该控制器是否被销毁了，</span></span><br><span class="line">来验证闭包是否发生了循环引用问题；</span><br><span class="line">在<span class="type">TwoController中我们只需要简单写一些代码即可：</span></span><br><span class="line"></span><br><span class="line"> <span class="comment">// 定义一个闭包的属性 </span></span><br><span class="line"> <span class="keyword">var</span> finished: (() -&gt; ())<span class="operator">?</span></span><br><span class="line"> <span class="comment">// 定义一个函数，参数为闭包</span></span><br><span class="line"> <span class="keyword">func</span> <span class="title function_">loadData</span>(<span class="params">finished</span>: () -&gt; ()) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;调用了&quot;</span>)</span><br><span class="line">    <span class="keyword">self</span>.finished <span class="operator">=</span> finished</span><br><span class="line">    finished();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 函数调用</span></span><br><span class="line">loadData &#123; () -&gt; () <span class="keyword">in</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;回调了&quot;</span>)</span><br><span class="line">        <span class="comment">// 这句又强引用self，导致循环引用</span></span><br><span class="line">        <span class="keyword">self</span>.view.backgroundColor <span class="operator">=</span> <span class="type">UIColor</span>.redColor()</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">// 判断是否被销毁了</span></span><br><span class="line"><span class="keyword">deinit</span> &#123;</span><br><span class="line">       <span class="built_in">print</span>(<span class="string">&quot;控制器被销毁了&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">当我们执行以上代码，并且从<span class="type">TwoController返回到OneController时，</span></span><br><span class="line"><span class="type">TwoController的deinit方法没有被调用，表明TwoController没有被销毁，闭包存在了循环引用的问题；</span></span><br><span class="line"></span><br><span class="line">这是因为：控制器通过闭包属性引用闭包，而闭包中又强引用着<span class="keyword">self</span>(控制器),所以导致了循环引用的问题；</span><br><span class="line"></span><br><span class="line"><span class="type">Swift中关于循环引用的解决方案</span></span><br><span class="line"><span class="keyword">weak</span> <span class="keyword">var</span> weakSelf <span class="operator">=</span> <span class="keyword">self</span></span><br><span class="line">那么原先代码中只需要把<span class="keyword">self</span>改成weakSelf即可</span><br><span class="line"><span class="comment">// 由于weakSelf为可选类型，这里必须保证有值，所以加上！号</span></span><br><span class="line">weakSelf<span class="operator">!</span>.view.backgroundColor <span class="operator">=</span> <span class="type">UIColor</span>.redColor()</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、代理"><a href="#二、代理" class="headerlink" title="二、代理"></a>二、代理</h2><p><strong>流程基本和OC中的一致</strong></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> UIKit</span><br><span class="line"><span class="keyword">@objc</span> <span class="keyword">protocol</span> <span class="title class_">mydelegate</span> &#123;</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">FF1</span>(<span class="params">a</span>:<span class="type">String</span>)     <span class="comment">//必须实现的</span></span><br><span class="line">   <span class="keyword">@objc</span> <span class="keyword">optional</span> <span class="keyword">func</span> <span class="title function_">FF2</span>(<span class="params">aa</span>:<span class="type">String</span>)  <span class="comment">//可以选择是否实现的</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*在声明的protocol中为什么要用  @objc 呢？ </span></span><br><span class="line"><span class="comment">因为 Swift 的 protocol 是可以除了 class 以外的其他类型遵守的，而对于像 struct 或是 enum 这样的类型，</span></span><br><span class="line"><span class="comment">本身就不通过引用计数来管理内存，所以也不可能用 weak 这样的 ARC 的概念来进行修饰。</span></span><br><span class="line"><span class="comment">想要在 Swift 中使用 weak delegate，我们就需要将 protocol 限制在 class 内。</span></span><br><span class="line"><span class="comment">一种做法是将 protocol 声明为 Objective-C 的，这可以通过在 protocol 前面加上 @objc 关键字来达到*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyTest</span>: <span class="title class_">NSObject</span> &#123;</span><br><span class="line">    <span class="keyword">weak</span> <span class="keyword">var</span> delegate:mydelegate<span class="operator">?</span></span><br><span class="line">    <span class="comment">/*一定要 weak var  delegate: AADelegate?  去声明你的代理属性，避免循环引用问题*/</span></span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">test</span>() -&gt; () &#123;</span><br><span class="line">        <span class="keyword">self</span>.delegate<span class="operator">?</span> .<span class="type">FF1</span>(a: <span class="string">&quot;代理方法1&quot;</span>)</span><br><span class="line">         <span class="comment">/* 为什么要 delegateOK.clickAction?() 中要有个问号呢</span></span><br><span class="line"><span class="comment">            原因是在OC的代码中， 用respondsToSelector（）方法来判断是否实现了方法。</span></span><br><span class="line"><span class="comment">            而在swift 中就直接可以用 ？ 来判断是否实现了方法。有时系统可能会给你自动提示，然后你就fix 一下*/</span></span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*遵循协议*/</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ViewController</span>: <span class="title class_">UIViewController</span>,<span class="title class_">mydelegate</span> &#123;</span><br><span class="line"><span class="keyword">override</span> <span class="keyword">func</span> <span class="title function_">viewDidLoad</span>() &#123;</span><br><span class="line">    <span class="keyword">super</span>.viewDidLoad()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> myTest <span class="operator">=</span> <span class="type">MyTest</span>()</span><br><span class="line">    myTest.delegate <span class="operator">=</span> <span class="keyword">self</span></span><br><span class="line">    myTest.test()  </span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">   <span class="comment">/*实现代理方法 */</span></span><br><span class="line">   <span class="keyword">func</span> <span class="title function_">FF1</span>(<span class="params">a</span>:<span class="type">String</span>)&#123;</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">&quot;代理：<span class="subst">\(a)</span>&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">  代理：代理方法<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="三、通知"><a href="#三、通知" class="headerlink" title="三、通知"></a>三、通知</h2><p><strong>流程基本和OC中的一致</strong></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyTest</span>: <span class="title class_">NSObject</span> &#123;        </span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">test</span>() -&gt; () &#123;</span><br><span class="line">        <span class="type">NotificationCenter</span>.default.post(name: <span class="type">NSNotification</span>.<span class="type">Name</span>.<span class="keyword">init</span>(<span class="string">&quot;test&quot;</span>), object: <span class="keyword">self</span>, userInfo: [<span class="string">&quot;post&quot;</span>:<span class="string">&quot;哈哈&quot;</span>])</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="keyword">func</span> <span class="title function_">viewDidLoad</span>() &#123;</span><br><span class="line">    <span class="keyword">super</span>.viewDidLoad()</span><br><span class="line">    </span><br><span class="line">    <span class="type">NotificationCenter</span>.default.addObserver(<span class="keyword">self</span>, selector: <span class="keyword">#selector</span>(test), name: <span class="type">NSNotification</span>.<span class="type">Name</span>.<span class="keyword">init</span>(<span class="string">&quot;test&quot;</span>), object: <span class="literal">nil</span>)</span><br><span class="line">   </span><br><span class="line">    <span class="keyword">let</span> myste <span class="operator">=</span> <span class="type">MyTest</span>()</span><br><span class="line">    myste .test()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@objc</span> <span class="keyword">func</span> <span class="title function_">test</span>(<span class="params">nofi</span> : <span class="type">Notification</span>) -&gt; <span class="type">Void</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> str <span class="operator">=</span> nofi.userInfo<span class="operator">!</span>[<span class="string">&quot;post&quot;</span>]</span><br><span class="line">    <span class="keyword">let</span> str1 <span class="operator">=</span> str <span class="keyword">as!</span> <span class="type">String</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;通知传来了: <span class="subst">\(str1)</span>&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">deinit</span> &#123;</span><br><span class="line">    <span class="type">NotificationCenter</span>.default.removeObserver(<span class="keyword">self</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、构造函数"><a href="#四、构造函数" class="headerlink" title="四、构造函数"></a>四、构造函数</h2><h4 id="普通构造函数"><a href="#普通构造函数" class="headerlink" title="普通构造函数"></a>普通构造函数</h4><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//构造方法</span></span><br><span class="line"><span class="keyword">init</span>(<span class="params">name</span>: <span class="type">String</span>, <span class="params">age</span>: <span class="type">Int</span>) &#123;</span><br><span class="line">    <span class="comment">//当属性名和参数名相同时  需要加上 self来区分</span></span><br><span class="line">    <span class="keyword">self</span>.name <span class="operator">=</span> name</span><br><span class="line">    <span class="keyword">self</span>.age <span class="operator">=</span> age</span><br><span class="line">    <span class="keyword">super</span>.<span class="keyword">init</span>()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> myste <span class="operator">=</span> <span class="type">MyTest</span>.<span class="keyword">init</span>(name: <span class="string">&quot;bady&quot;</span>, age: <span class="number">19</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="构造函数-KVC构造"><a href="#构造函数-KVC构造" class="headerlink" title="构造函数-KVC构造"></a>构造函数-KVC构造</h4><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">@objc</span> <span class="keyword">var</span> name: <span class="type">String</span>?</span><br><span class="line"> <span class="keyword">@objc</span> <span class="keyword">var</span> age: <span class="type">Int</span> <span class="operator">=</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line"> <span class="comment">//构造方法</span></span><br><span class="line"><span class="keyword">init</span>(<span class="params">dict</span>: [<span class="params">String</span> : <span class="type">AnyObject</span>])&#123;</span><br><span class="line">    <span class="keyword">super</span>.<span class="keyword">init</span>()</span><br><span class="line">    setValuesForKeys(dict)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">override</span> <span class="keyword">func</span> <span class="title function_">setValue</span>(<span class="keyword">_</span> <span class="params">value</span>: <span class="keyword">Any</span><span class="operator">?</span>, <span class="params">forKey</span> <span class="params">key</span>: <span class="type">String</span>) &#123;</span><br><span class="line">    <span class="keyword">super</span>.setValue(value, forKey: key)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//过滤掉 不存的在属性对应的key</span></span><br><span class="line"><span class="keyword">override</span> <span class="keyword">func</span> <span class="title function_">setValue</span>(<span class="keyword">_</span> <span class="params">value</span>: <span class="keyword">Any</span><span class="operator">?</span>, <span class="params">forUndefinedKey</span> <span class="params">key</span>: <span class="type">String</span>) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;no: <span class="subst">\(value)</span>,<span class="subst">\(key)</span>&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">let</span> dic <span class="operator">=</span> [<span class="string">&quot;name&quot;</span>:<span class="string">&quot;zhangsan&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">2</span>,<span class="string">&quot;title&quot;</span>:<span class="string">&quot;nini&quot;</span>] <span class="keyword">as</span> [<span class="type">String</span> : <span class="keyword">Any</span>]</span><br><span class="line"> <span class="keyword">let</span> myste <span class="operator">=</span> <span class="type">MyTest</span>.<span class="keyword">init</span>(dict: dic <span class="keyword">as</span> [String : <span class="type">AnyObject</span>])</span><br><span class="line"> <span class="built_in">print</span>(<span class="string">&quot;name: <span class="subst">\(myste.name)</span><span class="subst">\n</span> age:<span class="subst">\(myste.age)</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>在swift 4.0中使用系统方法setValuesForKeys()进行赋值，明明有这个属性，但它还是走<br>override func setValue(_ value: Any?, forUndefinedKey key: String)<br>这个未定义的方法</strong><br><strong>原因是：swift 4.0 版本要在属性前面加@objc</strong></p>
+<h2 id="五、懒加载"><a href="#五、懒加载" class="headerlink" title="五、懒加载"></a>五、懒加载</h2><p><strong>格式：<br>lazy var 变量: 类型 &#x3D; { 创建变量代码 }()</strong><br><strong>懒加载的写法本质上是定义并执行一个闭包</strong></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//MARK: -View懒加载</span></span><br><span class="line"><span class="keyword">lazy</span> <span class="keyword">var</span> <span class="type">View</span>: <span class="type">UIView</span> <span class="operator">=</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> view <span class="operator">=</span> <span class="type">UIView</span>(frame:<span class="type">CGRect</span>(x: <span class="number">0</span>, y: <span class="number">0</span>, width: <span class="number">100</span>, height: <span class="number">100</span>))</span><br><span class="line">    view.backgroundColor <span class="operator">=</span> <span class="type">UIColor</span>.redColor()</span><br><span class="line">    <span class="keyword">return</span> view</span><br><span class="line">&#125;()</span><br><span class="line"></span><br><span class="line"><span class="comment">//MARK: -TableView懒加载</span></span><br><span class="line"><span class="keyword">lazy</span> <span class="keyword">var</span> zyTableView: <span class="type">UITableView</span> <span class="operator">=</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> tempTableView <span class="operator">=</span> <span class="type">UITableView</span> (frame: <span class="keyword">self</span>.view.bounds, style: <span class="type">UITableViewStyle</span>.plain)</span><br><span class="line">    tempTableView.delegate <span class="operator">=</span> <span class="keyword">self</span></span><br><span class="line">    tempTableView.dataSource <span class="operator">=</span> <span class="keyword">self</span></span><br><span class="line">    <span class="keyword">return</span> tempTableView</span><br><span class="line">&#125;()</span><br><span class="line"></span><br><span class="line">  <span class="comment">//MARK: -数组懒加载</span></span><br><span class="line"><span class="keyword">lazy</span> <span class="keyword">var</span> dataList: [<span class="type">String</span>] <span class="operator">=</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;我懒加载了&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> [<span class="string">&quot;lnj&quot;</span>, <span class="string">&quot;lmj&quot;</span>, <span class="string">&quot;why&quot;</span>]</span><br><span class="line">  &#125;()</span><br></pre></td></tr></table></figure>
+
+<h2 id="六、重写属性的Set、get发方法"><a href="#六、重写属性的Set、get发方法" class="headerlink" title="六、重写属性的Set、get发方法"></a>六、重写属性的Set、get发方法</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyTest</span>: <span class="title class_">NSObject</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//定义一个变量</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">var</span> _tittle: <span class="type">String</span>?</span><br><span class="line">  <span class="keyword">var</span> tittle: <span class="type">String</span>?&#123;</span><br><span class="line">      <span class="keyword">set</span>&#123;</span><br><span class="line">          <span class="built_in">print</span>(<span class="string">&quot;重写了set方法！&quot;</span>)</span><br><span class="line">          _tittle<span class="operator">=</span>newValue</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">get</span>&#123;</span><br><span class="line">          <span class="keyword">return</span> _tittle</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">myste.tittle <span class="operator">=</span> <span class="string">&quot;asd&quot;</span></span><br></pre></td></tr></table></figure>
+
+</div>
+        </div>
+        
+            <div class="kratos-copyright text-center clearfix">
+                <h5 itemprop="copyrightNotice">本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+            </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+                <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                
+                
+                    <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                    <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/23/Swift%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%EF%BC%88%E5%9B%9B%EF%BC%89/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/23/Swift%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%EF%BC%88%E5%9B%9B%EF%BC%89/";
+            const title         = "「Swift基础语法（四）」";
+            const excerpt       = `一、闭包Swift 中闭包的概念就像是Objective-C中的block。OC中的block类似于匿名函数，闭包是用来定义函数， 同时闭包可以嵌套和作为参数传递。 在 Swift 中，函数也只不过是一种特殊的闭包。Swift 中的闭...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                
+                </div>
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/Swift/" rel="tag">Swift</a>
+                </div>
+				
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" Swift基础语法（三）" href="/22/Swift基础语法（三）/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" Swift基础语法（五）" href="/12/Swift基础语法（五）/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center"></p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                68
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                6
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                12
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS%E7%9F%A5%E8%AF%86%E7%82%B9/">iOS知识点</a><span class="category-list-count">55</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF/">加密技术</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/Cocoapods/" style="font-size: 0.63em;">Cocoapods</a> <a href="/tags/Runloop/" style="font-size: 0.6em;">Runloop</a> <a href="/tags/Swift/" style="font-size: 0.73em;">Swift</a> <a href="/tags/UI%E6%8E%A7%E4%BB%B6/" style="font-size: 0.8em;">UI控件</a> <a href="/tags/ffmpeg/" style="font-size: 0.6em;">ffmpeg</a> <a href="/tags/git/" style="font-size: 0.63em;">git</a> <a href="/tags/runtime/" style="font-size: 0.67em;">runtime</a> <a href="/tags/%E5%8A%A0%E5%AF%86/" style="font-size: 0.6em;">加密</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 0.67em;">多线程</a> <a href="/tags/%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" style="font-size: 0.77em;">底层原理</a> <a href="/tags/%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6/" style="font-size: 0.7em;">开源框架</a> <a href="/tags/%E6%99%BA%E8%83%BD%E8%AE%BE%E5%A4%87/" style="font-size: 0.63em;">智能设备</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/17/XCode14-iOS16-%E9%80%82%E9%85%8D%E9%97%AE%E9%A2%98/"><i class="fa  fa-book"></i> XCode14 & iOS16 适配问题</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/26/objc%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/"><i class="fa  fa-book"></i> objc源码编译</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/08/git%E6%8A%A5%E9%94%99-Support-for-password-authentication-was-removed-on-August-13-2021/"><i class="fa  fa-book"></i> git报错#Support for password authentication was removed on August 13,2021</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/26/ios-%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93/"><i class="fa  fa-book"></i> iOS-离屏渲染</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/09/FFmpeg%E5%B8%B8%E8%A7%81%E6%8C%87%E4%BB%A4%E7%9A%84%E4%BD%BF%E7%94%A8/"><i class="fa  fa-book"></i> FFmpeg常见指令的使用</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  class="ap-lrc"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://t.me/CandyUnion"><i class="fa fa-telegram"></i></a></li>
+                        
+                        
+                        
+                        <li><a target="_blank" rel="me" href="https://nya.one/@Candinya"><i class="fa fa fa-share-alt-square"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/Candinya"><i class="fa fa-github"></i></a></li>
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2023 欢迎来到我的个人博客 版权所有.</li>
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+    <script defer src="/vendors/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="/vendors/meting@2.0.1/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="3204190542"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

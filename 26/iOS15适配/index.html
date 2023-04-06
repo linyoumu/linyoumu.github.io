@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  
+  
+  <title>iOS15适配 | 欢迎来到我的个人博客</title>
+  <meta name="author" content="勿忘初心" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="" />
+  
+  <meta name="description" content="注意：以下适配内容，必须适配的会以”必须”标出 UITableView Section的header增加默认间距123if (@available(iOS 15.0, *)) &amp;#123;    self.tableView.sectionHeaderTopPadding &#x3D; 0;&amp;#125;  导航栏异样iOS 15中，导航栏的问题比较明显，调试之后发现是UINavigationBar部分属性的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS15适配">
+<meta property="og:url" content="http://example.com/26/iOS15%E9%80%82%E9%85%8D/index.html">
+<meta property="og:site_name" content="欢迎来到我的个人博客">
+<meta property="og:description" content="注意：以下适配内容，必须适配的会以”必须”标出 UITableView Section的header增加默认间距123if (@available(iOS 15.0, *)) &amp;#123;    self.tableView.sectionHeaderTopPadding &#x3D; 0;&amp;#125;  导航栏异样iOS 15中，导航栏的问题比较明显，调试之后发现是UINavigationBar部分属性的">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-09-26T05:53:43.000Z">
+<meta property="article:modified_time" content="2022-09-26T05:58:28.000Z">
+<meta property="article:author" content="勿忘初心">
+<meta name="twitter:card" content="summary">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+    <link rel="stylesheet" href="/vendors/aplayer@1.10.1/dist/APlayer.min.css"></script>
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+    <script src="/vendors/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">欢迎来到我的个人博客</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>欢迎来到我的个人博客</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="http://example.com/26/iOS15%E9%80%82%E9%85%8D/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">iOS15适配</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2021-09-26T05:53:43.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2021-09-26</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">勿忘初心</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~5.37K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1664171908000"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            
+            <hr />
+            <div itemprop="articleBody"><p><strong>注意：以下适配内容，必须适配的会以”必须”标出</strong></p>
+<h2 id="UITableView-Section的header增加默认间距"><a href="#UITableView-Section的header增加默认间距" class="headerlink" title="UITableView Section的header增加默认间距"></a><code>UITableView Section</code>的<code>header</code>增加默认间距</h2><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="meta">@available(iOS 15.0, *)</span>) &#123;</span><br><span class="line">    self.tableView.sectionHeaderTopPadding = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="导航栏异样"><a href="#导航栏异样" class="headerlink" title="导航栏异样"></a>导航栏异样</h2><p><code>iOS 15</code>中，导航栏的问题比较明显，调试之后发现是<code>UINavigationBar</code>部分属性的设置在<code>iOS 15</code>上是无效的，查看导航栏特性<code>API</code>，苹果对导航栏的性能做了优化，默认情况下，如果导航栏与视图没有折叠，导航栏的背景透明，如果系统检测到有重叠的话，会变成毛玻璃的效果。</p>
+<p><strong>注意⚠️：</strong><code>UINavigationBarAppearance</code>是<code>iOS 13</code>更新的<code>API</code>，<code>iOS 15</code> <code>navigationBar</code>的相关属性设置要通过实例<code>UINavigationBarAppearance</code>来实现。</p>
+<p>在<code>iOS 13 UINavigationBar</code>新增了<code>scrollEdgeAppearance</code>属性，但在<code>iOS 14</code>及更早的版本中此属性只应用在大标题导航栏上。在<code>iOS 15</code>中此属性适用于所有导航栏。</p>
+<p>对于<code>scrollEdgeAppearance</code>属性的说明：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">When a navigation controller contains a navigation bar and a scroll view, part of the scroll view’s content appears underneath the navigation bar. If the edge of the scrolled content reaches that bar, <span class="built_in">UIKit</span> applies the appearance settings <span class="keyword">in</span> <span class="variable language_">this</span> property.</span><br><span class="line">If the value of <span class="variable language_">this</span> property is <span class="literal">nil</span>, <span class="built_in">UIKit</span> uses the settings found <span class="keyword">in</span> the standard Appearance property, modified to use a transparent background. If no navigation controller manages your navigation bar, <span class="built_in">UIKit</span> ignores <span class="variable language_">this</span> property and uses the standard appearance of the navigation bar.</span><br><span class="line"></span><br><span class="line"><span class="comment">//旧代码</span></span><br><span class="line">- (<span class="type">void</span>)customizeInterface &#123;</span><br><span class="line">    <span class="comment">//设置Nav的背景色和title色</span></span><br><span class="line">    <span class="built_in">UINavigationBar</span> *navigationBarAppearance = [<span class="built_in">UINavigationBar</span> appearance];</span><br><span class="line">    [navigationBarAppearance setBackgroundImage:[<span class="built_in">UIImage</span> imageWithColor:[<span class="built_in">UIColor</span> whiteColor]] forBarMetrics:<span class="built_in">UIBarMetricsDefault</span>];</span><br><span class="line">    [navigationBarAppearance setShadowImage:[<span class="built_in">UIImage</span> new]];</span><br><span class="line">    [navigationBarAppearance setTintColor:[<span class="built_in">UIColor</span> colorWithHexString:<span class="string">@&quot;333333&quot;</span>]];<span class="comment">//返回按钮的箭头颜色</span></span><br><span class="line">    <span class="built_in">NSDictionary</span> *textAttributes = @&#123;</span><br><span class="line">        <span class="built_in">NSFontAttributeName</span>:[<span class="built_in">UIFont</span> fontWithName:<span class="string">@&quot;SourceHanSerifSC-Bold&quot;</span> size:<span class="number">18.0</span>],</span><br><span class="line">        <span class="built_in">NSForegroundColorAttributeName</span>: [<span class="built_in">UIColor</span> colorWithHexString:<span class="string">@&quot;333333&quot;</span>],</span><br><span class="line">    &#125;;</span><br><span class="line">    [navigationBarAppearance setTitleTextAttributes:textAttributes];</span><br><span class="line">    navigationBarAppearance.backIndicatorImage = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@&quot;image_common_navBackBlack&quot;</span>];</span><br><span class="line">    navigationBarAppearance.backIndicatorTransitionMaskImage = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@&quot;image_common_navBackBlack&quot;</span>];</span><br><span class="line">    [[<span class="built_in">UITextField</span> appearance] setTintColor:kColorLightBlue];<span class="comment">//设置UITextField的光标颜色</span></span><br><span class="line">    [[<span class="built_in">UITextView</span> appearance] setTintColor:kColorLightBlue];<span class="comment">//设置UITextView的光标颜色</span></span><br><span class="line">    [[<span class="built_in">UISearchBar</span> appearance] setBackgroundImage:[<span class="built_in">UIImage</span> imageWithColor:[<span class="built_in">UIColor</span> whiteColor]] forBarPosition:<span class="number">0</span> barMetrics:<span class="built_in">UIBarMetricsDefault</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//新代码</span></span><br><span class="line">- (<span class="type">void</span>)customizeInterface &#123;</span><br><span class="line">    <span class="comment">//设置Nav的背景色和title色</span></span><br><span class="line">    <span class="keyword">if</span> (@available(iOS <span class="number">13.0</span>, *)) &#123;</span><br><span class="line">        <span class="built_in">UINavigationBarAppearance</span> *appearance = [[<span class="built_in">UINavigationBarAppearance</span> alloc] init];</span><br><span class="line">        [appearance setBackgroundColor:[<span class="built_in">UIColor</span> whiteColor]];</span><br><span class="line">        [appearance setBackgroundImage:[<span class="built_in">UIImage</span> imageWithColor:[<span class="built_in">UIColor</span> whiteColor]]];</span><br><span class="line">        [appearance setShadowImage:[<span class="built_in">UIImage</span> imageWithColor:[<span class="built_in">UIColor</span> whiteColor]]];</span><br><span class="line">        appearance.titleTextAttributes = @&#123;<span class="built_in">NSFontAttributeName</span>:[<span class="built_in">UIFont</span> systemFontOfSize:<span class="number">18.0</span>f weight:<span class="built_in">UIFontWeightSemibold</span>],<span class="built_in">NSForegroundColorAttributeName</span>: [<span class="built_in">UIColor</span> colorWithHexString:<span class="string">@&quot;333333&quot;</span>]&#125;;</span><br><span class="line">        [appearance setBackIndicatorImage:[<span class="built_in">UIImage</span> imageNamed:<span class="string">@&quot;image_common_navBackBlack&quot;</span>] transitionMaskImage:[<span class="built_in">UIImage</span> imageNamed:<span class="string">@&quot;image_common_navBackBlack&quot;</span>]];</span><br><span class="line">        [[<span class="built_in">UINavigationBar</span> appearance] setScrollEdgeAppearance: appearance];</span><br><span class="line">        [[<span class="built_in">UINavigationBar</span> appearance] setStandardAppearance:appearance];</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">UINavigationBar</span> *navigationBarAppearance = [<span class="built_in">UINavigationBar</span> appearance];</span><br><span class="line">    [navigationBarAppearance setBackgroundImage:[<span class="built_in">UIImage</span> imageWithColor:[<span class="built_in">UIColor</span> whiteColor]] forBarMetrics:<span class="built_in">UIBarMetricsDefault</span>];</span><br><span class="line">    [navigationBarAppearance setShadowImage:[<span class="built_in">UIImage</span> new]];</span><br><span class="line">    [navigationBarAppearance setTintColor:[<span class="built_in">UIColor</span> colorWithHexString:<span class="string">@&quot;333333&quot;</span>]];</span><br><span class="line">    [navigationBarAppearance setTitleTextAttributes:@&#123;<span class="built_in">NSFontAttributeName</span>:[<span class="built_in">UIFont</span> systemFontOfSize:<span class="number">18.0</span>f weight:<span class="built_in">UIFontWeightSemibold</span>],<span class="built_in">NSForegroundColorAttributeName</span>: [<span class="built_in">UIColor</span> colorWithHexString:<span class="string">@&quot;333333&quot;</span>]&#125;];</span><br><span class="line">    navigationBarAppearance.backIndicatorImage = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@&quot;image_common_navBackBlack&quot;</span>];</span><br><span class="line">    navigationBarAppearance.backIndicatorTransitionMaskImage = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@&quot;image_common_navBackBlack&quot;</span>];</span><br><span class="line"></span><br><span class="line">    [[<span class="built_in">UITextField</span> appearance] setTintColor:[<span class="built_in">UIColor</span> colorWithHexString:System_color]];</span><br><span class="line">    [[<span class="built_in">UITextView</span> appearance] setTintColor:[<span class="built_in">UIColor</span> colorWithHexString:System_color]];</span><br><span class="line">    [[<span class="built_in">UISearchBar</span> appearance] setBackgroundImage:[<span class="built_in">UIImage</span> imageWithColor:[<span class="built_in">UIColor</span> whiteColor]] forBarPosition:<span class="number">0</span> barMetrics:<span class="built_in">UIBarMetricsDefault</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="UITabbar"><a href="#UITabbar" class="headerlink" title="UITabbar"></a>UITabbar</h2><p>tabbar和<code>navigationBar</code>的问题属于同一类，<code>tabbar</code>背景颜色设置失效，字体设置失效，阴影设置失效问题。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//旧代码</span></span><br><span class="line"><span class="keyword">self</span>.tabBar.backgroundImage = <span class="built_in">UIColor</span>.white.image</span><br><span class="line"><span class="keyword">self</span>.tabBar.shadowImage = <span class="built_in">UIColor</span>.init(<span class="number">0xEEEEEE</span>).image</span><br><span class="line">item.setTitleTextAttributes(norTitleAttr, <span class="keyword">for</span>: .normal)</span><br><span class="line">item.setTitleTextAttributes(selTitleAttr, <span class="keyword">for</span>: .selected)</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意⚠️：</strong>首先是背景色设置失效，需要用<code>UITabBarAppearance</code>来设置</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//新代码</span></span><br><span class="line"><span class="keyword">if</span> <span class="meta">#available(iOS 15, *) &#123;</span></span><br><span class="line">    let bar = <span class="built_in">UITabBarAppearance</span>.init()</span><br><span class="line">    bar.backgroundColor = <span class="built_in">UIColor</span>.white</span><br><span class="line">    bar.shadowImage = <span class="built_in">UIColor</span>.init(<span class="number">0xEEEEEE</span>).image</span><br><span class="line">    let selTitleAttr = [</span><br><span class="line">        <span class="built_in">NSAttributedString</span>.Key.font: itemFont,</span><br><span class="line">        <span class="built_in">NSAttributedString</span>.Key.foregroundColor: <span class="built_in">UIColor</span>.theme</span><br><span class="line">    ]</span><br><span class="line">    bar.stackedLayoutAppearance.selected.titleTextAttributes = selTitleAttr <span class="comment">// 设置选中attributes</span></span><br><span class="line">    <span class="keyword">self</span>.tabBar.scrollEdgeAppearance = bar</span><br><span class="line">    <span class="keyword">self</span>.tabBar.standardAppearance = bar</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+        </div>
+        
+            <div class="kratos-copyright text-center clearfix">
+                <h5 itemprop="copyrightNotice">本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+            </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+                <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                
+                
+                    <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                    <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/26/iOS15%E9%80%82%E9%85%8D/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/26/iOS15%E9%80%82%E9%85%8D/";
+            const title         = "「iOS15适配」";
+            const excerpt       = `注意：以下适配内容，必须适配的会以”必须”标出
+UITableView Section的header增加默认间距123if (@available(iOS 15.0, *)) &#123;    self.tableView.sect...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                
+                </div>
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    
+                </div>
+				
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" iOS 开发中的锁" href="/02/iOS-开发中的锁/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" FFmpeg常见指令的使用" href="/09/FFmpeg常见指令的使用/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center"></p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                68
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                6
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                12
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS%E7%9F%A5%E8%AF%86%E7%82%B9/">iOS知识点</a><span class="category-list-count">55</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF/">加密技术</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/Cocoapods/" style="font-size: 0.63em;">Cocoapods</a> <a href="/tags/Runloop/" style="font-size: 0.6em;">Runloop</a> <a href="/tags/Swift/" style="font-size: 0.73em;">Swift</a> <a href="/tags/UI%E6%8E%A7%E4%BB%B6/" style="font-size: 0.8em;">UI控件</a> <a href="/tags/ffmpeg/" style="font-size: 0.6em;">ffmpeg</a> <a href="/tags/git/" style="font-size: 0.63em;">git</a> <a href="/tags/runtime/" style="font-size: 0.67em;">runtime</a> <a href="/tags/%E5%8A%A0%E5%AF%86/" style="font-size: 0.6em;">加密</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 0.67em;">多线程</a> <a href="/tags/%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" style="font-size: 0.77em;">底层原理</a> <a href="/tags/%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6/" style="font-size: 0.7em;">开源框架</a> <a href="/tags/%E6%99%BA%E8%83%BD%E8%AE%BE%E5%A4%87/" style="font-size: 0.63em;">智能设备</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/17/XCode14-iOS16-%E9%80%82%E9%85%8D%E9%97%AE%E9%A2%98/"><i class="fa  fa-book"></i> XCode14 & iOS16 适配问题</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/26/objc%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/"><i class="fa  fa-book"></i> objc源码编译</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/08/git%E6%8A%A5%E9%94%99-Support-for-password-authentication-was-removed-on-August-13-2021/"><i class="fa  fa-book"></i> git报错#Support for password authentication was removed on August 13,2021</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/26/ios-%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93/"><i class="fa  fa-book"></i> iOS-离屏渲染</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/09/FFmpeg%E5%B8%B8%E8%A7%81%E6%8C%87%E4%BB%A4%E7%9A%84%E4%BD%BF%E7%94%A8/"><i class="fa  fa-book"></i> FFmpeg常见指令的使用</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  class="ap-lrc"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://t.me/CandyUnion"><i class="fa fa-telegram"></i></a></li>
+                        
+                        
+                        
+                        <li><a target="_blank" rel="me" href="https://nya.one/@Candinya"><i class="fa fa fa-share-alt-square"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/Candinya"><i class="fa fa-github"></i></a></li>
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2023 欢迎来到我的个人博客 版权所有.</li>
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+    <script defer src="/vendors/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="/vendors/meting@2.0.1/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="3204190542"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

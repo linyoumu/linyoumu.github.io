@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  
+  
+  <title>SDWebImage源码分析 | 欢迎来到我的个人博客</title>
+  <meta name="author" content="勿忘初心" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="开源框架" />
+  
+  <meta name="description" content="一、流程架构图  SDWebImage对UIButton，UIImageView，NSButton，UIView进行了拓展，并对外提供了接口。无论对UIButton，UIImageView还是NSButton调用sd_setImageWithURL的时候，最终都会调用到UIView拓展类的sd_internalSetImageWithURL方法。 前面的拓展都只是对外的接口，主要逻辑处理放在SDW">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SDWebImage源码分析">
+<meta property="og:url" content="http://example.com/27/SDWebImage%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="欢迎来到我的个人博客">
+<meta property="og:description" content="一、流程架构图  SDWebImage对UIButton，UIImageView，NSButton，UIView进行了拓展，并对外提供了接口。无论对UIButton，UIImageView还是NSButton调用sd_setImageWithURL的时候，最终都会调用到UIView拓展类的sd_internalSetImageWithURL方法。 前面的拓展都只是对外的接口，主要逻辑处理放在SDW">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/2147926-35209707d567a04d.png">
+<meta property="article:published_time" content="2021-05-27T12:35:30.000Z">
+<meta property="article:modified_time" content="2022-09-28T08:45:46.000Z">
+<meta property="article:author" content="勿忘初心">
+<meta property="article:tag" content="开源框架">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/2147926-35209707d567a04d.png">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+    <link rel="stylesheet" href="/vendors/aplayer@1.10.1/dist/APlayer.min.css"></script>
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+    <script src="/vendors/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">欢迎来到我的个人博客</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>欢迎来到我的个人博客</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="http://example.com/27/SDWebImage%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">SDWebImage源码分析</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2021-05-27T12:35:30.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2021-05-27</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">勿忘初心</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~15.11K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1664354746000"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            
+            <hr />
+            <div itemprop="articleBody"><h2 id="一、流程架构图"><a href="#一、流程架构图" class="headerlink" title="一、流程架构图"></a>一、流程架构图</h2><h6 id=""><a href="#" class="headerlink" title=""></a><img src="/../images/2147926-35209707d567a04d.png" alt="img"></h6><blockquote>
+<ul>
+<li>SDWebImage对UIButton，UIImageView，NSButton，UIView进行了拓展，并对外提供了接口。无论对UIButton，UIImageView还是NSButton调用<code>sd_setImageWithURL</code>的时候，最终都会调用到UIView拓展类的<code>sd_internalSetImageWithURL</code>方法。</li>
+<li>前面的拓展都只是对外的接口，主要逻辑处理放在<code>SDWebImageManager</code>里面。他相当于一个<code>调度中心</code>，如果需要缓存（读跟取），他就会调用<code>SDImageCache</code>，如果需要下载，就会调用<code>SDWebImageDownloader</code>。类似我们MVP模式下的<code>Presenter</code>，收到View拓展接口相关的参数后，根据不同业务传递给cache跟downloader处理，最后将处理完的数据通过block回调给接口。</li>
+</ul>
+</blockquote>
+<p>最后还有一些工具，没有在流程图中画出来，这里说明一下:</p>
+<blockquote>
+<ul>
+<li><code>Decoder</code>：做一些编解码操作，针对不同类型的图片进行不同的操作。</li>
+<li><code>Transform</code>：从缓存或下载转换图像加载的转换器协议。</li>
+<li><code>AnimatedImage</code>：可以替代UIImageView，支持gif</li>
+<li><code>Utils</code>：存放一些枚举，Define，还有菊花器</li>
+<li><code>Categories</code>：对需要的类进行拓展，大部分是UIImage</li>
+<li><code>Private</code>：一些私人方法</li>
+</ul>
+</blockquote>
+<h2 id="二、代码部分"><a href="#二、代码部分" class="headerlink" title="二、代码部分"></a>二、代码部分</h2><h4 id="1-UIView-WebCache"><a href="#1-UIView-WebCache" class="headerlink" title="1. UIView+WebCache"></a>1. UIView+WebCache</h4><blockquote>
+<p>直接找到<code>sd_internalSetImageWithURL</code>方法，这是入口进来后第一个处理的方法，处理内容如下：</p>
+<p>a. 拿到旧的operation（任务），取消其操作，并从<code>SDOperationsDictionary</code>移除。然后创建新的加载任务，并加入到<code>SDOperationsDictionary</code>中。</p>
+<p>b. 处理进度条，重置进度条</p>
+<p>c. 处理菊花器</p>
+<p>d. 创建SDWebImageManager，并调用<code>loadImageWithURL</code>加载图片</p>
+</blockquote>
+<p>我们先看<code>sd_internalSetImageWithURL</code>方法里面的代码</p>
+<h5 id="a、取消之前的任务"><a href="#a、取消之前的任务" class="headerlink" title="a、取消之前的任务"></a>a、取消之前的任务</h5><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">     *通过SDWebImageContextSetImageOperationKey拿到SDOperationsDictionary的key：validOperationKey（说白了这里就是二维字典）</span></span><br><span class="line"><span class="comment">     *在通过validOperationKey拿到对应的Operation（任务），对任务进行取消之类的相关操作</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="built_in">NSString</span> *validOperationKey = context[SDWebImageContextSetImageOperationKey];</span><br><span class="line">    <span class="keyword">if</span> (!validOperationKey) &#123;</span><br><span class="line">        <span class="comment">// pass through the operation key to downstream, which can used for tracing operation or image view class</span></span><br><span class="line">        validOperationKey = <span class="built_in">NSStringFromClass</span>([<span class="keyword">self</span> <span class="keyword">class</span>]);</span><br><span class="line">        <span class="comment">// 对context进行深拷贝，转为可变字典</span></span><br><span class="line">        SDWebImageMutableContext *mutableContext = [context mutableCopy];</span><br><span class="line">        <span class="comment">// 将当前类对象名称装载进mutableContext</span></span><br><span class="line">        mutableContext[SDWebImageContextSetImageOperationKey] = validOperationKey;</span><br><span class="line">        <span class="comment">// 将mutableContext转回不可变字典context</span></span><br><span class="line">        context = [mutableContext <span class="keyword">copy</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 将validOperationKey存储起来</span></span><br><span class="line">    <span class="keyword">self</span>.sd_latestOperationKey = validOperationKey;</span><br><span class="line">    <span class="comment">// 如果这个key存在任务，则取消任务，且从SDOperationsDictionary移除</span></span><br><span class="line">    [<span class="keyword">self</span> sd_cancelImageLoadOperationWithKey:validOperationKey];</span><br><span class="line">    <span class="comment">// 将url存储起来</span></span><br><span class="line">    <span class="keyword">self</span>.sd_imageURL = url;</span><br></pre></td></tr></table></figure>
+
+<p>这段代码主要是拿到<code>validOperationKey</code>，并传给<code>sd_cancelImage</code>方法，<code>sd_cancelImage</code>的逻辑也很简单，通过<code>validOperationKey</code>，在<code>SDOperationsDictionary</code>里面拿到对应的任务，并<code>取消</code>。下面是<code>sd_cancelImage</code>的代码：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="type">void</span>)sd_cancelImageLoadOperationWithKey:(<span class="keyword">nullable</span> <span class="built_in">NSString</span> *)key &#123;</span><br><span class="line">    <span class="keyword">if</span> (key) &#123;</span><br><span class="line">        <span class="comment">// Cancel in progress downloader from queue</span></span><br><span class="line">        SDOperationsDictionary *operationDictionary = [<span class="keyword">self</span> sd_operationDictionary];</span><br><span class="line">        <span class="type">id</span>&lt;SDWebImageOperation&gt; operation;</span><br><span class="line">        <span class="comment">// 拿到对应的任务operation</span></span><br><span class="line">        <span class="keyword">@synchronized</span> (<span class="keyword">self</span>) &#123;</span><br><span class="line">            operation = [operationDictionary objectForKey:key];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (operation) &#123;</span><br><span class="line">            <span class="keyword">if</span> ([operation conformsToProtocol:<span class="class"><span class="keyword">@protocol</span>(<span class="title">SDWebImageOperation</span>)]) </span>&#123;</span><br><span class="line">                <span class="comment">// 如果存在并遵循SDWebImageOperation代理，则取消任务</span></span><br><span class="line">                [operation cancel];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 最后将任务移除</span></span><br><span class="line">            <span class="keyword">@synchronized</span> (<span class="keyword">self</span>) &#123;</span><br><span class="line">                [operationDictionary removeObjectForKey:key];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="b、占位图显示"><a href="#b、占位图显示" class="headerlink" title="b、占位图显示"></a>b、占位图显示</h5><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 是否需要延迟加载占位图</span></span><br><span class="line">    <span class="keyword">if</span> (!(options &amp; SDWebImageDelayPlaceholder)) &#123;</span><br><span class="line">        <span class="comment">// 主线程显示占位图</span></span><br><span class="line">        dispatch_main_async_safe(^&#123;</span><br><span class="line">            [<span class="keyword">self</span> sd_setImage:placeholder imageData:<span class="literal">nil</span> basedOnClassOrViaCustomSetImageBlock:setImageBlock cacheType:SDImageCacheTypeNone imageURL:url];</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="c、进度条，菊花器处理逻辑"><a href="#c、进度条，菊花器处理逻辑" class="headerlink" title="c、进度条，菊花器处理逻辑"></a>c、进度条，菊花器处理逻辑</h5><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (url) &#123;</span><br><span class="line">        <span class="comment">// reset the progress</span></span><br><span class="line">        <span class="comment">// 重置进度条</span></span><br><span class="line">        <span class="built_in">NSProgress</span> *imageProgress = objc_getAssociatedObject(<span class="keyword">self</span>, <span class="keyword">@selector</span>(sd_imageProgress));</span><br><span class="line">        <span class="keyword">if</span> (imageProgress) &#123;</span><br><span class="line">            imageProgress.totalUnitCount = <span class="number">0</span>;</span><br><span class="line">            imageProgress.completedUnitCount = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line"><span class="meta">#<span class="keyword">if</span> SD_UIKIT || SD_MAC</span></span><br><span class="line">        <span class="comment">// check and start image indicator</span></span><br><span class="line">        <span class="comment">// 有菊花器就转菊花</span></span><br><span class="line">        [<span class="keyword">self</span> sd_startImageIndicator];</span><br><span class="line">        <span class="type">id</span>&lt;SDWebImageIndicator&gt; imageIndicator = <span class="keyword">self</span>.sd_imageIndicator;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">        <span class="comment">// 拿到当前manager,没有就创建，有的话就将context的移除，防止循环引用</span></span><br><span class="line">        SDWebImageManager *manager = context[SDWebImageContextCustomManager];</span><br><span class="line">        <span class="keyword">if</span> (!manager) &#123;</span><br><span class="line">            manager = [SDWebImageManager sharedManager];</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// remove this manager to avoid retain cycle (manger -&gt; loader -&gt; operation -&gt; context -&gt; manager)</span></span><br><span class="line">            SDWebImageMutableContext *mutableContext = [context mutableCopy];</span><br><span class="line">            mutableContext[SDWebImageContextCustomManager] = <span class="literal">nil</span>;</span><br><span class="line">            context = [mutableContext <span class="keyword">copy</span>];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对进度条进行处理，如果菊花器是进度条类型的，那就让进度条跑起来，回调进度block</span></span><br><span class="line">        SDImageLoaderProgressBlock combinedProgressBlock = ^(<span class="built_in">NSInteger</span> receivedSize, <span class="built_in">NSInteger</span> expectedSize, <span class="built_in">NSURL</span> * _Nullable targetURL) &#123;</span><br><span class="line">            <span class="keyword">if</span> (imageProgress) &#123;</span><br><span class="line">                imageProgress.totalUnitCount = expectedSize;</span><br><span class="line">                imageProgress.completedUnitCount = receivedSize;</span><br><span class="line">            &#125;</span><br><span class="line"><span class="meta">#<span class="keyword">if</span> SD_UIKIT || SD_MAC</span></span><br><span class="line">            <span class="keyword">if</span> ([imageIndicator respondsToSelector:<span class="keyword">@selector</span>(updateIndicatorProgress:)]) &#123;</span><br><span class="line">                <span class="type">double</span> progress = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">if</span> (expectedSize != <span class="number">0</span>) &#123;</span><br><span class="line">                    progress = (<span class="type">double</span>)receivedSize / expectedSize;</span><br><span class="line">                &#125;</span><br><span class="line">                progress = MAX(MIN(progress, <span class="number">1</span>), <span class="number">0</span>); <span class="comment">// 0.0 - 1.0</span></span><br><span class="line">                <span class="built_in">dispatch_async</span>(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">                    [imageIndicator updateIndicatorProgress:progress];</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">            <span class="keyword">if</span> (progressBlock) &#123;</span><br><span class="line">                progressBlock(receivedSize, expectedSize, targetURL);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>注意这里并没有直接调用<code>combinedProgressBlock</code>处理进度条，而是在下面加载图片的时候将<code>combinedProgressBlock</code>扔过去处理。</p>
+<h5 id="d、通过SDWebImageManager调用加载图片的方法"><a href="#d、通过SDWebImageManager调用加载图片的方法" class="headerlink" title="d、通过SDWebImageManager调用加载图片的方法"></a>d、通过SDWebImageManager调用加载图片的方法</h5><p>这里调用了<code>SDWebImageManager</code>的图片加载方法，将一些必要参数传递过去，接下来就是<code>SDWebImageManager</code>的事情了。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span>manager loadImageWithURL<span class="punctuation">:</span>url options<span class="punctuation">:</span>options context<span class="punctuation">:</span>context progress<span class="punctuation">:</span>combinedProgressBlock completed<span class="punctuation">:</span>^(UIImage *image<span class="punctuation">,</span> NSData *data<span class="punctuation">,</span> NSError *error<span class="punctuation">,</span> SDImageCacheType cacheType<span class="punctuation">,</span> BOOL finished<span class="punctuation">,</span> NSURL *imageURL)</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-SDWebImageManager"><a href="#2-SDWebImageManager" class="headerlink" title="2. SDWebImageManager"></a>2. SDWebImageManager</h4><blockquote>
+<p>直接找到<code>loadImageWithURL</code>方法，这个方法主要是对<code>url</code>的一些判断，<code>context</code>与<code>options</code>的预处理，内容如下：</p>
+<p>a. 先判断url的可行性</p>
+<p>b. 对<code>context</code>，<code>options</code>进行预处理，并放到<code>result</code>里面</p>
+<p>c. 调用<code>callCacheProcessForOperation</code> 判断是否有缓存，如果有则进入<code>ImageCache</code> 拿到缓存数据，如果没有则进入<code>callDownloadProcessForOperation</code> 方法进一步判断如何下载</p>
+<p>先看看这些步骤的源码，看完再看<code>callCacheProcessForOperation</code>做了些什么</p>
+</blockquote>
+<h5 id="a、判断url的可行性"><a href="#a、判断url的可行性" class="headerlink" title="a、判断url的可行性"></a>a、判断url的可行性</h5><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Invoking this method without a completedBlock is pointless</span></span><br><span class="line">    <span class="built_in">NSAssert</span>(completedBlock != <span class="literal">nil</span>, <span class="string">@&quot;If you mean to prefetch the image, use -[SDWebImagePrefetcher prefetchURLs] instead&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Very common mistake is to send the URL using NSString object instead of NSURL. For some strange reason, Xcode won&#x27;t</span></span><br><span class="line">    <span class="comment">// throw any warning for this type mismatch. Here we failsafe this error by allowing URLs to be passed as NSString.</span></span><br><span class="line">    <span class="keyword">if</span> ([url isKindOfClass:<span class="built_in">NSString</span>.class]) &#123;</span><br><span class="line">        url = [<span class="built_in">NSURL</span> URLWithString:(<span class="built_in">NSString</span> *)url];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Prevents app crashing on argument type error like sending NSNull instead of NSURL</span></span><br><span class="line">    <span class="keyword">if</span> (![url isKindOfClass:<span class="built_in">NSURL</span>.class]) &#123;</span><br><span class="line">        url = <span class="literal">nil</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 可以把operation当做是一个任务，一个执行着读取图片（缓存跟加载器的组合）操作的任务</span></span><br><span class="line">    SDWebImageCombinedOperation *operation = [SDWebImageCombinedOperation new];</span><br><span class="line">    operation.manager = <span class="keyword">self</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">BOOL</span> isFailedUrl = <span class="literal">NO</span>;</span><br><span class="line">    <span class="comment">// 检测当前url是否在failedURLs列表中</span></span><br><span class="line">    <span class="keyword">if</span> (url) &#123;</span><br><span class="line">        <span class="comment">//os_unfair_lock的宏定义</span></span><br><span class="line">        <span class="comment">// 加锁，防止多个线程对failedURLs操作，引起的数据问题</span></span><br><span class="line">        SD_LOCK(_failedURLsLock);</span><br><span class="line">        isFailedUrl = [<span class="keyword">self</span>.failedURLs containsObject:url];</span><br><span class="line">        SD_UNLOCK(_failedURLsLock);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果url为nil，且未设置SDWebImageRetryFailed，url在failedURLs列表中，执行失败回调</span></span><br><span class="line">    <span class="comment">// SDWebImageRetryFailed为失败链接重试，默认是不会重试</span></span><br><span class="line">    <span class="keyword">if</span> (url.absoluteString.length == <span class="number">0</span> || (!(options &amp; SDWebImageRetryFailed) &amp;&amp; isFailedUrl)) &#123;</span><br><span class="line">        <span class="built_in">NSString</span> *description = isFailedUrl ? <span class="string">@&quot;Image url is blacklisted&quot;</span> : <span class="string">@&quot;Image url is nil&quot;</span>;</span><br><span class="line">        <span class="built_in">NSInteger</span> code = isFailedUrl ? SDWebImageErrorBlackListed : SDWebImageErrorInvalidURL;</span><br><span class="line">        [<span class="keyword">self</span> callCompletionBlockForOperation:operation completion:completedBlock error:[<span class="built_in">NSError</span> errorWithDomain:SDWebImageErrorDomain code:code userInfo:@&#123;<span class="built_in">NSLocalizedDescriptionKey</span> : description&#125;] url:url];</span><br><span class="line">        <span class="keyword">return</span> operation;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里注释应该很清楚了，就是判断url的可行性，跟url是否在失败列表里面，如果在的，且<code>options</code>没有<code>SDWebImageRetryFailed</code>的话，就直接失败回调。值得注意的是SD的锁在iOS10以上用的是<code>os_unfair_lock</code>，iOS10以下用的是<code>OSSpinLockLock</code>（这个锁存在任务优先级问题，已经被淘汰了）</p>
+<h5 id="b、对context，options进行预处理，并放到result里面"><a href="#b、对context，options进行预处理，并放到result里面" class="headerlink" title="b、对context，options进行预处理，并放到result里面"></a>b、对<code>context</code>，<code>options</code>进行预处理，并放到<code>result</code>里面</h5><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将当前operation加入到runningOperations（正在运行的operation）</span></span><br><span class="line">    <span class="comment">// 加锁，防止多个线程对runningOperations进行操作</span></span><br><span class="line">    SD_LOCK(_runningOperationsLock);</span><br><span class="line">    [<span class="keyword">self</span>.runningOperations addObject:operation];</span><br><span class="line">    SD_UNLOCK(_runningOperationsLock);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Preprocess the options and context arg to decide the final the result for manager</span></span><br><span class="line">    <span class="comment">// 对context进行预处理，然后将处理的context跟options包装到result里面。</span></span><br><span class="line">    <span class="comment">/* 里面对context的处理包括，SDWebImageContextImageTransformer、SDWebImageContextCacheKeyFilter、SDWebImageContextCacheSerializer。分别查看外面是否自定义这3个key的context，如果有就使用，没有就使用SD默认的。除了SDWebImageContextCacheKeyFilter（缓存url的key）默认是本身的url，其他2个都是nil</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    SDWebImageOptionsResult *result = [<span class="keyword">self</span> processedResultForURL:url options:options context:context];</span><br></pre></td></tr></table></figure>
+
+<p>这里先将任务加入到正在执行的列表里面，然后再对<code>context</code>进行预处理，源代码是没有对<code>options</code>进行说明处理的，然后将<code>context</code>跟<code>options</code>放入result里面。context的处理源代码就不贴出来了，大概就是对<code>SDWebImageContextImageTransformer</code>、<code>SDWebImageContextCacheKeyFilter</code>、<code>SDWebImageContextCacheSerializer</code>这3个进行一个判断，看是否有自定义的传过来，没有就用默认的。</p>
+<h5 id="c、callCacheProcessForOperation的调用"><a href="#c、callCacheProcessForOperation的调用" class="headerlink" title="c、callCacheProcessForOperation的调用"></a>c、<code>callCacheProcessForOperation</code>的调用</h5><p>这里主要是判断要到哪里去取数据，ImageCache，还是去下载，接下来就进入这个方法看一下。</p>
+<blockquote>
+<p>这里主要是判断任务是否该走缓存查询，或者直接下载。如果是缓存查询，就进入<code>SDImageCache</code>里面进行缓存查询，且在此处理缓存结果的回调。否则就调用<code>callDownloadProcessForOperation</code>进入下一步判断。</p>
+<p>①. 拿到<code>imageCache</code>，拿到缓存类型<code>queryCacheType</code></p>
+<p>②. 通过 <code>options</code>判断，走缓存还是下载。如果走缓存，则调用<code>SDImageCache</code>里面的<code>queryImageForKey</code>(开始进入<code>SDImageCache</code>的逻辑)；如果走下载，则调用<code>callDownloadProcessForOperation</code>开始下载前的一些处理。</p>
+</blockquote>
+<p><strong>①、拿到<code>imageCache</code>，拿到缓存类型<code>queryCacheType</code></strong></p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Grab the image cache to use</span></span><br><span class="line">    <span class="comment">// 查看是否有传进来的自定义缓存对象，没有就用默认的imageCache</span></span><br><span class="line">    <span class="type">id</span>&lt;SDImageCache&gt; imageCache;</span><br><span class="line">    <span class="keyword">if</span> ([context[SDWebImageContextImageCache] conformsToProtocol:<span class="class"><span class="keyword">@protocol</span>(<span class="title">SDImageCache</span>)]) </span>&#123;</span><br><span class="line">        imageCache = context[SDWebImageContextImageCache];</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        imageCache = <span class="keyword">self</span>.imageCache;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Get the query cache type</span></span><br><span class="line">    <span class="comment">// 查看缓存类型，默认是all，如果有传进来的就用传进来的</span></span><br><span class="line">    SDImageCacheType queryCacheType = SDImageCacheTypeAll;</span><br><span class="line">    <span class="keyword">if</span> (context[SDWebImageContextQueryCacheType]) &#123;</span><br><span class="line">        queryCacheType = [context[SDWebImageContextQueryCacheType] integerValue];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>②、通过<code>options</code>，判断缓存查找，还是下载</strong></p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Check whether we should query cache</span></span><br><span class="line">    <span class="comment">// SD_OPTIONS_CONTAINS为与运算，当options为SDWebImageFromLoaderOnly时为true（或者全是1也可以）</span></span><br><span class="line">    <span class="comment">// 注意这里是取反，也就是设置了SDWebImageFromLoaderOnly后是不走缓存，直接下载</span></span><br><span class="line">    <span class="type">BOOL</span> shouldQueryCache = !SD_OPTIONS_CONTAINS(options, SDWebImageFromLoaderOnly);</span><br><span class="line">    <span class="keyword">if</span> (shouldQueryCache) &#123;</span><br><span class="line">        <span class="comment">// 拿到缓存的key</span></span><br><span class="line">        <span class="built_in">NSString</span> *key = [<span class="keyword">self</span> cacheKeyForURL:url context:context];</span><br><span class="line">        @weakify(operation);</span><br><span class="line">        <span class="comment">// 缓存查询，并返回缓存任务</span></span><br><span class="line">        operation.cacheOperation = [imageCache queryImageForKey:key options:options context:context cacheType:queryCacheType completion:^(<span class="built_in">UIImage</span> * _Nullable cachedImage, <span class="built_in">NSData</span> * _Nullable cachedData, SDImageCacheType cacheType) &#123;</span><br><span class="line">            @strongify(operation);</span><br><span class="line">            <span class="comment">// 如果没有执行的任务，或者任务被取消了</span></span><br><span class="line">            <span class="keyword">if</span> (!operation || operation.isCancelled) &#123;</span><br><span class="line">                <span class="comment">// Image combined operation cancelled by user</span></span><br><span class="line">                <span class="comment">// 抛出错误</span></span><br><span class="line">                [<span class="keyword">self</span> callCompletionBlockForOperation:operation completion:completedBlock error:[<span class="built_in">NSError</span> errorWithDomain:SDWebImageErrorDomain code:SDWebImageErrorCancelled userInfo:@&#123;<span class="built_in">NSLocalizedDescriptionKey</span> : <span class="string">@&quot;Operation cancelled by user during querying the cache&quot;</span>&#125;] url:url];</span><br><span class="line">                <span class="comment">// 安全的移除任务</span></span><br><span class="line">                [<span class="keyword">self</span> safelyRemoveOperationFromRunning:operation];</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (context[SDWebImageContextImageTransformer] &amp;&amp; !cachedImage) &#123;</span><br><span class="line">                <span class="comment">// 没拿到缓存图片，且图片有经过Transformer转化，那就去查询原始图片缓存</span></span><br><span class="line">                <span class="comment">//有机会去查询原始缓存</span></span><br><span class="line">                <span class="comment">// Have a chance to query original cache instead of downloading</span></span><br><span class="line">                [<span class="keyword">self</span> callOriginalCacheProcessForOperation:operation url:url options:options context:context progress:progressBlock completed:completedBlock];</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// Continue download process</span></span><br><span class="line">            <span class="comment">// 走下载流程</span></span><br><span class="line">            [<span class="keyword">self</span> callDownloadProcessForOperation:operation url:url options:options context:context cachedImage:cachedImage cachedData:cachedData cacheType:cacheType progress:progressBlock completed:completedBlock];</span><br><span class="line">        &#125;];</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;<span class="comment">// 走下载流程</span></span><br><span class="line">        <span class="comment">// Continue download process</span></span><br><span class="line">        [<span class="keyword">self</span> callDownloadProcessForOperation:operation url:url options:options context:context cachedImage:<span class="literal">nil</span> cachedData:<span class="literal">nil</span> cacheType:SDImageCacheTypeNone progress:progressBlock completed:completedBlock];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里解释一下<code>key</code>是怎么拿（SDWebImage的缓存key是怎么样的），逻辑在这个方法里面<code>cacheKeyForURL</code>，代码就不贴出来了，说一下大概逻辑。</p>
+<blockquote>
+<p>a、<code>SDWebImage</code>的<code>context</code>里面有个<code>SDWebImageContextCacheKeyFilter</code>，里面存储的是用来存放<code>自定义key</code>逻辑的<code>协议</code>，通过重写<code>cacheKeyForURL</code>自定义key，如果没有传<code>SDWebImageContextCacheKeyFilter</code>进来则使用<code>url的string</code>值。<br>b、然后通过<code>context</code>里面的<code>SDWebImageContextImageThumbnailPixelSize</code>、<code>SDWebImageContextImagePreserveAspectRatio</code>和<code>SDWebImageContextImageTransformer</code>这3个里面是否有值，如果有值就加上上面的<code>key</code>进行拼接，没值就直接用上面的<code>key</code>。</p>
+</blockquote>
+<p>查到缓存后就是回调了，回调看代码注释，问题应该不大，要注意的是它也走了<code>callDownloadProcessForOperation</code>这个方法，因为<code>options</code>为<code>SDWebImageRefreshCached</code>的情况下，也是要走下载的，所以索性将找到的缓存，放到<code>callDownloadProcessForOperation</code>处理，而不是直接回调。</p>
+<h4 id="3-SDImageCache"><a href="#3-SDImageCache" class="headerlink" title="3.SDImageCache"></a>3.SDImageCache</h4><blockquote>
+<p>缓存获取数据，主要是通过<code>key</code>缓存，<code>cacheType</code>判断缓存方式，<code>options</code>进行缓存拓展。主要内容如下：</p>
+<p>a. 对<code>cacheOptions</code>类型进行筛选</p>
+<p>b. 进入<code>queryCacheOperationForKey</code>方法，对具体缓存方式进行划分，其中包括内存缓存，磁盘缓存。然后又在各自缓存下面进行了详细划分</p>
+</blockquote>
+<h5 id="a、内存查找"><a href="#a、内存查找" class="headerlink" title="a、内存查找"></a>a、内存查找</h5><p>为啥说缓存的查找是先内存呢，看下面这段代码:</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 先检查内存里面的缓存</span></span><br><span class="line">    <span class="built_in">UIImage</span> *image;</span><br><span class="line">    <span class="keyword">if</span> (queryCacheType != SDImageCacheTypeDisk) &#123;</span><br><span class="line">        <span class="comment">// 通过key去内存表拿到value（image），默认实现表为weak(NSMapTable&lt;KeyType, ObjectType&gt; *weakCache)</span></span><br><span class="line">        image = [<span class="keyword">self</span> imageFromMemoryCacheForKey:key];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>一般的<code>queryCacheType</code>默认为<code>SDImageCacheTypeAll</code>，在没有自定义<code>queryCacheType</code>为<code>SDImageCacheTypeDisk</code>的情况下都是先走的<code>memoryCache</code></p>
+<p>而<code>imageFromMemoryCacheForKey</code>这个方法里面的查找方式也很简单，通过封装<code>SDMemoryCache</code>协议，并用<code>NSMapTable&lt;KeyType, ObjectType&gt;</code>类型存储的值去取到对应的<code>image</code></p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 是否只能在内存缓存查询，是的话直接将找到的image回调，注意这里是不查询data，所以data为nil</span></span><br><span class="line">    <span class="comment">// 默认情况下，在内存缓存找到image是不查询data了，但是设置了SDImageCacheQueryMemoryData，就会强制去查询</span></span><br><span class="line">    <span class="type">BOOL</span> shouldQueryMemoryOnly = (queryCacheType == SDImageCacheTypeMemory) || (image &amp;&amp; !(options &amp; SDImageCacheQueryMemoryData));</span><br><span class="line">    <span class="keyword">if</span> (shouldQueryMemoryOnly) &#123;</span><br><span class="line">        <span class="keyword">if</span> (doneBlock) &#123;</span><br><span class="line">            doneBlock(image, <span class="literal">nil</span>, SDImageCacheTypeMemory);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>正常情况下，如果照片找到了，就直接回调block。但是在<code>queryCacheType</code>不指定为<code>SDImageCacheTypeMemory</code>，且<code>options</code>为<code>SDImageCacheQueryMemoryData</code>的时候那就得继续往下，去<code>磁盘</code>查找。</p>
+<h5 id="b、磁盘查找"><a href="#b、磁盘查找" class="headerlink" title="b、磁盘查找"></a>b、磁盘查找</h5><p>磁盘查找分为同步跟异步，默认情况是异步查找，以下情况是同步查找</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">     *两种情况，需要同步查询磁盘</span></span><br><span class="line"><span class="comment">     *1、在内存缓存中存在图片，但是指定标签为SDImageCacheQueryMemoryDataSync</span></span><br><span class="line"><span class="comment">     *2、在内存缓存找不到图片，且指定标签为SDImageCacheQueryDiskDataSync</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="type">BOOL</span> shouldQueryDiskSync = ((image &amp;&amp; options &amp; SDImageCacheQueryMemoryDataSync) ||</span><br><span class="line">                                (!image &amp;&amp; options &amp; SDImageCacheQueryDiskDataSync));</span><br></pre></td></tr></table></figure>
+
+<p><strong>磁盘的查找有2种方式</strong></p>
+<p>一种是通过<code>SDDiskCache</code>协议内部封装的方法，通过key获取path，然后拿到data<br>一种是通过<code>additionalCachePathBlock</code>拿到保存的path，然后拿到data<br>如果是通过磁盘拿到的image，还会将image保存到内存，以便下次查询。</p>
+<blockquote>
+<p>这里说个小细节，磁盘查询的过程是用了<code>@autoreleasepool</code>包了起来，为了防止多张照片查询，引起的内存飙升。</p>
+</blockquote>
+</div>
+        </div>
+        
+            <div class="kratos-copyright text-center clearfix">
+                <h5 itemprop="copyrightNotice">本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+            </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+                <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                
+                
+                    <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                    <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/27/SDWebImage%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/27/SDWebImage%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/";
+            const title         = "「SDWebImage源码分析」";
+            const excerpt       = `一、流程架构图
+
+SDWebImage对UIButton，UIImageView，NSButton，UIView进行了拓展，并对外提供了接口。无论对UIButton，UIImageView还是NSButton调用sd_setImage...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                
+                </div>
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6/" rel="tag">开源框架</a>
+                </div>
+				
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" Block原理" href="/27/Block原理/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" iOS 开发中的锁" href="/02/iOS-开发中的锁/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center"></p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                68
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                6
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                12
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS%E7%9F%A5%E8%AF%86%E7%82%B9/">iOS知识点</a><span class="category-list-count">55</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF/">加密技术</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/Cocoapods/" style="font-size: 0.63em;">Cocoapods</a> <a href="/tags/Runloop/" style="font-size: 0.6em;">Runloop</a> <a href="/tags/Swift/" style="font-size: 0.73em;">Swift</a> <a href="/tags/UI%E6%8E%A7%E4%BB%B6/" style="font-size: 0.8em;">UI控件</a> <a href="/tags/ffmpeg/" style="font-size: 0.6em;">ffmpeg</a> <a href="/tags/git/" style="font-size: 0.63em;">git</a> <a href="/tags/runtime/" style="font-size: 0.67em;">runtime</a> <a href="/tags/%E5%8A%A0%E5%AF%86/" style="font-size: 0.6em;">加密</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 0.67em;">多线程</a> <a href="/tags/%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" style="font-size: 0.77em;">底层原理</a> <a href="/tags/%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6/" style="font-size: 0.7em;">开源框架</a> <a href="/tags/%E6%99%BA%E8%83%BD%E8%AE%BE%E5%A4%87/" style="font-size: 0.63em;">智能设备</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/17/XCode14-iOS16-%E9%80%82%E9%85%8D%E9%97%AE%E9%A2%98/"><i class="fa  fa-book"></i> XCode14 & iOS16 适配问题</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/26/objc%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/"><i class="fa  fa-book"></i> objc源码编译</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/08/git%E6%8A%A5%E9%94%99-Support-for-password-authentication-was-removed-on-August-13-2021/"><i class="fa  fa-book"></i> git报错#Support for password authentication was removed on August 13,2021</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/26/ios-%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93/"><i class="fa  fa-book"></i> iOS-离屏渲染</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/09/FFmpeg%E5%B8%B8%E8%A7%81%E6%8C%87%E4%BB%A4%E7%9A%84%E4%BD%BF%E7%94%A8/"><i class="fa  fa-book"></i> FFmpeg常见指令的使用</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  class="ap-lrc"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://t.me/CandyUnion"><i class="fa fa-telegram"></i></a></li>
+                        
+                        
+                        
+                        <li><a target="_blank" rel="me" href="https://nya.one/@Candinya"><i class="fa fa fa-share-alt-square"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/Candinya"><i class="fa fa-github"></i></a></li>
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2023 欢迎来到我的个人博客 版权所有.</li>
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+    <script defer src="/vendors/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="/vendors/meting@2.0.1/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="3204190542"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

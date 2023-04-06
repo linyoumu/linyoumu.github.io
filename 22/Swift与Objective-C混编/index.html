@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  
+  
+  <title>Swift与Objective-C混编 | 欢迎来到我的个人博客</title>
+  <meta name="author" content="勿忘初心" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="" />
+  
+  <meta name="description" content="1、swift 项目 中调用oc当你在一个swift项目中引入oc文件时，xcode会提示你是否自动创建桥连接文件：  如果你用系统自动生成，只需要将要使用到的oc的文件导入到桥连接文件中，然后可以使用swift直接使用oc的文件； 如果你没有选择系统生成，那你可以手动创建桥连接文件，桥连接文件格式必须为：项目名-Bridging-Header.h    将桥连接文件路径 Build Settin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swift与Objective-C混编">
+<meta property="og:url" content="http://example.com/22/Swift%E4%B8%8EObjective-C%E6%B7%B7%E7%BC%96/index.html">
+<meta property="og:site_name" content="欢迎来到我的个人博客">
+<meta property="og:description" content="1、swift 项目 中调用oc当你在一个swift项目中引入oc文件时，xcode会提示你是否自动创建桥连接文件：  如果你用系统自动生成，只需要将要使用到的oc的文件导入到桥连接文件中，然后可以使用swift直接使用oc的文件； 如果你没有选择系统生成，那你可以手动创建桥连接文件，桥连接文件格式必须为：项目名-Bridging-Header.h    将桥连接文件路径 Build Settin">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/14844115-d3172a422e9c71b2.png">
+<meta property="og:image" content="http://example.com/images/14844115-e317535589cd070b.png">
+<meta property="og:image" content="http://example.com/images/14844115-1288d08c8dfd5cfb.png">
+<meta property="og:image" content="http://example.com/images/14844115-567956cee20b75fb.png">
+<meta property="og:image" content="http://example.com/images/0C789457-C44E-4790-AA40-142B9A7EA4E0.png">
+<meta property="og:image" content="http://example.com/images/14844115-113c4378a8fd20d5.png">
+<meta property="og:image" content="http://example.com/images/14844115-54fd5835ff8ff6ea.png">
+<meta property="og:image" content="http://example.com/images/14844115-70120c53355cec7e.png">
+<meta property="og:image" content="http://example.com/images/14844115-f64b35793547def7.png">
+<meta property="og:image" content="http://example.com/images/14844115-356bd9f4b3fdbc32.png">
+<meta property="og:image" content="http://example.com/images/14844115-61097f170a9c1ace.png">
+<meta property="og:image" content="http://example.com/images/14844115-7f81e98bc8911b7e.png">
+<meta property="og:image" content="http://example.com/images/14844115-b262251998edd759.png">
+<meta property="og:image" content="http://example.com/images/14844115-d620a76de95046f5.png">
+<meta property="og:image" content="http://example.com/images/14844115-649cde28f5741a8c.png">
+<meta property="og:image" content="http://example.com/images/14844115-b8f7d9ad50bc217a.png">
+<meta property="og:image" content="http://example.com/images/14844115-6bac560c9a0cdcfd.png">
+<meta property="article:published_time" content="2018-05-22T13:32:56.000Z">
+<meta property="article:modified_time" content="2022-09-22T08:42:06.000Z">
+<meta property="article:author" content="勿忘初心">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/14844115-d3172a422e9c71b2.png">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+    <link rel="stylesheet" href="/vendors/aplayer@1.10.1/dist/APlayer.min.css"></script>
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+    <script src="/vendors/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">欢迎来到我的个人博客</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>欢迎来到我的个人博客</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="http://example.com/22/Swift%E4%B8%8EObjective-C%E6%B7%B7%E7%BC%96/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">Swift与Objective-C混编</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2018-05-22T13:32:56.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2018-05-22</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">勿忘初心</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~1.79K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1663836126000"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            
+            <hr />
+            <div itemprop="articleBody"><h4 id="1、swift-项目-中调用oc"><a href="#1、swift-项目-中调用oc" class="headerlink" title="1、swift 项目 中调用oc"></a>1、swift 项目 中调用oc</h4><p>当你在一个swift项目中引入oc文件时，xcode会提示你是否自动创建桥连接文件：</p>
+<p><img src="/../images/14844115-d3172a422e9c71b2.png"></p>
+<p>如果你用系统自动生成，只需要将要使用到的oc的文件导入到桥连接文件中，然后可以使用swift直接使用oc的文件；</p>
+<p>如果你没有选择系统生成，那你可以手动创建桥连接文件，<strong>桥连接文件格式必须为</strong>：<strong>项目名-Bridging-Header.h</strong> </p>
+<p><img src="/../images/14844115-e317535589cd070b.png"></p>
+<p><img src="/../images/14844115-1288d08c8dfd5cfb.png"></p>
+<p>将桥连接文件路径</p>
+<p>Build Setting -OC bridging Header将桥连接文件路径填入</p>
+<p><img src="/../images/14844115-567956cee20b75fb.png"></p>
+<p>在桥连接文件中导入你要使用的oc文件</p>
+<p><img src="/../images/0C789457-C44E-4790-AA40-142B9A7EA4E0.png"></p>
+<p>然后按照swift语言去使用oc即可</p>
+<p>如果你想在swift项目中的oc文件中再 调用swift：</p>
+<p>1）首先把Build Setting -&gt; Packaging -&gt; Define Modules 设为YES</p>
+<p><img src="/../images/14844115-113c4378a8fd20d5.png"></p>
+<p><img src="/../images/14844115-54fd5835ff8ff6ea.png"></p>
+<p>确认Product Module Name 就是项目名称</p>
+<p><img src="/../images/14844115-70120c53355cec7e.png"></p>
+<p>系统会自动生成一个 项目名-Swift.h 文件，这个文件你是看不到的，它的用途就是可以使用swift文件，你只需要在你需要使用swift的oc文件中去导入他，你不需要在oc文件中导入桥连接，这和oc调swift两回事</p>
+<p><img src="/../images/14844115-f64b35793547def7.png"></p>
+<p>swift 使用oc 中的某些方法时，比如oc 中自定义的分类，方法名会被优化</p>
+<p>例如你有一个计算label高度的oc 分类方法：</p>
+<p><img src="/../images/14844115-356bd9f4b3fdbc32.png"></p>
+<p>在swift 中使用是这样</p>
+<p><img src="/../images/14844115-61097f170a9c1ace.png"></p>
+<h4 id="2、oc项目中调用swift"><a href="#2、oc项目中调用swift" class="headerlink" title="2、oc项目中调用swift"></a>2、oc项目中调用swift</h4><p>当你添加swift文件时，xcode会提示你是否自动创建桥连接文件，如果你选择否，如果你还想在swft文件中去调用oc就需要手动去创建桥连接文件，你要明白，桥连接文件是swift去调用oc需要的。</p>
+<p>oc 中调用swift需要：</p>
+<p>1）首先把Build Setting -&gt; Packaging -&gt; Define Modules 设为YES</p>
+<p>2）确认Product Module Name 就是项目名称</p>
+<p>3）系统会自动生成一个 项目名-Swift.h 文件，这个文件你是看不到的，你只需要在需要使用swift的oc文件中导入 项目名-Swift.h 文件即可，这个 项目名-Swift.h 文件作用就是告诉oc文件内可以去使用所有的swift文件。</p>
+<h4 id="3、oc-中调用swift-注意点："><a href="#3、oc-中调用swift-注意点：" class="headerlink" title="3、oc 中调用swift,注意点："></a>3、oc 中调用swift,注意点：</h4><p><strong>如果你只想暴露个别的属性和方法给 Objective-C 访问和调用，你只需要在要暴露的属性和方法前添加 @objc 关键字即可</strong></p>
+<h5 id="3-1-oc-调用swift中的类"><a href="#3-1-oc-调用swift中的类" class="headerlink" title="3.1 oc 调用swift中的类"></a><strong>3.1 oc 调用swift中的类</strong></h5><p>  被调用的swift类必须继承于NSObject或其子类</p>
+<p>  如果你只是想用swift中类的某几个属性和方法，那在相应</p>
+<p>  属性和方法前加@objc修饰符；</p>
+<p><img src="/../images/14844115-7f81e98bc8911b7e.png"></p>
+<p>如果你想使用类中的所有属性和方法，那你需要在这个类之前加@objcMembers</p>
+<p><img src="/../images/14844115-b262251998edd759.png"></p>
+<p>我们可以得出结论，<code>@objc</code> 与 <code>@objcMembers</code> 的<strong>关键区别</strong>在于暴露给 Objective-C 的属性、方法的范围。如果我们想要保护业务实现的细节，就需要合理的使用 <code>@objc</code> 与 <code>@objcMembers</code> 关键字。</p>
+<h5 id="3-2-oc-调用swift-中枚举"><a href="#3-2-oc-调用swift-中枚举" class="headerlink" title="3.2 oc 调用swift 中枚举"></a><strong>3.2 oc 调用swift 中枚举</strong></h5><p>  <strong>oc 中的枚举只有Int类型，所以要调用的枚举也必须是Int 类型:</strong></p>
+<p>  在枚举定义前面加上@objc</p>
+<p><img src="/../images/14844115-d620a76de95046f5.png"></p>
+<h5 id="3-3-oc-使用swift-中的协议，协议定义前加上-objc即可"><a href="#3-3-oc-使用swift-中的协议，协议定义前加上-objc即可" class="headerlink" title="3.3 oc 使用swift 中的协议，协议定义前加上@objc即可"></a><strong>3.3 oc 使用swift 中的协议，协议定义前加上@objc即可</strong></h5><p><img src="/../images/14844115-649cde28f5741a8c.png"></p>
+<h5 id="3-4-oc-是无法使用swift中的结构体的"><a href="#3-4-oc-是无法使用swift中的结构体的" class="headerlink" title="3.4 oc 是无法使用swift中的结构体的"></a><strong>3.4 oc 是无法使用swift中的结构体的</strong></h5><p>如果想得到结构体中的值，也只能写个方法返回相应值了</p>
+<p><img src="/../images/14844115-b8f7d9ad50bc217a.png"></p>
+<h5 id="3-5-在-OC-项目中使用基于-Swift-的-CocoaPods-库"><a href="#3-5-在-OC-项目中使用基于-Swift-的-CocoaPods-库" class="headerlink" title="3.5 在 OC 项目中使用基于 Swift 的 CocoaPods 库"></a><strong>3.5 在 OC 项目中使用基于 Swift 的 CocoaPods 库</strong></h5><p>  Podfile</p>
+<p>要用 CocoaPods，首先要修改的当然是 Podfile，这是最简单的一步，只需要在文件开始加上这一句：</p>
+<p><code>use_frameworks!</code></p>
+<p>这是告诉 CocoaPods：“请把我要用到的第三方库用动态框架的形式集成进来”。因为 Apple 不允许开发者构建内含 Swift 代码的静态库，所以要往 OC 项目中集成第三方 Swift 代码的时候就只能通过动态框架（ framework ）的形式了。</p>
+<p><img src="/../images/14844115-6bac560c9a0cdcfd.png"></p>
+<p>最后注意点：</p>
+<p>1）oc 不能去swift中使用oc不存在的类型，比如可选类型</p>
+<ol start="2">
+<li>oc 的控制器是不能继承swift中的控制器，swift控制器可以继承oc的控制器。</li>
+</ol>
+<p>3） 混编期间报错，不要怀疑自己代码，先编译一下再下结论</p>
+</div>
+        </div>
+        
+            <div class="kratos-copyright text-center clearfix">
+                <h5 itemprop="copyrightNotice">本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+            </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+                <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                
+                
+                    <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                    <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/22/Swift%E4%B8%8EObjective-C%E6%B7%B7%E7%BC%96/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/22/Swift%E4%B8%8EObjective-C%E6%B7%B7%E7%BC%96/";
+            const title         = "「Swift与Objective-C混编」";
+            const excerpt       = `1、swift 项目 中调用oc当你在一个swift项目中引入oc文件时，xcode会提示你是否自动创建桥连接文件：
+
+如果你用系统自动生成，只需要将要使用到的oc的文件导入到桥连接文件中，然后可以使用swift直接使用oc的文件；
+...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                
+                </div>
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    
+                </div>
+				
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" Swift基础语法（五）" href="/12/Swift基础语法（五）/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" ReactiveCocoa常用方法" href="/21/ReactiveCocoa常用方法/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center"></p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                68
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                6
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                12
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS%E7%9F%A5%E8%AF%86%E7%82%B9/">iOS知识点</a><span class="category-list-count">55</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF/">加密技术</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/Cocoapods/" style="font-size: 0.63em;">Cocoapods</a> <a href="/tags/Runloop/" style="font-size: 0.6em;">Runloop</a> <a href="/tags/Swift/" style="font-size: 0.73em;">Swift</a> <a href="/tags/UI%E6%8E%A7%E4%BB%B6/" style="font-size: 0.8em;">UI控件</a> <a href="/tags/ffmpeg/" style="font-size: 0.6em;">ffmpeg</a> <a href="/tags/git/" style="font-size: 0.63em;">git</a> <a href="/tags/runtime/" style="font-size: 0.67em;">runtime</a> <a href="/tags/%E5%8A%A0%E5%AF%86/" style="font-size: 0.6em;">加密</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 0.67em;">多线程</a> <a href="/tags/%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" style="font-size: 0.77em;">底层原理</a> <a href="/tags/%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6/" style="font-size: 0.7em;">开源框架</a> <a href="/tags/%E6%99%BA%E8%83%BD%E8%AE%BE%E5%A4%87/" style="font-size: 0.63em;">智能设备</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/17/XCode14-iOS16-%E9%80%82%E9%85%8D%E9%97%AE%E9%A2%98/"><i class="fa  fa-book"></i> XCode14 & iOS16 适配问题</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/26/objc%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/"><i class="fa  fa-book"></i> objc源码编译</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/08/git%E6%8A%A5%E9%94%99-Support-for-password-authentication-was-removed-on-August-13-2021/"><i class="fa  fa-book"></i> git报错#Support for password authentication was removed on August 13,2021</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/26/ios-%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93/"><i class="fa  fa-book"></i> iOS-离屏渲染</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/09/FFmpeg%E5%B8%B8%E8%A7%81%E6%8C%87%E4%BB%A4%E7%9A%84%E4%BD%BF%E7%94%A8/"><i class="fa  fa-book"></i> FFmpeg常见指令的使用</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  class="ap-lrc"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://t.me/CandyUnion"><i class="fa fa-telegram"></i></a></li>
+                        
+                        
+                        
+                        <li><a target="_blank" rel="me" href="https://nya.one/@Candinya"><i class="fa fa fa-share-alt-square"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/Candinya"><i class="fa fa-github"></i></a></li>
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2023 欢迎来到我的个人博客 版权所有.</li>
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+    <script defer src="/vendors/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="/vendors/meting@2.0.1/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="3204190542"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

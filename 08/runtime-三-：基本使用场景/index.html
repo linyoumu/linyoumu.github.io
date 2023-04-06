@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  
+  
+  <title>runtime(三)：基本使用场景 | 欢迎来到我的个人博客</title>
+  <meta name="author" content="勿忘初心" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="runtime" />
+  
+  <meta name="description" content="一、方法替换项目代码编写中，常会遇见第三方框架或者原生方法无法满足需求时或是一个方法在工程中大量被调用时，我们想要批量替换或修改，为了避免更改原有功能，**在保持原有方法功能基础上，添加额外的功能**，此时就需要用到Swizzle Method  方法替换Swizzle Method，目的是为了替换方法的实现。 平时实现某一方法时用到@selector，而能够实现方法是在@selector(方法选">
+<meta property="og:type" content="article">
+<meta property="og:title" content="runtime(三)：基本使用场景">
+<meta property="og:url" content="http://example.com/08/runtime-%E4%B8%89-%EF%BC%9A%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF/index.html">
+<meta property="og:site_name" content="欢迎来到我的个人博客">
+<meta property="og:description" content="一、方法替换项目代码编写中，常会遇见第三方框架或者原生方法无法满足需求时或是一个方法在工程中大量被调用时，我们想要批量替换或修改，为了避免更改原有功能，**在保持原有方法功能基础上，添加额外的功能**，此时就需要用到Swizzle Method  方法替换Swizzle Method，目的是为了替换方法的实现。 平时实现某一方法时用到@selector，而能够实现方法是在@selector(方法选">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
+<meta property="article:published_time" content="2019-05-08T14:02:28.000Z">
+<meta property="article:modified_time" content="2022-09-22T04:09:27.000Z">
+<meta property="article:author" content="勿忘初心">
+<meta property="article:tag" content="runtime">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+    <link rel="stylesheet" href="/vendors/aplayer@1.10.1/dist/APlayer.min.css"></script>
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+    <script src="/vendors/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">欢迎来到我的个人博客</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>欢迎来到我的个人博客</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="http://example.com/08/runtime-%E4%B8%89-%EF%BC%9A%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">runtime(三)：基本使用场景</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2019-05-08T14:02:28.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2019-05-08</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">勿忘初心</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~7.03K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1663819767000"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            
+            <hr />
+            <div itemprop="articleBody"><h4 id="一、方法替换"><a href="#一、方法替换" class="headerlink" title="一、方法替换"></a>一、方法替换</h4><p>项目代码编写中，常会遇见第三方框架或者原生方法无法满足需求时或是一个方法在工程中大量被调用时，我们想要批量替换或修改，为了避免更改原有功能，**<code>在保持原有方法功能基础上，添加额外的功能</code>**，此时就需要用到<code>Swizzle Method</code></p>
+<blockquote>
+<p>方法替换<code>Swizzle Method</code>，目的是为了替换方法的实现。 平时实现某一方法时用到<code>@selector</code>，而能够实现方法是在<code>@selector</code>(方法选择器)中取出一方法编号(指向方法的指针)，用<code>SEL</code>类型表示，它所指向的是一<code>IMP</code>(方法实现的指针)，而方法替换的就是这个<code>IMP</code>，从而实现方法的替换</p>
+</blockquote>
+<h5 id="实例方法替换"><a href="#实例方法替换" class="headerlink" title="实例方法替换"></a>实例方法替换</h5><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#import <span class="string">&lt;objc/runtime.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">+ (<span class="type">void</span>)swizzleInstanceMethodWithOriginalSEL:(SEL)originalSel SwizzleNewSEL:(SEL)newSel &#123;</span><br><span class="line">    </span><br><span class="line">    Method originalMethod = class_getInstanceMethod(<span class="keyword">self</span>, originalSel);</span><br><span class="line">    Method newMethod = class_getInstanceMethod(<span class="keyword">self</span>, newSel);</span><br><span class="line">    <span class="keyword">if</span> (!originalMethod || !newMethod) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//加一层保护措施，如果添加成功，则表示该方法不存在于本类，而是存在于父类中，不能交换父类的方法,否则父类的对象调用该方法会crash；添加失败则表示本类存在该方法</span></span><br><span class="line">    <span class="type">BOOL</span> addMethod = class_addMethod(<span class="keyword">self</span>, originalSel, method_getImplementation(newMethod), method_getTypeEncoding(newMethod));</span><br><span class="line">    <span class="keyword">if</span> (addMethod) &#123;</span><br><span class="line">        <span class="comment">//再将原有的实现替换到swizzledMethod方法上，从而实现方法的交换，并且未影响到父类方法的实现</span></span><br><span class="line">        class_replaceMethod(<span class="keyword">self</span>, newSel, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        method_exchangeImplementations(originalMethod, newMethod);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="类方法替换"><a href="#类方法替换" class="headerlink" title="类方法替换"></a>类方法替换</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line"></span><br><span class="line">+ (void)swizzleClassMethodWithOriginalSEL:(SEL)originalSel SwizzleNewSEL:(SEL)newSel &#123;</span><br><span class="line">    Class class = object_getClass(self);</span><br><span class="line">    Method originalMethod = class_getInstanceMethod(class, originalSel);</span><br><span class="line">    Method newMethod = class_getInstanceMethod(class, newSel);</span><br><span class="line">    if (!originalMethod || !newMethod) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    BOOL addMethod = class_addMethod(class, originalSel, method_getImplementation(newMethod), method_getTypeEncoding(newMethod));</span><br><span class="line">    if (addMethod) &#123;</span><br><span class="line">        class_replaceMethod(class, newSel, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        method_exchangeImplementations(originalMethod, newMethod);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="替换方法的使用"><a href="#替换方法的使用" class="headerlink" title="替换方法的使用"></a>替换方法的使用</h5><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="type">void</span>)load&#123;</span><br><span class="line">    <span class="comment">//方法替换处load不需要调用super，否则会导致父类被重复Swizzling</span></span><br><span class="line">    <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;</span><br><span class="line">    <span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;<span class="comment">//保证方法替换只被执行一次</span></span><br><span class="line"></span><br><span class="line">        [<span class="keyword">self</span> swizzleInstanceMethodWithClass:<span class="built_in">NSClassFromString</span>(<span class="string">@&quot;__NSArrayI&quot;</span>) OriginalSEL:<span class="keyword">@selector</span>(objectAtIndex:) SwizzleNewSEL:<span class="keyword">@selector</span>(safe_objectAtIndex:)];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>为了确保Swizzle Method方法替换能一定被执行调用，因此需要在<code>load</code>中执行（在装载类文件时就会被调用（程序启动前））</p>
+</li>
+<li><p>为了避免子类或子类的子类调用了<code>[super load]</code>而导致Swizzling被执行了多次（相当于SEL和IMP被交换了多次。这就会导致第一次执行成功交换了、第二次执行又换回去了、第三次执行…..这样换来换去的结果），需要在<code>load</code>中使用GCD方法<code>dispatch_once</code>确保方法只被执行一次并且**<code>不需要</code>**调用<code>[super load]</code>方法</p>
+</li>
+</ul>
+<h4 id="二、实现分类添加新属性"><a href="#二、实现分类添加新属性" class="headerlink" title="二、实现分类添加新属性"></a>二、实现分类添加新属性</h4><p>我们在开发中常常使用类目Category为一些已有的类扩展功能。虽然继承也能够为已有类增加新的方法，而且相比类目更是具有增加属性的优势，但是继承毕竟是一个重量级的操作，添加不必要的继承关系无疑增加了代码的复杂度。</p>
+<p>遗憾的是，OC的类目并不支持直接添加属性，如果我们直接在分类的声明中写入Property属性，那么只能为其生成set与get方法声明，却不能生成成员变量，直接调用这些属性还会造成崩溃。</p>
+<p>所以为了实现给分类添加属性，我们还需借助Runtime的<strong>关联对象(Associated Objects)</strong>特性，它能够帮助我们在运行阶段将任意的属性关联到一个对象上，下面是相关的三个方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> 1.给对象设置关联属性</span><br><span class="line"> @param object 需要设置关联属性的对象，即给哪个对象关联属性</span><br><span class="line"> @param key 关联属性对应的key，可通过key获取这个属性，</span><br><span class="line"> @param value 给关联属性设置的值</span><br><span class="line"> @param policy 关联属性的存储策略(对应Property属性中的assign,copy，retain等)</span><br><span class="line"> OBJC_ASSOCIATION_ASSIGN             @property(assign)。</span><br><span class="line"> OBJC_ASSOCIATION_RETAIN_NONATOMIC   @property(strong, nonatomic)。</span><br><span class="line"> OBJC_ASSOCIATION_COPY_NONATOMIC     @property(copy, nonatomic)。</span><br><span class="line"> OBJC_ASSOCIATION_RETAIN             @property(strong,atomic)。</span><br><span class="line"> OBJC_ASSOCIATION_COPY               @property(copy, atomic)。</span><br><span class="line"> */</span><br><span class="line">void objc_setAssociatedObject(id _Nonnull object,</span><br><span class="line">                              const void * _Nonnull key,</span><br><span class="line">                              id _Nullable value,</span><br><span class="line">                              objc_AssociationPolicy policy)</span><br><span class="line">/**</span><br><span class="line"> 2.通过key获取关联的属性</span><br><span class="line"> @param object 从哪个对象中获取关联属性</span><br><span class="line"> @param key 关联属性对应的key</span><br><span class="line"> @return 返回关联属性的值</span><br><span class="line"> */</span><br><span class="line">id _Nullable objc_getAssociatedObject(id _Nonnull object,</span><br><span class="line">                                      const void * _Nonnull key)</span><br><span class="line">/**</span><br><span class="line"> 3.移除对象所关联的属性</span><br><span class="line"> @param object 移除某个对象的所有关联属性</span><br><span class="line"> */</span><br><span class="line">void objc_removeAssociatedObjects(id _Nonnull object)</span><br></pre></td></tr></table></figure>
+
+<p>注意：key与关联属性一一对应，我们必须确保其全局唯一性，常用我们使用@selector(methodName)作为key。</p>
+<p><strong>现在演示一个代码示例:</strong></p>
+<p>创建分类并声明一个属性</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;Persion.h&quot;</span><br><span class="line">@interface Persion (category)</span><br><span class="line">@property (nonatomic,copy) NSString* nick;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<p>分类中属性实现</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const char* name = &quot;lisi&quot;;</span><br><span class="line">- (void) setNick:(NSString *)nick &#123;</span><br><span class="line">    objc_setAssociatedObject(self, &amp;name, nick, OBJC_ASSOCIATION_COPY_NONATOMIC);</span><br><span class="line">&#125;</span><br><span class="line">- (NSString*) nick &#123;</span><br><span class="line">    return objc_getAssociatedObject(self, &amp;name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>代码调用</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">-</span> (void) runtime_Test &#123;</span><br><span class="line">    <span class="keyword">self</span>.persion <span class="operator">=</span> [[<span class="type">Persion</span> alloc] <span class="keyword">init</span>];</span><br><span class="line">    <span class="keyword">self</span>.persion.nick <span class="operator">=</span> @<span class="string">&quot;Zhangsan&quot;</span>;</span><br><span class="line">    <span class="type">NSLog</span>(@<span class="string">&quot;%@&quot;</span>, <span class="keyword">self</span>.persion.nick);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="三、获取类的详细信息"><a href="#三、获取类的详细信息" class="headerlink" title="三、获取类的详细信息"></a>三、获取类的详细信息</h4><h5 id="1-获取属性列表"><a href="#1-获取属性列表" class="headerlink" title="1.获取属性列表"></a>1.获取属性列表</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">unsigned int count;</span><br><span class="line">objc_property_t *propertyList = class_copyPropertyList([self class], &amp;amp;count);</span><br><span class="line">for (unsigned int i = 0; i&amp;lt;count; i++) &#123;</span><br><span class="line">    const char *propertyName = property_getName(propertyList[i]);</span><br><span class="line">    NSLog(@&quot;PropertyName(%d): %@&quot;,i,[NSString stringWithUTF8String:propertyName]);</span><br><span class="line">&#125;</span><br><span class="line">free(propertyList);</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-获取所有成员变量"><a href="#2-获取所有成员变量" class="headerlink" title="2.获取所有成员变量"></a>2.获取所有成员变量</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Ivar *ivarList = class_copyIvarList([self class], &amp;amp;count);</span><br><span class="line">for (int i= 0; i&amp;lt;count; i++) &#123;</span><br><span class="line">    Ivar ivar = ivarList[i];</span><br><span class="line">    const char *ivarName = ivar_getName(ivar);</span><br><span class="line">    NSLog(@&quot;Ivar(%d): %@&quot;, i, [NSString stringWithUTF8String:ivarName]);</span><br><span class="line">&#125;</span><br><span class="line">free(ivarList);</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-获取所有方法"><a href="#3-获取所有方法" class="headerlink" title="3.获取所有方法"></a>3.获取所有方法</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Method *methodList = class_copyMethodList([self class], &amp;amp;count);</span><br><span class="line">for (unsigned int i = 0; i&amp;lt;count; i++) &#123;</span><br><span class="line">    Method method = methodList[i];</span><br><span class="line">    SEL mthodName = method_getName(method);</span><br><span class="line">    NSLog(@&quot;MethodName(%d): %@&quot;,i,NSStringFromSelector(mthodName));</span><br><span class="line">&#125;</span><br><span class="line">free(methodList);</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-获取当前遵循的所有协议"><a href="#4-获取当前遵循的所有协议" class="headerlink" title="4.获取当前遵循的所有协议"></a>4.获取当前遵循的所有协议</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">__unsafe_unretained Protocol **protocolList = class_copyProtocolList([self class], &amp;amp;count);</span><br><span class="line">for (int i=0; i&amp;lt;count; i++) &#123;</span><br><span class="line">    Protocol *protocal = protocolList[i];</span><br><span class="line">    const char *protocolName = protocol_getName(protocal);</span><br><span class="line">    NSLog(@&quot;protocol(%d): %@&quot;,i, [NSString stringWithUTF8String:protocolName]);</span><br><span class="line">&#125;</span><br><span class="line">free(propertyList);</span><br></pre></td></tr></table></figure>
+
+<h4 id="四、方法动态解析与消息转发"><a href="#四、方法动态解析与消息转发" class="headerlink" title="四、方法动态解析与消息转发"></a>四、方法动态解析与消息转发</h4><p>其实该部分可以参考runtime第一篇中内容，这里不再重复赘述，只是大概做出一些总结。</p>
+<h5 id="1-动态方法解析：动态添加方法"><a href="#1-动态方法解析：动态添加方法" class="headerlink" title="1.动态方法解析：动态添加方法"></a>1.动态方法解析：动态添加方法</h5><p>Runtime足够强大，能够让我们在运行时动态添加一个未实现的方法，这个功能主要有两个应用场景：</p>
+<p><strong>场景1</strong>：动态添加未实现方法，解决代码中因为方法未找到而报错的问题；</p>
+<p><strong>场景2</strong>：利用懒加载思路，若一个类有很多个方法，同时加载到内存中会耗费资源，可以使用动态解析添加方法。方法动态解析主要用到的方法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">//OC方法：</span><br><span class="line">//类方法未找到时调起，可于此添加类方法实现</span><br><span class="line">+ (BOOL)resolveClassMethod:(SEL)sel</span><br><span class="line"></span><br><span class="line">//实例方法未找到时调起，可于此添加实例方法实现</span><br><span class="line">+ (BOOL)resolveInstanceMethod:(SEL)sel</span><br><span class="line"></span><br><span class="line">//Runtime方法：</span><br><span class="line">/**</span><br><span class="line"> 运行时方法：向指定类中添加特定方法实现的操作</span><br><span class="line"> @param cls 被添加方法的类</span><br><span class="line"> @param name selector方法名</span><br><span class="line"> @param imp 指向实现方法的函数指针</span><br><span class="line"> @param types imp函数实现的返回值与参数类型</span><br><span class="line"> @return 添加方法是否成功</span><br><span class="line"> */</span><br><span class="line">BOOL class_addMethod(Class _Nullable cls,</span><br><span class="line">                     SEL _Nonnull name,</span><br><span class="line">                     IMP _Nonnull imp,</span><br><span class="line">                     const char * _Nullable types)</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-解决方法无响应崩溃问题"><a href="#2-解决方法无响应崩溃问题" class="headerlink" title="2.解决方法无响应崩溃问题"></a>2.解决方法无响应崩溃问题</h5><p>执行OC方法其实就是一个发送消息的过程，若方法未实现，我们可以利用方法动态解析与消息转发来避免程序崩溃，这主要涉及下面一个处理未实现消息的过程：<img src="/../images/%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt="消息转发流程图"></p>
+<p>除了上述的方法动态解析，还使用到的相关方法如下：</p>
+<p>消息接收者重定向</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//重定向类方法的消息接收者，返回一个类</span><br><span class="line">- (id)forwardingTargetForSelector:(SEL)aSelector</span><br><span class="line"></span><br><span class="line">//重定向实例方法的消息接受者，返回一个实例对象</span><br><span class="line">- (id)forwardingTargetForSelector:(SEL)aSelector</span><br></pre></td></tr></table></figure>
+
+<p>消息重定向</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (void)forwardInvocation:(NSInvocation *)anInvocation；</span><br><span class="line"></span><br><span class="line">- (NSMethodSignature*)methodSignatureForSelector:(SEL)aSelector;</span><br></pre></td></tr></table></figure>
+
+</div>
+        </div>
+        
+            <div class="kratos-copyright text-center clearfix">
+                <h5 itemprop="copyrightNotice">本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+            </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+                <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                
+                
+                    <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                    <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/08/runtime-%E4%B8%89-%EF%BC%9A%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/08/runtime-%E4%B8%89-%EF%BC%9A%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF/";
+            const title         = "「runtime(三)：基本使用场景」";
+            const excerpt       = `一、方法替换项目代码编写中，常会遇见第三方框架或者原生方法无法满足需求时或是一个方法在工程中大量被调用时，我们想要批量替换或修改，为了避免更改原有功能，**在保持原有方法功能基础上，添加额外的功能**，此时就需要用到Swizzle M...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                
+                </div>
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/runtime/" rel="tag">runtime</a>
+                </div>
+				
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" runtime(二)：runtime相关术语及数据结构" href="/25/runtime-二-：runtime相关术语及数据结构/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" iOS 中常见 Crash 总结" href="/17/iOS-中常见-Crash-总结/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center"></p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                68
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                6
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                12
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS%E7%9F%A5%E8%AF%86%E7%82%B9/">iOS知识点</a><span class="category-list-count">55</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF/">加密技术</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/Cocoapods/" style="font-size: 0.63em;">Cocoapods</a> <a href="/tags/Runloop/" style="font-size: 0.6em;">Runloop</a> <a href="/tags/Swift/" style="font-size: 0.73em;">Swift</a> <a href="/tags/UI%E6%8E%A7%E4%BB%B6/" style="font-size: 0.8em;">UI控件</a> <a href="/tags/ffmpeg/" style="font-size: 0.6em;">ffmpeg</a> <a href="/tags/git/" style="font-size: 0.63em;">git</a> <a href="/tags/runtime/" style="font-size: 0.67em;">runtime</a> <a href="/tags/%E5%8A%A0%E5%AF%86/" style="font-size: 0.6em;">加密</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 0.67em;">多线程</a> <a href="/tags/%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" style="font-size: 0.77em;">底层原理</a> <a href="/tags/%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6/" style="font-size: 0.7em;">开源框架</a> <a href="/tags/%E6%99%BA%E8%83%BD%E8%AE%BE%E5%A4%87/" style="font-size: 0.63em;">智能设备</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/17/XCode14-iOS16-%E9%80%82%E9%85%8D%E9%97%AE%E9%A2%98/"><i class="fa  fa-book"></i> XCode14 & iOS16 适配问题</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/26/objc%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/"><i class="fa  fa-book"></i> objc源码编译</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/08/git%E6%8A%A5%E9%94%99-Support-for-password-authentication-was-removed-on-August-13-2021/"><i class="fa  fa-book"></i> git报错#Support for password authentication was removed on August 13,2021</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/26/ios-%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93/"><i class="fa  fa-book"></i> iOS-离屏渲染</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/09/FFmpeg%E5%B8%B8%E8%A7%81%E6%8C%87%E4%BB%A4%E7%9A%84%E4%BD%BF%E7%94%A8/"><i class="fa  fa-book"></i> FFmpeg常见指令的使用</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  class="ap-lrc"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://t.me/CandyUnion"><i class="fa fa-telegram"></i></a></li>
+                        
+                        
+                        
+                        <li><a target="_blank" rel="me" href="https://nya.one/@Candinya"><i class="fa fa fa-share-alt-square"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/Candinya"><i class="fa fa-github"></i></a></li>
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2023 欢迎来到我的个人博客 版权所有.</li>
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+    <script defer src="/vendors/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="/vendors/meting@2.0.1/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="3204190542"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

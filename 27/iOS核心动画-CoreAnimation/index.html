@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  
+  
+  <title>iOS核心动画(CoreAnimation) | 欢迎来到我的个人博客</title>
+  <meta name="author" content="勿忘初心" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="" />
+  
+  <meta name="description" content="CoreAnimation是iOS中的核心动画框架，是iOS开发中专门用来处理动画的API，在开发中使用CoreAnimation可以做出很多很炫酷的动画。下面，就对CoreAnimation的使用做出详细的解析。 UIView动画​        在说CoreAnimation之前，可以先简单的介绍一下UIView动画，UIView动画用起来很简单，实现的动画也是非常简单。​        在开">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS核心动画(CoreAnimation)">
+<meta property="og:url" content="http://example.com/27/iOS%E6%A0%B8%E5%BF%83%E5%8A%A8%E7%94%BB-CoreAnimation/index.html">
+<meta property="og:site_name" content="欢迎来到我的个人博客">
+<meta property="og:description" content="CoreAnimation是iOS中的核心动画框架，是iOS开发中专门用来处理动画的API，在开发中使用CoreAnimation可以做出很多很炫酷的动画。下面，就对CoreAnimation的使用做出详细的解析。 UIView动画​        在说CoreAnimation之前，可以先简单的介绍一下UIView动画，UIView动画用起来很简单，实现的动画也是非常简单。​        在开">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-07-27T13:26:29.000Z">
+<meta property="article:modified_time" content="2022-09-21T07:45:39.000Z">
+<meta property="article:author" content="勿忘初心">
+<meta name="twitter:card" content="summary">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+    <link rel="stylesheet" href="/vendors/aplayer@1.10.1/dist/APlayer.min.css"></script>
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+    <script src="/vendors/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">欢迎来到我的个人博客</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>欢迎来到我的个人博客</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="http://example.com/27/iOS%E6%A0%B8%E5%BF%83%E5%8A%A8%E7%94%BB-CoreAnimation/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">iOS核心动画(CoreAnimation)</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2017-07-27T13:26:29.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2017-07-27</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">勿忘初心</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~6.64K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1663746339000"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            
+            <hr />
+            <div itemprop="articleBody"><p>CoreAnimation是iOS中的核心动画框架，是iOS开发中专门用来处理动画的API，在开发中使用CoreAnimation可以做出很多很炫酷的动画。下面，就对CoreAnimation的使用做出详细的解析。</p>
+<h2 id="UIView动画"><a href="#UIView动画" class="headerlink" title="UIView动画"></a>UIView动画</h2><p>​        在说CoreAnimation之前，可以先简单的介绍一下UIView动画，UIView动画用起来很简单，实现的动画也是非常简单。<br>​        在开发中，我们也会经常调用到，主要有两种调用方式：</p>
+<ul>
+<li><h4 id="block代码块调用"><a href="#block代码块调用" class="headerlink" title="block代码块调用"></a>block代码块调用</h4></li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[<span class="built_in">UIView</span> animateWithDuration:<span class="number">1</span> animations:^&#123;</span><br><span class="line">        <span class="keyword">self</span>.firstView.frame = <span class="built_in">CGRectMake</span>(<span class="number">200</span>, <span class="number">200</span>, <span class="number">50</span>, <span class="number">100</span>);</span><br><span class="line"> &#125;];</span><br></pre></td></tr></table></figure>
+
+<p>​        常用的还有delay参数和completion的回调方法，completion中是动画完成后的回调，可以在做一些动画完成后要执行的任务，delay是动画延迟执行的时间。</p>
+<ul>
+<li><h4 id="begin-commit-代码段调用"><a href="#begin-commit-代码段调用" class="headerlink" title="[begin commit]代码段调用"></a>[begin commit]代码段调用</h4></li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[<span class="built_in">UIView</span> beginAnimations:<span class="literal">nil</span> context:<span class="literal">nil</span>];</span><br><span class="line">[<span class="built_in">UIView</span> setAnimationDuration:<span class="number">1</span>];</span><br><span class="line"><span class="keyword">self</span>.firstView.frame = <span class="built_in">CGRectMake</span>(<span class="number">200</span>, <span class="number">200</span>, <span class="number">50</span>, <span class="number">100</span>);</span><br><span class="line">[<span class="built_in">UIView</span> commitAnimations];</span><br></pre></td></tr></table></figure>
+
+<p>​        这种方式需要将执行的动画内容放到beginAnimations和commitAnimations中间，包括一些要设置的属性，如：Duration、Delay、StartDate、Curve、RepeatCount等等，还可以通过设置setAnimationDelegate代理，来监听动画的开始和结束。</p>
+<h2 id="核心动画（CoreAnimation）"><a href="#核心动画（CoreAnimation）" class="headerlink" title="核心动画（CoreAnimation）"></a>核心动画（CoreAnimation）</h2><p>​        CoreAnimation的动画实现是在layer层，每一个UIView的对象在创建的时候都会生成一个layer层，我们平时看到的view上展示的元素都是layer层绘制和显示的，通过改变layer的属性，就可以实现复杂的动画了。其实，UIView动画也可以看做是CoreAnimation的封装，不过，值得注意的是：UIView动画在执行完成后，view本身是发生改变的，CoreAnimation在执行完成后，view本身是没有发生改变的，只是看起来变了而已。<br>​        CoreAnimation的基类为CAAnimation，实现了CAMediaTiming协议，以用来控制动画的时间、速度和时间曲线等，CoreAnimation不能直接使用，需要使用它的子类：CAAnimationGroup、CAPropertyAnimation和CATransition，CAPropertyAnimation一般也不会直接时候，它又有两个子类：CABasicAnimation、CAKeyframeAnimation。</p>
+<p>综上所述，可以使用的动画的类包括：</p>
+<blockquote>
+<p>CABasicAnimation： 基础动画<br>CAKeyframeAnimation： 关键帧动画<br>CATransition： 转场动画<br>CAAnimationGroup： 动画组</p>
+</blockquote>
+<h3 id="CABasicAnimation（基础动画）"><a href="#CABasicAnimation（基础动画）" class="headerlink" title="CABasicAnimation（基础动画）"></a>CABasicAnimation（基础动画）</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">CABasicAnimation</span> *basicAnimation = [<span class="built_in">CABasicAnimation</span> animationWithKeyPath:<span class="string">@&quot;position&quot;</span>];</span><br><span class="line">basicAnimation.fromValue = [<span class="built_in">NSValue</span> valueWithCGPoint:<span class="built_in">CGPointMake</span>(<span class="number">150</span>, <span class="number">125</span>)];</span><br><span class="line">basicAnimation.toValue = [<span class="built_in">NSValue</span> valueWithCGPoint:<span class="built_in">CGPointMake</span>(<span class="number">200</span>, <span class="number">500</span>)];</span><br><span class="line">basicAnimation.duration = <span class="number">1.0</span>f;</span><br><span class="line">[<span class="keyword">self</span>.firstView.layer addAnimation:basicAnimation forKey:<span class="string">@&quot;positonAnimation&quot;</span>];</span><br></pre></td></tr></table></figure>
+
+<p>其中，keyPath对应的是想要改变的layer的属性，支持动画的属性主要包括以下这些：</p>
+<blockquote>
+<p>&#x2F;&#x2F;CATransform3D Key Paths :<br>rotation.x<br>rotation.y<br>rotation.z<br>rotation 旋转</p>
+<p>scale.x<br>scale.y<br>scale.z<br>scale 缩放</p>
+<p>translation.x<br>translation.y<br>translation.z<br>translation 平移</p>
+</blockquote>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="built_in">CGPoint</span> Key Paths : </span><br><span class="line">   x</span><br><span class="line">   y</span><br><span class="line">&gt; </span><br><span class="line"><span class="comment">//CGRect Key Paths : </span></span><br><span class="line"> origin.x</span><br><span class="line"> origin.y</span><br><span class="line"> origin</span><br><span class="line"> size.width</span><br><span class="line"> size.height</span><br><span class="line"> size</span><br><span class="line"></span><br><span class="line"> &gt;opacity</span><br><span class="line"> backgroundColor</span><br><span class="line"> cornerRadius </span><br><span class="line"> borderWidth</span><br><span class="line"> contents </span><br><span class="line"> &gt;</span><br><span class="line">     </span><br><span class="line"> <span class="comment">//Shadow Key Path:</span></span><br><span class="line"> shadowColor </span><br><span class="line"> shadowOffset </span><br><span class="line"> shadowOpacity </span><br><span class="line"> shadowRadius</span><br></pre></td></tr></table></figure>
+
+<p>经常用到的还有以下属性：</p>
+<ul>
+<li>fillMode、removedOnCompletion，他们两个同时使用，</li>
+</ul>
+<blockquote>
+<p>basicAnimation.fillMode &#x3D; kCAFillModeForwards;<br>basicAnimation.removedOnCompletion &#x3D; NO;</p>
+</blockquote>
+<p>动画执行完成后，视图不会再回到原来的位置。</p>
+<ul>
+<li>timingFunction ：动画执行时的效果：</li>
+</ul>
+<blockquote>
+<p>basicAnimation.timingFunction &#x3D; [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];</p>
+</blockquote>
+<p>同时，要想移除动画，系统提供了两个方法：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="type">void</span>)removeAnimationForKey:(<span class="built_in">NSString</span> *)key;<span class="comment">//移除指定的动画</span></span><br><span class="line">- (<span class="type">void</span>)removeAllAnimations;<span class="comment">//移除某个layer上所有的动画</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="CAKeyframeAnimation（关键帧动画）"><a href="#CAKeyframeAnimation（关键帧动画）" class="headerlink" title="CAKeyframeAnimation（关键帧动画）"></a>CAKeyframeAnimation（关键帧动画）</h3><p>关键帧动画可以为动画的执行过程设置若干个中间点，中间点前后动画的属性可以设置多个不同的值，动画可以沿着设置的中间点顺序执行。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">CAKeyframeAnimation</span> * keyFrameAnimation = [<span class="built_in">CAKeyframeAnimation</span> animationWithKeyPath:<span class="string">@&quot;position&quot;</span>];</span><br><span class="line">keyFrameAnimation.duration = <span class="number">3.0</span>;</span><br><span class="line">keyFrameAnimation.removedOnCompletion = <span class="literal">NO</span>;</span><br><span class="line">keyFrameAnimation.fillMode = kCAFillModeForwards;</span><br><span class="line">keyFrameAnimation.timingFunction = [<span class="built_in">CAMediaTimingFunction</span> functionWithName:kCAMediaTimingFunctionEaseInEaseOut];</span><br><span class="line"></span><br><span class="line"><span class="built_in">NSValue</span> * value0 = [<span class="built_in">NSValue</span> valueWithCGPoint:<span class="built_in">CGPointMake</span>(<span class="number">150</span>, <span class="number">125</span>)];</span><br><span class="line"><span class="built_in">NSValue</span> *value1=[<span class="built_in">NSValue</span> valueWithCGPoint:<span class="built_in">CGPointMake</span>(<span class="number">250</span>, <span class="number">125</span>)];</span><br><span class="line"><span class="built_in">NSValue</span> *value2=[<span class="built_in">NSValue</span> valueWithCGPoint:<span class="built_in">CGPointMake</span>(<span class="number">250</span>, <span class="number">225</span>)];</span><br><span class="line"><span class="built_in">NSValue</span> *value3=[<span class="built_in">NSValue</span> valueWithCGPoint:<span class="built_in">CGPointMake</span>(<span class="number">100</span>, <span class="number">400</span>)];</span><br><span class="line">keyFrameAnimation.values = @[value0, value1, value2, value3];</span><br><span class="line"></span><br><span class="line">[<span class="keyword">self</span>.firstView.layer addAnimation:keyFrameAnimation forKey:<span class="string">@&quot;KeyframeAnimationForPosition&quot;</span>];</span><br></pre></td></tr></table></figure>
+
+<p>关键帧动画有几个非常重要的属性：</p>
+<blockquote>
+<p>values：关键帧数组对象，里面每一个元素即为一个关键帧，动画会在对应的时间段内，依次执行数组中每一个关键帧的动画。<br>path：动画路径对象，可以指定一个路径，在执行动画时路径会沿着路径移动，Path在动画中只会影响视图的Position。<br>keyTimes：设置关键帧对应的时间点，范围：0-1。如果没有设置该属性，则每一帧的时间平分。</p>
+</blockquote>
+<p>利用path属性，我们可以使用关键帧动画来实现画圆圈的动画：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">CGSize</span> screenSize = [<span class="built_in">UIScreen</span> mainScreen].bounds.size;</span><br><span class="line"><span class="built_in">CAKeyframeAnimation</span> *keyFrameAnimation = [<span class="built_in">CAKeyframeAnimation</span> animationWithKeyPath:<span class="string">@&quot;position&quot;</span>];</span><br><span class="line">keyFrameAnimation.removedOnCompletion = <span class="literal">NO</span>;</span><br><span class="line">keyFrameAnimation.fillMode = kCAFillModeForwards;</span><br><span class="line"><span class="built_in">UIBezierPath</span> *path = [<span class="built_in">UIBezierPath</span> bezierPathWithOvalInRect:<span class="built_in">CGRectMake</span>(screenSize.width/<span class="number">2</span><span class="number">-100</span>, screenSize.height/<span class="number">2</span><span class="number">-100</span>, <span class="number">200</span>, <span class="number">200</span>)];</span><br><span class="line">keyFrameAnimation.path = path.CGPath;</span><br><span class="line">keyFrameAnimation.duration = <span class="number">2.0</span>f;</span><br><span class="line">[<span class="keyword">self</span>.firstView.layer addAnimation:keyFrameAnimation forKey:<span class="string">@&quot;KeyframeAnimationCirclePath&quot;</span>];</span><br></pre></td></tr></table></figure>
+
+<h3 id="CATransition（转场动画）"><a href="#CATransition（转场动画）" class="headerlink" title="CATransition（转场动画）"></a>CATransition（转场动画）</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">CATransition</span> * transAnimation = [<span class="built_in">CATransition</span> animation];</span><br><span class="line">transAnimation.type = kCATransitionFade;</span><br><span class="line">transAnimation.subtype = kCATransitionFromLeft;</span><br><span class="line">transAnimation.duration = <span class="number">1.5</span>;</span><br><span class="line"><span class="keyword">self</span>.firstView.backgroundColor = [<span class="built_in">UIColor</span> blueColor];</span><br><span class="line">[<span class="keyword">self</span>.firstView.layer addAnimation:transAnimation forKey:<span class="string">@&quot;transitionAnimation&quot;</span>];</span><br></pre></td></tr></table></figure>
+
+<p>转场动画两个重要的属性：</p>
+<blockquote>
+<p>type：转场动画的种类，公有api主要有四个：</p>
+<p>渐变 kCATransitionFade 、覆盖 kCATransitionMoveIn </p>
+<p>推出 kCATransitionPush 、揭开kCATransitionReveal </p>
+<p>还有一些私有api：”cube”、”suckEffect”、”oglFlip”、 “rippleEffect”、”pageCurl”、”pageUnCurl”</p>
+<p>动画的方向，有以下几种：</p>
+<p>kCATransitionFromRight 从右边、kCATransitionFromLeft 从左边</p>
+<p>kCATransitionFromTop 从顶部、kCATransitionFromBottom 从底部</p>
+</blockquote>
+<h3 id="CAAnimationGroup（动画组）"><a href="#CAAnimationGroup（动画组）" class="headerlink" title="CAAnimationGroup（动画组）"></a>CAAnimationGroup（动画组）</h3><p>CAAnimationGroup顾名思义就是一组动画，动画组中可以添加多个动画，动画组中的动画可以并发运行。我们平时见到的一些炫酷的动画，都是依赖动画组完成的。<br>CAAnimationGroup最重要的属性：</p>
+<blockquote>
+<p>animations： 数组类型，用来接收动画组中要添加的动画</p>
+</blockquote>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">CGSize</span> screenSize = [<span class="built_in">UIScreen</span> mainScreen].bounds.size;</span><br><span class="line"><span class="comment">//关键帧动画（移动）</span></span><br><span class="line"><span class="built_in">CAKeyframeAnimation</span> *animation1 = [<span class="built_in">CAKeyframeAnimation</span> animationWithKeyPath:<span class="string">@&quot;position&quot;</span>];</span><br><span class="line"><span class="built_in">NSValue</span> *value0 = [<span class="built_in">NSValue</span> valueWithCGPoint:<span class="built_in">CGPointMake</span>(<span class="number">0</span>, screenSize.height/<span class="number">2</span><span class="number">-50</span>)];</span><br><span class="line"><span class="built_in">NSValue</span> *value1 = [<span class="built_in">NSValue</span> valueWithCGPoint:<span class="built_in">CGPointMake</span>(screenSize.width/<span class="number">3</span>, screenSize.height/<span class="number">2</span><span class="number">-50</span>)];</span><br><span class="line"><span class="built_in">NSValue</span> *value2 = [<span class="built_in">NSValue</span> valueWithCGPoint:<span class="built_in">CGPointMake</span>(screenSize.width/<span class="number">3</span>, screenSize.height/<span class="number">2</span>+<span class="number">50</span>)];</span><br><span class="line"><span class="built_in">NSValue</span> *value3 = [<span class="built_in">NSValue</span> valueWithCGPoint:<span class="built_in">CGPointMake</span>(screenSize.width*<span class="number">2</span>/<span class="number">3</span>, screenSize.height/<span class="number">2</span><span class="number">-50</span>)];</span><br><span class="line">animation1.values = [<span class="built_in">NSArray</span> arrayWithObjects:value0,value1,value2,value3,<span class="literal">nil</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">//缩放动画</span></span><br><span class="line"><span class="built_in">CABasicAnimation</span> *animation2 = [<span class="built_in">CABasicAnimation</span> animationWithKeyPath:<span class="string">@&quot;transform.scale&quot;</span>];</span><br><span class="line">animation2.fromValue = [<span class="built_in">NSNumber</span> numberWithFloat:<span class="number">0.8</span>f];</span><br><span class="line">animation2.toValue = [<span class="built_in">NSNumber</span> numberWithFloat:<span class="number">2.0</span>f];</span><br><span class="line"></span><br><span class="line"><span class="comment">//旋转动画</span></span><br><span class="line"><span class="built_in">CABasicAnimation</span> *animation3 = [<span class="built_in">CABasicAnimation</span> animationWithKeyPath:<span class="string">@&quot;transform.rotation&quot;</span>];</span><br><span class="line">animation3.toValue = [<span class="built_in">NSNumber</span> numberWithFloat:M_PI*<span class="number">4</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">//组动画</span></span><br><span class="line"><span class="built_in">CAAnimationGroup</span> *groupAnimation = [<span class="built_in">CAAnimationGroup</span> animation];</span><br><span class="line">groupAnimation.animations = [<span class="built_in">NSArray</span> arrayWithObjects:animation1,animation2,animation3, <span class="literal">nil</span>];</span><br><span class="line">groupAnimation.duration = <span class="number">3.0</span>f;</span><br><span class="line">[<span class="keyword">self</span>.firstView.layer addAnimation:groupAnimation forKey:<span class="string">@&quot;groupAnimation&quot;</span>];</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><p>平时大家看到的动画，无论多么复杂，都是由一个个简单的动画组合而成的，在使用的时候，我们要进行合适的组合，控制好动画的属性，就能达到我们满意的效果。</p>
+</div>
+        </div>
+        
+            <div class="kratos-copyright text-center clearfix">
+                <h5 itemprop="copyrightNotice">本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+            </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+                <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                
+                
+                    <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                    <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/27/iOS%E6%A0%B8%E5%BF%83%E5%8A%A8%E7%94%BB-CoreAnimation/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/27/iOS%E6%A0%B8%E5%BF%83%E5%8A%A8%E7%94%BB-CoreAnimation/";
+            const title         = "「iOS核心动画(CoreAnimation)」";
+            const excerpt       = `CoreAnimation是iOS中的核心动画框架，是iOS开发中专门用来处理动画的API，在开发中使用CoreAnimation可以做出很多很炫酷的动画。下面，就对CoreAnimation的使用做出详细的解析。
+UIView动画​...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                
+                </div>
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    
+                </div>
+				
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" Runloop的知识点" href="/15/Runloop的知识点/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" UICollectionView详解（一）： 基本使用" href="/06/UICollectionView详解（一）：-基本使用/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center"></p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                68
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                6
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                12
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS%E7%9F%A5%E8%AF%86%E7%82%B9/">iOS知识点</a><span class="category-list-count">55</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF/">加密技术</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/Cocoapods/" style="font-size: 0.63em;">Cocoapods</a> <a href="/tags/Runloop/" style="font-size: 0.6em;">Runloop</a> <a href="/tags/Swift/" style="font-size: 0.73em;">Swift</a> <a href="/tags/UI%E6%8E%A7%E4%BB%B6/" style="font-size: 0.8em;">UI控件</a> <a href="/tags/ffmpeg/" style="font-size: 0.6em;">ffmpeg</a> <a href="/tags/git/" style="font-size: 0.63em;">git</a> <a href="/tags/runtime/" style="font-size: 0.67em;">runtime</a> <a href="/tags/%E5%8A%A0%E5%AF%86/" style="font-size: 0.6em;">加密</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 0.67em;">多线程</a> <a href="/tags/%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" style="font-size: 0.77em;">底层原理</a> <a href="/tags/%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6/" style="font-size: 0.7em;">开源框架</a> <a href="/tags/%E6%99%BA%E8%83%BD%E8%AE%BE%E5%A4%87/" style="font-size: 0.63em;">智能设备</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/17/XCode14-iOS16-%E9%80%82%E9%85%8D%E9%97%AE%E9%A2%98/"><i class="fa  fa-book"></i> XCode14 & iOS16 适配问题</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/26/objc%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/"><i class="fa  fa-book"></i> objc源码编译</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/08/git%E6%8A%A5%E9%94%99-Support-for-password-authentication-was-removed-on-August-13-2021/"><i class="fa  fa-book"></i> git报错#Support for password authentication was removed on August 13,2021</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/26/ios-%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93/"><i class="fa  fa-book"></i> iOS-离屏渲染</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/09/FFmpeg%E5%B8%B8%E8%A7%81%E6%8C%87%E4%BB%A4%E7%9A%84%E4%BD%BF%E7%94%A8/"><i class="fa  fa-book"></i> FFmpeg常见指令的使用</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  class="ap-lrc"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://t.me/CandyUnion"><i class="fa fa-telegram"></i></a></li>
+                        
+                        
+                        
+                        <li><a target="_blank" rel="me" href="https://nya.one/@Candinya"><i class="fa fa fa-share-alt-square"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/Candinya"><i class="fa fa-github"></i></a></li>
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2023 欢迎来到我的个人博客 版权所有.</li>
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+    <script defer src="/vendors/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="/vendors/meting@2.0.1/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="3204190542"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

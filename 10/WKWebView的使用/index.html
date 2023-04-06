@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  
+  
+  <title>WKWebView的使用 | 欢迎来到我的个人博客</title>
+  <meta name="author" content="勿忘初心" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="UI控件" />
+  
+  <meta name="description" content="WKWebView 是苹果在iOS 8中引入的新组件，目的是提供一个现代的支持最新 Webkit 功能的网页浏览控件，摆脱过去 UIWebView的老、旧、笨，特别是内存占用量巨大的问题。它使用与 Safari 中一样的Nitro JavaScript引擎，大大提高了页面 js 执行速度。 一、WKWebView涉及的一些类 WKWebView：网页的渲染与展示  1234567891011121">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WKWebView的使用">
+<meta property="og:url" content="http://example.com/10/WKWebView%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="欢迎来到我的个人博客">
+<meta property="og:description" content="WKWebView 是苹果在iOS 8中引入的新组件，目的是提供一个现代的支持最新 Webkit 功能的网页浏览控件，摆脱过去 UIWebView的老、旧、笨，特别是内存占用量巨大的问题。它使用与 Safari 中一样的Nitro JavaScript引擎，大大提高了页面 js 执行速度。 一、WKWebView涉及的一些类 WKWebView：网页的渲染与展示  1234567891011121">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-06-10T12:44:22.000Z">
+<meta property="article:modified_time" content="2022-09-21T06:13:11.000Z">
+<meta property="article:author" content="勿忘初心">
+<meta property="article:tag" content="UI控件">
+<meta name="twitter:card" content="summary">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+    <link rel="stylesheet" href="/vendors/aplayer@1.10.1/dist/APlayer.min.css"></script>
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+    <script src="/vendors/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">欢迎来到我的个人博客</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>欢迎来到我的个人博客</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="http://example.com/10/WKWebView%E7%9A%84%E4%BD%BF%E7%94%A8/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">WKWebView的使用</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2017-06-10T12:44:22.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2017-06-10</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">勿忘初心</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~15.49K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1663740791000"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            
+            <hr />
+            <div itemprop="articleBody"><p>WKWebView 是苹果在iOS 8中引入的新组件，目的是提供一个现代的支持最新 Webkit 功能的网页浏览控件，摆脱过去 UIWebView的老、旧、笨，特别是内存占用量巨大的问题。它使用与 Safari 中一样的Nitro JavaScript引擎，大大提高了页面 js 执行速度。</p>
+<h4 id="一、WKWebView涉及的一些类"><a href="#一、WKWebView涉及的一些类" class="headerlink" title="一、WKWebView涉及的一些类"></a>一、WKWebView涉及的一些类</h4><ul>
+<li>WKWebView：网页的渲染与展示</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">注意： #import &lt;WebKit/WebKit.h&gt;</span><br><span class="line">//初始化</span><br><span class="line">_webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) configuration:config];</span><br><span class="line">// UI代理</span><br><span class="line">_webView.UIDelegate = self;</span><br><span class="line">// 导航代理</span><br><span class="line">_webView.navigationDelegate = self;</span><br><span class="line">// 是否允许手势左滑返回上一级, 类似导航控制的左滑返回</span><br><span class="line">_webView.allowsBackForwardNavigationGestures = YES;</span><br><span class="line">//可返回的页面列表, 存储已打开过的网页 </span><br><span class="line">WKBackForwardList * backForwardList = [_webView backForwardList];</span><br><span class="line"></span><br><span class="line">//NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@&quot;https://www.baidu.com&quot;]];</span><br><span class="line">//[request addValue:[self readCurrentCookieWithDomain:@&quot;https://www.baidu.com&quot;] forHTTPHeaderField:@&quot;Cookie&quot;];</span><br><span class="line">//[_webView loadRequest:request];</span><br><span class="line"></span><br><span class="line">//页面后退</span><br><span class="line">[_webView goBack];</span><br><span class="line">//页面前进</span><br><span class="line">[_webView goForward];</span><br><span class="line">//刷新当前页面</span><br><span class="line">[_webView reload];</span><br><span class="line">        </span><br><span class="line">NSString *path = [[NSBundle mainBundle] pathForResource:@&quot;Demo.html&quot; ofType:nil];</span><br><span class="line">NSString *htmlString = [[NSString alloc]initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];</span><br><span class="line">//加载本地html文件</span><br><span class="line">[_webView loadHTMLString:htmlString baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];</span><br><span class="line">        </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>WKWebViewConfiguration：为添加WKWebView配置信息</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">//创建网页配置对象</span><br><span class="line">WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];</span><br><span class="line">        </span><br><span class="line">// 创建设置对象</span><br><span class="line">WKPreferences *preference = [[WKPreferences alloc]init];</span><br><span class="line"></span><br><span class="line">//最小字体大小 当将javaScriptEnabled属性设置为NO时，可以看到明显的效果</span><br><span class="line">preference.minimumFontSize = 0;</span><br><span class="line"></span><br><span class="line">//设置是否支持javaScript 默认是支持的</span><br><span class="line">preference.javaScriptEnabled = YES;</span><br><span class="line"></span><br><span class="line">// 在iOS上默认为NO，表示是否允许不经过用户交互由javaScript自动打开窗口</span><br><span class="line">preference.javaScriptCanOpenWindowsAutomatically = YES;</span><br><span class="line">config.preferences = preference;</span><br><span class="line">        </span><br><span class="line">// 是使用h5的视频播放器在线播放, 还是使用原生播放器全屏播放</span><br><span class="line">config.allowsInlineMediaPlayback = YES;</span><br><span class="line"></span><br><span class="line">//设置视频是否需要用户手动播放  设置为NO则会允许自动播放</span><br><span class="line">config.requiresUserActionForMediaPlayback = YES;</span><br><span class="line"></span><br><span class="line">//设置是否允许画中画技术 在特定设备上有效</span><br><span class="line">config.allowsPictureInPictureMediaPlayback = YES;</span><br><span class="line"></span><br><span class="line">//设置请求的User-Agent信息中应用程序名称 iOS9后可用</span><br><span class="line">config.applicationNameForUserAgent = @&quot;ChinaDailyForiPad&quot;;</span><br><span class="line"></span><br><span class="line">//自定义的WKScriptMessageHandler 是为了解决内存不释放的问题</span><br><span class="line">WeakWebViewScriptMessageDelegate *weakScriptMessageDelegate = [[WeakWebViewScriptMessageDelegate alloc] initWithDelegate:self];</span><br><span class="line"></span><br><span class="line">//这个类主要用来做native与JavaScript的交互管理</span><br><span class="line">WKUserContentController * wkUController = [[WKUserContentController alloc] init];</span><br><span class="line">//注册一个name为jsToOc的js方法</span><br><span class="line">[wkUController addScriptMessageHandler:weakScriptMessageDelegate  name:@&quot;jsToOc&quot;];</span><br><span class="line"></span><br><span class="line">[wkUController addScriptMessageHandler:weakScriptMessageDelegate  name:@&quot;jsToOcWithPrams&quot;]; </span><br><span class="line">config.userContentController = wkUController;</span><br><span class="line">        </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>WKUserScript：用于进行JavaScript注入</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//以下代码适配文本大小，由UIWebView换为WKWebView后，会发现字体小了很多，这应该是WKWebView与html的兼容问题，解决办法是修改原网页，要么我们手动注入JS</span><br><span class="line">NSString *jSString = @&quot;var meta = document.createElement(&#x27;meta&#x27;); meta.setAttribute(&#x27;name&#x27;, &#x27;viewport&#x27;); meta.setAttribute(&#x27;content&#x27;, &#x27;width=device-width&#x27;); document.getElementsByTagName(&#x27;head&#x27;)[0].appendChild(meta);&quot;;</span><br><span class="line"></span><br><span class="line">//用于进行JavaScript注入</span><br><span class="line">WKUserScript *wkUScript = [[WKUserScript alloc] initWithSource:jSString injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];</span><br><span class="line">[config.userContentController addUserScript:wkUScript];</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>WKScriptMessageHandler：这个协议类专门用来处理监听JavaScript方法从而调用原生OC方法，和WKUserContentController搭配使用。</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">注意：遵守<span class="built_in">WKScriptMessageHandler</span>协议，代理是由<span class="built_in">WKUserContentControl</span>设置</span><br><span class="line"></span><br><span class="line">   <span class="comment">//通过接收JS传出消息的name进行捕捉的回调方法</span></span><br><span class="line">- (<span class="type">void</span>)userContentController:(<span class="built_in">WKUserContentController</span> *)userContentController didReceiveScriptMessage:(<span class="built_in">WKScriptMessage</span> *)message&#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@&quot;name:%@\\\\n body:%@\\\\n frameInfo:%@\\\\n&quot;</span>,message.name,message.body,message.frameInfo);</span><br><span class="line">    <span class="comment">//用message.body获得JS传出的参数体</span></span><br><span class="line">    <span class="built_in">NSDictionary</span> * parameter = message.body;</span><br><span class="line">    <span class="comment">//JS调用OC</span></span><br><span class="line">    <span class="keyword">if</span>([message.name isEqualToString:<span class="string">@&quot;jsToOc&quot;</span>])&#123;</span><br><span class="line">        <span class="built_in">UIAlertController</span> *alertController = [<span class="built_in">UIAlertController</span> alertControllerWithTitle:<span class="string">@&quot;js调用到了oc&quot;</span> message:<span class="string">@&quot;无参数&quot;</span> preferredStyle:<span class="built_in">UIAlertControllerStyleAlert</span>];</span><br><span class="line">        [alertController addAction:([<span class="built_in">UIAlertAction</span> actionWithTitle:<span class="string">@&quot;OK&quot;</span> style:<span class="built_in">UIAlertActionStyleDefault</span> handler:^(<span class="built_in">UIAlertAction</span> * _Nonnull action) &#123;</span><br><span class="line">        &#125;])];</span><br><span class="line">        [<span class="keyword">self</span> presentViewController:alertController animated:<span class="literal">YES</span> completion:<span class="literal">nil</span>];</span><br><span class="line">        </span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>([message.name isEqualToString:<span class="string">@&quot;jsToOcWithPrams&quot;</span>])&#123;</span><br><span class="line">        <span class="built_in">UIAlertController</span> *alertController = [<span class="built_in">UIAlertController</span> alertControllerWithTitle:<span class="string">@&quot;js调用到了oc&quot;</span> message:parameter[<span class="string">@&quot;params&quot;</span>] preferredStyle:<span class="built_in">UIAlertControllerStyleAlert</span>];</span><br><span class="line">        [alertController addAction:([<span class="built_in">UIAlertAction</span> actionWithTitle:<span class="string">@&quot;OK&quot;</span> style:<span class="built_in">UIAlertActionStyleDefault</span> handler:^(<span class="built_in">UIAlertAction</span> * _Nonnull action) &#123;</span><br><span class="line">        &#125;])];</span><br><span class="line">        [<span class="keyword">self</span> presentViewController:alertController animated:<span class="literal">YES</span> completion:<span class="literal">nil</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="二、WKWebView涉及的代理方法"><a href="#二、WKWebView涉及的代理方法" class="headerlink" title="二、WKWebView涉及的代理方法"></a>二、WKWebView涉及的代理方法</h4><ul>
+<li>WKNavigationDelegate ：主要处理一些跳转、加载处理操作</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">// 页面开始加载时调用</span><br><span class="line">- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 页面加载失败时调用</span><br><span class="line">- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error &#123;</span><br><span class="line">    [self.progressView setProgress:0.0f animated:NO];</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">// 当内容开始返回时调用</span><br><span class="line">- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 页面加载完成之后调用</span><br><span class="line">- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation &#123;</span><br><span class="line">    [self getCookie];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//提交发生错误时调用</span><br><span class="line">- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error &#123;</span><br><span class="line">    [self.progressView setProgress:0.0f animated:NO];</span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">// 接收到服务器跳转请求即服务重定向时之后调用</span><br><span class="line">- (void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(WKNavigation *)navigation &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 根据WebView对于即将跳转的HTTP请求头信息和相关信息来决定是否跳转</span><br><span class="line">- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler &#123;</span><br><span class="line">    </span><br><span class="line">    NSString * urlStr = navigationAction.request.URL.absoluteString;</span><br><span class="line">    NSLog(@&quot;发送跳转请求：%@&quot;,urlStr);</span><br><span class="line">    //自己定义的协议头</span><br><span class="line">    NSString *htmlHeadString = @&quot;xxxxx&quot;;</span><br><span class="line">    if([urlStr hasPrefix:htmlHeadString])&#123;</span><br><span class="line">        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@&quot;通过截取URL调用OC&quot; message:@&quot;你想前往xxxxx页面?&quot; preferredStyle:UIAlertControllerStyleAlert];</span><br><span class="line">        [alertController addAction:([UIAlertAction actionWithTitle:@&quot;取消&quot; style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) &#123;   </span><br><span class="line">        &#125;])];</span><br><span class="line">        [alertController addAction:([UIAlertAction actionWithTitle:@&quot;打开&quot; style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) &#123;</span><br><span class="line">            NSURL * url = [NSURL URLWithString:urlStr];</span><br><span class="line">            [[UIApplication sharedApplication] openURL:url];</span><br><span class="line">        &#125;])];</span><br><span class="line">        [self presentViewController:alertController animated:YES completion:nil];</span><br><span class="line">        decisionHandler(WKNavigationActionPolicyCancel);</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        decisionHandler(WKNavigationActionPolicyAllow);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">// 根据客户端受到的服务器响应头以及response相关信息来决定是否可以跳转</span><br><span class="line">- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler&#123;</span><br><span class="line">   </span><br><span class="line">   NSString * urlStr = navigationResponse.response.URL.absoluteString;</span><br><span class="line">   NSLog(@&quot;当前跳转地址：%@&quot;,urlStr);</span><br><span class="line">   //允许跳转</span><br><span class="line">   decisionHandler(WKNavigationResponsePolicyAllow);</span><br><span class="line">   //不允许跳转</span><br><span class="line">   //decisionHandler(WKNavigationResponsePolicyCancel);</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">//需要响应身份验证时调用 同样在block中需要传入用户身份凭证</span><br><span class="line">- (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential * _Nullable credential))completionHandler&#123;</span><br><span class="line">    </span><br><span class="line">    //用户身份信息</span><br><span class="line">    NSURLCredential * newCred = [[NSURLCredential alloc] initWithUser:@&quot;zhangsan&quot; password:@&quot;666&quot; persistence:NSURLCredentialPersistenceNone];</span><br><span class="line">    </span><br><span class="line">    //为 challenge 的发送方提供 credential</span><br><span class="line">    [challenge.sender useCredential:newCred forAuthenticationChallenge:challenge];</span><br><span class="line">    completionHandler(NSURLSessionAuthChallengeUseCredential,newCred);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//进程被终止时调用</span><br><span class="line">- (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>WKUIDelegate ：主要处理JS脚本，确认框，警告框等</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"> /**</span><br><span class="line">     *  web界面中有弹出警告框时调用</span><br><span class="line">     *</span><br><span class="line">     *  @param webView           实现该代理的webview</span><br><span class="line">     *  @param message           警告框中的内容</span><br><span class="line">     *  @param completionHandler 警告框消失调用</span><br><span class="line">     */</span><br><span class="line">- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler &#123;</span><br><span class="line">    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@&quot;HTML的弹出框&quot; message:message?:@&quot;&quot; preferredStyle:UIAlertControllerStyleAlert];</span><br><span class="line">    [alertController addAction:([UIAlertAction actionWithTitle:@&quot;OK&quot; style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) &#123;</span><br><span class="line">        completionHandler();</span><br><span class="line">    &#125;])];</span><br><span class="line">    [self presentViewController:alertController animated:YES completion:nil];</span><br><span class="line">&#125;</span><br><span class="line">    // 确认框</span><br><span class="line">    //JavaScript调用confirm方法后回调的方法 confirm是js中的确定框，需要在block中把用户选择的情况传递进去</span><br><span class="line">- (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL))completionHandler&#123;</span><br><span class="line">  </span><br><span class="line">    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@&quot;&quot; message:message?:@&quot;&quot; preferredStyle:UIAlertControllerStyleAlert];</span><br><span class="line">    [alertController addAction:([UIAlertAction actionWithTitle:@&quot;Cancel&quot; style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) &#123;</span><br><span class="line">        completionHandler(NO);</span><br><span class="line">    &#125;])];</span><br><span class="line">    [alertController addAction:([UIAlertAction actionWithTitle:@&quot;OK&quot; style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) &#123;</span><br><span class="line">        completionHandler(YES);</span><br><span class="line">    &#125;])];</span><br><span class="line">    [self presentViewController:alertController animated:YES completion:nil];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 输入框</span><br><span class="line">//JavaScript调用prompt方法后回调的方法 prompt是js中的输入框 需要在block中把用户输入的信息传入</span><br><span class="line">- (void)webView:(WKWebView *)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(NSString * _Nullable))completionHandler&#123;</span><br><span class="line">  </span><br><span class="line">    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:prompt message:@&quot;&quot; preferredStyle:UIAlertControllerStyleAlert];</span><br><span class="line">  </span><br><span class="line">    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) &#123;</span><br><span class="line">        textField.text = defaultText;</span><br><span class="line">    &#125;];</span><br><span class="line">  </span><br><span class="line">    [alertController addAction:([UIAlertAction actionWithTitle:@&quot;OK&quot; style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) &#123;</span><br><span class="line">        completionHandler(alertController.textFields[0].text?:@&quot;&quot;);</span><br><span class="line">    &#125;])];</span><br><span class="line">    [self presentViewController:alertController animated:YES completion:nil];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 页面是弹出窗口 _blank 处理</span><br><span class="line">- (WKWebView *)webView:(WKWebView *)webView createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration forNavigationAction:(WKNavigationAction *)navigationAction windowFeatures:(WKWindowFeatures *)windowFeatures &#123;</span><br><span class="line">    if (!navigationAction.targetFrame.isMainFrame) &#123;</span><br><span class="line">        [webView loadRequest:navigationAction.request];</span><br><span class="line">    &#125;</span><br><span class="line">    return nil;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="三、网页内容加载进度条和title的实现"><a href="#三、网页内容加载进度条和title的实现" class="headerlink" title="三、网页内容加载进度条和title的实现"></a>三、网页内容加载进度条和title的实现</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">//添加监测网页加载进度的观察者</span><br><span class="line">[self.webView addObserver:self</span><br><span class="line">              forKeyPath:@&quot;estimatedProgress&quot;</span><br><span class="line">              options:0</span><br><span class="line">              context:nil];</span><br><span class="line"></span><br><span class="line">//添加监测网页标题title的观察者</span><br><span class="line">[self.webView addObserver:self</span><br><span class="line">              forKeyPath:@&quot;title&quot;</span><br><span class="line">              options:NSKeyValueObservingOptionNew</span><br><span class="line">              context:nil];</span><br><span class="line"></span><br><span class="line">//kvo 监听进度 必须实现此方法</span><br><span class="line">-(void)observeValueForKeyPath:(NSString *)keyPath</span><br><span class="line">                     ofObject:(id)object</span><br><span class="line">                     change:(NSDictionary&lt;NSKeyValueChangeKey,id&gt; *)change</span><br><span class="line">                     context:(void *)context&#123;</span><br><span class="line">                       </span><br><span class="line">    if ([keyPath isEqualToString:NSStringFromSelector(@selector(estimatedProgress))]</span><br><span class="line">        &amp;&amp; object == _webView) </span><br><span class="line">    &#123;</span><br><span class="line">       NSLog(@&quot;网页加载进度 = %f&quot;,_webView.estimatedProgress);</span><br><span class="line">      </span><br><span class="line">       self.progressView.progress = _webView.estimatedProgress;</span><br><span class="line">       if (_webView.estimatedProgress &gt;= 1.0f) &#123;</span><br><span class="line">            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</span><br><span class="line">                self.progressView.progress = 0;</span><br><span class="line">            &#125;);</span><br><span class="line">       &#125; </span><br><span class="line">    &#125;</span><br><span class="line">    else if([keyPath isEqualToString:@&quot;title&quot;] &amp;&amp; object == _webView)</span><br><span class="line">    &#123;</span><br><span class="line">        self.navigationItem.title = _webView.title;</span><br><span class="line">    &#125;</span><br><span class="line">    else </span><br><span class="line">    &#123;</span><br><span class="line">        [super observeValueForKeyPath:keyPath </span><br><span class="line">         											ofObject:object </span><br><span class="line">         				              change:change</span><br><span class="line">                              context:context];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    //移除观察者</span><br><span class="line">    [_webView removeObserver:self</span><br><span class="line">                  forKeyPath:NSStringFromSelector(@selector(estimatedProgress))];</span><br><span class="line">    [_webView removeObserver:self</span><br><span class="line">                  forKeyPath:NSStringFromSelector(@selector(title))];</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="四、JS和OC的交互"><a href="#四、JS和OC的交互" class="headerlink" title="四、JS和OC的交互"></a>四、JS和OC的交互</h4><blockquote>
+<p>这个实现主要是依靠WKScriptMessageHandler协议类 和 WKUserContentController两个类：WKUserContentController 对象负责注册JS方法，设置处理接收JS方法的代理，代理遵守WKScriptMessageHandler，实现捕捉到JS消息的回调方法，详情可以看第一步中对这两个类的介绍。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//这个类主要用来做native与JavaScript的交互管理</span><br><span class="line">WKUserContentController * wkUController = [[WKUserContentController alloc] init];</span><br><span class="line">//注册一个name为jsToOcNoPrams的js方法，设置处理接收JS方法的代理</span><br><span class="line">[wkUController addScriptMessageHandler:self  name:@&quot;jsToOc&quot;];</span><br><span class="line">[wkUController addScriptMessageHandler:self  name:@&quot;jsToOcWithPrams&quot;];</span><br><span class="line">config.userContentController = wkUController;</span><br><span class="line"></span><br><span class="line">注意：遵守WKScriptMessageHandler协议，代理是由WKUserContentControl设置</span><br><span class="line"></span><br><span class="line">//通过接收JS传出消息的name进行捕捉的回调方法  js调OC</span><br><span class="line">- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message&#123;</span><br><span class="line">    NSLog(@&quot;name:%@\\\\n body:%@\\\\n frameInfo:%@\\\\n&quot;,message.name,message.body,message.frameInfo);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>JS调用OC</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//带参数的调用方式: key为参数名，value为值</span></span><br><span class="line"><span class="variable language_">window</span>.<span class="property">webkit</span>.<span class="property">messageHandlers</span>.<span class="property">methodXXX</span>.<span class="title function_">postMessage</span>(&#123;key1 : <span class="string">&quot;value1&quot;</span>, key2 : <span class="string">&quot;value2&quot;</span>&#125;) </span><br><span class="line"></span><br><span class="line"><span class="comment">//无参数的调用方式</span></span><br><span class="line"><span class="variable language_">window</span>.<span class="property">webkit</span>.<span class="property">messageHandlers</span>.<span class="property">methodXXX</span>.<span class="title function_">postMessage</span>(<span class="string">&#x27;&#x27;</span>) </span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>OC调用JS</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//OC调用JS  changeColor()是JS方法名，completionHandler是异步回调block</span><br><span class="line">NSString *jsString = [NSString stringWithFormat:@&quot;changeColor(&#x27;%@&#x27;)&quot;, @&quot;传入参数&quot;];</span><br><span class="line">[_webView evaluateJavaScript:jsString completionHandler:^(id _Nullable data, NSError * _Nullable error) &#123;</span><br><span class="line">   NSLog(@&quot;改变HTML的背景色&quot;);</span><br><span class="line">&#125;];</span><br><span class="line">    </span><br><span class="line">//改变字体大小 调用原生JS方法</span><br><span class="line">NSString *jsFont = [NSString stringWithFormat:@&quot;document.getElementsByTagName(&#x27;body&#x27;)[0].style.webkitTextSizeAdjust= &#x27;%d%%&#x27;&quot;, arc4random()%99 + 100];</span><br><span class="line">[_webView evaluateJavaScript:jsFont completionHandler:nil];</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+</div>
+        </div>
+        
+            <div class="kratos-copyright text-center clearfix">
+                <h5 itemprop="copyrightNotice">本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+            </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+                <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                
+                
+                    <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                    <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/10/WKWebView%E7%9A%84%E4%BD%BF%E7%94%A8/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/10/WKWebView%E7%9A%84%E4%BD%BF%E7%94%A8/";
+            const title         = "「WKWebView的使用」";
+            const excerpt       = `WKWebView 是苹果在iOS 8中引入的新组件，目的是提供一个现代的支持最新 Webkit 功能的网页浏览控件，摆脱过去 UIWebView的老、旧、笨，特别是内存占用量巨大的问题。它使用与 Safari 中一样的Nitro J...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                
+                </div>
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/UI%E6%8E%A7%E4%BB%B6/" rel="tag">UI控件</a>
+                </div>
+				
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" UIWebView的使用" href="/03/UIWebView的使用/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" UIScrollerView的使用" href="/14/UIScrollerView的使用/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center"></p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                68
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                6
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                12
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS%E7%9F%A5%E8%AF%86%E7%82%B9/">iOS知识点</a><span class="category-list-count">55</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF/">加密技术</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/Cocoapods/" style="font-size: 0.63em;">Cocoapods</a> <a href="/tags/Runloop/" style="font-size: 0.6em;">Runloop</a> <a href="/tags/Swift/" style="font-size: 0.73em;">Swift</a> <a href="/tags/UI%E6%8E%A7%E4%BB%B6/" style="font-size: 0.8em;">UI控件</a> <a href="/tags/ffmpeg/" style="font-size: 0.6em;">ffmpeg</a> <a href="/tags/git/" style="font-size: 0.63em;">git</a> <a href="/tags/runtime/" style="font-size: 0.67em;">runtime</a> <a href="/tags/%E5%8A%A0%E5%AF%86/" style="font-size: 0.6em;">加密</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 0.67em;">多线程</a> <a href="/tags/%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" style="font-size: 0.77em;">底层原理</a> <a href="/tags/%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6/" style="font-size: 0.7em;">开源框架</a> <a href="/tags/%E6%99%BA%E8%83%BD%E8%AE%BE%E5%A4%87/" style="font-size: 0.63em;">智能设备</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/17/XCode14-iOS16-%E9%80%82%E9%85%8D%E9%97%AE%E9%A2%98/"><i class="fa  fa-book"></i> XCode14 & iOS16 适配问题</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/26/objc%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/"><i class="fa  fa-book"></i> objc源码编译</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/08/git%E6%8A%A5%E9%94%99-Support-for-password-authentication-was-removed-on-August-13-2021/"><i class="fa  fa-book"></i> git报错#Support for password authentication was removed on August 13,2021</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/26/ios-%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93/"><i class="fa  fa-book"></i> iOS-离屏渲染</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/09/FFmpeg%E5%B8%B8%E8%A7%81%E6%8C%87%E4%BB%A4%E7%9A%84%E4%BD%BF%E7%94%A8/"><i class="fa  fa-book"></i> FFmpeg常见指令的使用</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  class="ap-lrc"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://t.me/CandyUnion"><i class="fa fa-telegram"></i></a></li>
+                        
+                        
+                        
+                        <li><a target="_blank" rel="me" href="https://nya.one/@Candinya"><i class="fa fa fa-share-alt-square"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/Candinya"><i class="fa fa-github"></i></a></li>
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2023 欢迎来到我的个人博客 版权所有.</li>
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+    <script defer src="/vendors/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="/vendors/meting@2.0.1/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="3204190542"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>
