@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   
   
-  <title>标签: 开源框架 | 欢迎来到我的个人博客</title>
+  <title>iOS编译速度提升 | 欢迎来到我的个人博客</title>
   <meta name="author" content="勿忘初心" />
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -16,11 +16,15 @@
   
     <meta name="keywords" content="" />
   
-  <meta property="og:type" content="website">
-<meta property="og:title" content="标签: 开源框架">
-<meta property="og:url" content="http://example.com/tags/%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6/index.html">
+  <meta name="description" content="Xcode编译过程 预编译pch文件（如果有） 编译各种资源文件 copy静态资源 compile asset catalogs process info.plist link 生成dSYM文件 sign app  编译原理编译器是把一种语言（通常是高级语言）转换为另一种语言（通常是低级语言）的程序 编译器组成前端负责解析源码，检查错误，生成抽象语法树（AST），并把AST转换类汇编代码LLVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS编译速度提升">
+<meta property="og:url" content="http://example.com/23/iOS%E7%BC%96%E8%AF%91%E9%80%9F%E5%BA%A6%E6%8F%90%E5%8D%87/index.html">
 <meta property="og:site_name" content="欢迎来到我的个人博客">
+<meta property="og:description" content="Xcode编译过程 预编译pch文件（如果有） 编译各种资源文件 copy静态资源 compile asset catalogs process info.plist link 生成dSYM文件 sign app  编译原理编译器是把一种语言（通常是高级语言）转换为另一种语言（通常是低级语言）的程序 编译器组成前端负责解析源码，检查错误，生成抽象语法树（AST），并把AST转换类汇编代码LLVM">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-06-23T12:29:50.000Z">
+<meta property="article:modified_time" content="2023-04-06T16:11:48.192Z">
 <meta property="article:author" content="勿忘初心">
 <meta name="twitter:card" content="summary">
   
@@ -125,255 +129,193 @@
 
         
 
-            <!-- Breadcrumb for tag & category page -->
-
-    <article class="kratos-hentry kratos-entry-border-new clearfix">
-        <div class="kratos-breadcrumb">
-            <a href="/">
-                <i class="fa fa-home"></i>
-            </a>
-            <i class="fa fa-angle-right"></i>
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="http://example.com/23/iOS%E7%BC%96%E8%AF%91%E9%80%9F%E5%BA%A6%E6%8F%90%E5%8D%87/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
             
-                <a href="/tags/">
-                    标签
-                </a>
-                <i class="fa fa-angle-right"></i>
-                <a href="/tags/%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6">
-                    开源框架
-                </a>
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">iOS编译速度提升</h1>
             
             
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2021-06-23T12:29:50.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2021-06-23</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">勿忘初心</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        1166
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1680797508192"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            
+            <hr />
+            <div itemprop="articleBody"><h3 id="Xcode编译过程"><a href="#Xcode编译过程" class="headerlink" title="Xcode编译过程"></a>Xcode编译过程</h3><ol>
+<li>预编译pch文件（如果有）</li>
+<li>编译各种资源文件</li>
+<li>copy静态资源</li>
+<li>compile asset catalogs</li>
+<li>process info.plist</li>
+<li>link</li>
+<li>生成dSYM文件</li>
+<li>sign app</li>
+</ol>
+<h2 id="编译原理"><a href="#编译原理" class="headerlink" title="编译原理"></a>编译原理</h2><p>编译器是把一种语言（通常是高级语言）转换为另一种语言（通常是低级语言）的程序</p>
+<h2 id="编译器组成"><a href="#编译器组成" class="headerlink" title="编译器组成"></a>编译器组成</h2><h3 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h3><p>负责解析源码，检查错误，生成抽象语法树（AST），并把AST转换类汇编代码LLVM IR</p>
+<h3 id="优化器"><a href="#优化器" class="headerlink" title="优化器"></a>优化器</h3><p>将中间代码进行架构无关的优化，提高运行效率，减少代码体积，例如删除if(0)无效分支</p>
+<h3 id="后端"><a href="#后端" class="headerlink" title="后端"></a>后端</h3><p>把中间代码转换为目标平台的机器码<br>Xcode中，C&#x2F;C++&#x2F;ObjC的编译器是Clang(前端)+LLVM(后端)，简称Clang</p>
+<h2 id="编译速提升方法"><a href="#编译速提升方法" class="headerlink" title="编译速提升方法"></a>编译速提升方法</h2><h3 id="硬件相关"><a href="#硬件相关" class="headerlink" title="硬件相关"></a>硬件相关</h3><p>加钱升级机器（最快）</p>
+<h3 id="组件二进制"><a href="#组件二进制" class="headerlink" title="组件二进制"></a>组件二进制</h3><ul>
+<li>cocoapods-packager</li>
+<li>cocoapods-binary</li>
+<li>cocoapods-imy-bin（推荐）<a target="_blank" rel="noopener" href="https://github.com/MeetYouDevs/cocoapods-imy-bin">https://github.com/MeetYouDevs/cocoapods-imy-bin</a></li>
+</ul>
+<h3 id="Xcode设置"><a href="#Xcode设置" class="headerlink" title="Xcode设置"></a>Xcode设置</h3><ul>
+<li>Debug Information Format<br>Debug改为DWARF，不生成dSYM，注意此相在使用Xcode的Instruments需要改回DWARF with dSYM file，要不然会在Instruments中找不到调用堆栈</li>
+<li>Precompile Prefix Header<br>全设为YES，此项为预编译头文件，PCH 文件预编译完成后，后面用到 PCH 文件的源文件编译速度也会加快，缺点是 PCH 文件和 PCH 引用到的头文件内容一旦发生变化，引用到 PCH 的所有源文件都要重新编译</li>
+<li>Build Active Architecture Only<br>Debug改为YES，此项设置的是是否仅编译当前架构的版本，如果为No，会编译所有架构的版本。需要注意的是，此选项在Release模式下必须为Yes。</li>
+<li>Optimizations Level<br>Debug改为None[-O0]，此项为编译优化等级</li>
+<li>Enable Index-While-Building Functionality<br>全设为YES。此项默认打开，作用是 Xcode 编译时会顺带建立代码索引，但影响编译速度。关闭后整体编译速度快 80s（Xcode 会换回以前的方式，在空闲时间建立代码索引）</li>
+<li>WWDC2018&#x2F;408<br>并行构建项目</li>
+</ul>
+<h3 id="代码相关"><a href="#代码相关" class="headerlink" title="代码相关"></a>代码相关</h3><ul>
+<li>将常用代码文件打包静态库<br>代码组件化，切断不同业务代码之间依赖，使得每次编译的时候就只需要编译自己模块下的代码</li>
+<li>能用@class就用@class，尽量减少文件引用关系</li>
+<li>减少Storybord和xib文件的使用</li>
+<li>清理未使用的图片等资源，清理未使用的类，或者合并重复功能的类</li>
+</ul>
+</div>
         </div>
-    </article>
-
-
-
-
-    
-    
-        <article class="kratos-hentry clearfix" itemscope itemtype="https://schema.org/Article">
-            <div class="kratos-entry-border-new clearfix">
-                
-                <div class="kratos-entry-thumb-new">
-                    <a href="/27/SDWebImage%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">
-                        
-                            <img class="kratos-entry-thumb-new-img" alt="">
-                        
-                    </a>
-                </div>
-                <div class="kratos-post-inner-new">
-                    <header class="kratos-entry-header-new">
-                            <a class="label-link" href="/categories/iOS%E7%9F%A5%E8%AF%86%E7%82%B9/">iOS知识点</a>
-                        <h2 class="kratos-entry-title-new"><a href="/27/SDWebImage%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" itemprop="mainEntityOfPage"><span itemprop="name headline">SDWebImage源码分析</span></a>
-                    </header>
-                    <div class="kratos-entry-content-new">
-                        <p itemProp="description">
-                            
-                                一、流程架构图
-
-SDWebImage对UIButton，UIImageView，NSButton，UIView进行了拓展，并对外提供了接口。无论对UIButton，UIImageView还是NSButton调用sd_setImage...
-                            
-                        </p>
-                    </div>
-                </div>
-                <footer class="kratos-post-meta-new">
-                    <span class="pull-left">
-                        <time datetime="2021-05-27T12:35:30.000Z" itemprop="datePublished">
-                            <a><i class="fa fa-calendar"></i> 2021-05-27</a>
-                        </time>
-                        <a>
-                            
-                                <i class="fa fa-tags"></i>
-                                <a class="tag-none-link" href="/tags/%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6/" rel="tag">开源框架</a>
-                            
-                        </a>
-                        
-                            <!-- 当前仅支持valine/waline自带的统计功能 -->
-                            
-                        
-                        
-                            <!-- 当前仅支持waline自带的统计功能 -->
-                            
-                        
-                    </span>
-                    <span class="pull-right">
-                        <a class="read-more" href="/27/SDWebImage%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                    </span>
-                </footer>
-            </div>
-        </article>
-    
-
-    
-    
-        <article class="kratos-hentry clearfix" itemscope itemtype="https://schema.org/Article">
-            <div class="kratos-entry-border-new clearfix">
-                
-                <div class="kratos-entry-thumb-new">
-                    <a href="/27/Masonry%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/">
-                        
-                            <img class="kratos-entry-thumb-new-img" alt="">
-                        
-                    </a>
-                </div>
-                <div class="kratos-post-inner-new">
-                    <header class="kratos-entry-header-new">
-                            <a class="label-link" href="/categories/iOS%E7%9F%A5%E8%AF%86%E7%82%B9/">iOS知识点</a>
-                        <h2 class="kratos-entry-title-new"><a href="/27/Masonry%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/" itemprop="mainEntityOfPage"><span itemprop="name headline">Masonry原理解析</span></a>
-                    </header>
-                    <div class="kratos-entry-content-new">
-                        <p itemProp="description">
-                            
-                                Masonry应该是目前使用最为广泛的对于AutoLayout的封装（Swift版本叫做SnapKit），但是大家对于Masonry的使用只是停留在基础的方式，很少人会去理解Masonry内部去调用AutoLayout的具体原理，致使...
-                            
-                        </p>
-                    </div>
-                </div>
-                <footer class="kratos-post-meta-new">
-                    <span class="pull-left">
-                        <time datetime="2020-09-27T03:19:01.000Z" itemprop="datePublished">
-                            <a><i class="fa fa-calendar"></i> 2020-09-27</a>
-                        </time>
-                        <a>
-                            
-                                <i class="fa fa-tags"></i>
-                                <a class="tag-none-link" href="/tags/%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6/" rel="tag">开源框架</a>
-                            
-                        </a>
-                        
-                            <!-- 当前仅支持valine/waline自带的统计功能 -->
-                            
-                        
-                        
-                            <!-- 当前仅支持waline自带的统计功能 -->
-                            
-                        
-                    </span>
-                    <span class="pull-right">
-                        <a class="read-more" href="/27/Masonry%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                    </span>
-                </footer>
-            </div>
-        </article>
-    
-
-    
-    
-        <article class="kratos-hentry clearfix" itemscope itemtype="https://schema.org/Article">
-            <div class="kratos-entry-border-new clearfix">
-                
-                <div class="kratos-entry-thumb-new">
-                    <a href="/26/iOS-AFNetworking%E5%BA%95%E5%B1%82%E6%A1%86%E6%9E%B6/">
-                        
-                            <img class="kratos-entry-thumb-new-img" alt="">
-                        
-                    </a>
-                </div>
-                <div class="kratos-post-inner-new">
-                    <header class="kratos-entry-header-new">
-                            <a class="label-link" href="/categories/iOS%E7%9F%A5%E8%AF%86%E7%82%B9/">iOS知识点</a>
-                        <h2 class="kratos-entry-title-new"><a href="/26/iOS-AFNetworking%E5%BA%95%E5%B1%82%E6%A1%86%E6%9E%B6/" itemprop="mainEntityOfPage"><span itemprop="name headline">iOS-AFNetworking底层框架</span></a>
-                    </header>
-                    <div class="kratos-entry-content-new">
-                        <p itemProp="description">
-                            
-                                AFNetworking是iOS开发中一个常用的网络请求第三方框架，我们常会这样子去发起一个请求
-123456789NSString *url = [NSString stringWithFormat:@&quot;https://t...
-                            
-                        </p>
-                    </div>
-                </div>
-                <footer class="kratos-post-meta-new">
-                    <span class="pull-left">
-                        <time datetime="2020-04-26T07:34:40.000Z" itemprop="datePublished">
-                            <a><i class="fa fa-calendar"></i> 2020-04-26</a>
-                        </time>
-                        <a>
-                            
-                                <i class="fa fa-tags"></i>
-                                <a class="tag-none-link" href="/tags/%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6/" rel="tag">开源框架</a>
-                            
-                        </a>
-                        
-                            <!-- 当前仅支持valine/waline自带的统计功能 -->
-                            
-                        
-                        
-                            <!-- 当前仅支持waline自带的统计功能 -->
-                            
-                        
-                    </span>
-                    <span class="pull-right">
-                        <a class="read-more" href="/26/iOS-AFNetworking%E5%BA%95%E5%B1%82%E6%A1%86%E6%9E%B6/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                    </span>
-                </footer>
-            </div>
-        </article>
-    
-
-    
-    
-        <article class="kratos-hentry clearfix" itemscope itemtype="https://schema.org/Article">
-            <div class="kratos-entry-border-new clearfix">
-                
-                <div class="kratos-entry-thumb-new">
-                    <a href="/21/ReactiveCocoa%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/">
-                        
-                            <img class="kratos-entry-thumb-new-img" alt="">
-                        
-                    </a>
-                </div>
-                <div class="kratos-post-inner-new">
-                    <header class="kratos-entry-header-new">
-                            <a class="label-link" href="/categories/iOS%E7%9F%A5%E8%AF%86%E7%82%B9/">iOS知识点</a>
-                        <h2 class="kratos-entry-title-new"><a href="/21/ReactiveCocoa%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/" itemprop="mainEntityOfPage"><span itemprop="name headline">ReactiveCocoa常用方法</span></a>
-                    </header>
-                    <div class="kratos-entry-content-new">
-                        <p itemProp="description">
-                            
-                                1、RACSignal使用：1234567891011121314151617181920212223242526272829303132333435363738394041// RACSignal使用步骤：// 1.创建信号 + (...
-                            
-                        </p>
-                    </div>
-                </div>
-                <footer class="kratos-post-meta-new">
-                    <span class="pull-left">
-                        <time datetime="2018-07-21T07:50:25.000Z" itemprop="datePublished">
-                            <a><i class="fa fa-calendar"></i> 2018-07-21</a>
-                        </time>
-                        <a>
-                            
-                                <i class="fa fa-tags"></i>
-                                <a class="tag-none-link" href="/tags/%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6/" rel="tag">开源框架</a>
-                            
-                        </a>
-                        
-                            <!-- 当前仅支持valine/waline自带的统计功能 -->
-                            
-                        
-                        
-                            <!-- 当前仅支持waline自带的统计功能 -->
-                            
-                        
-                    </span>
-                    <span class="pull-right">
-                        <a class="read-more" href="/21/ReactiveCocoa%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/" title="阅读全文">阅读全文<i class="fa fa-chevron-circle-right"></i></a>
-                    </span>
-                </footer>
-            </div>
-        </article>
-    
-
-
-
-
-
-    <div class="hidden">
-        <!-- 加载文章阅读对应的统计功能，评论自带的那种 -->
         
+            <div class="kratos-copyright text-center clearfix">
+                <h5 itemprop="copyrightNotice">本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+            </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+                <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                
+                
+                    <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                    <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
     </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/23/iOS%E7%BC%96%E8%AF%91%E9%80%9F%E5%BA%A6%E6%8F%90%E5%8D%87/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/23/iOS%E7%BC%96%E8%AF%91%E9%80%9F%E5%BA%A6%E6%8F%90%E5%8D%87/";
+            const title         = "「iOS编译速度提升」";
+            const excerpt       = `Xcode编译过程
+预编译pch文件（如果有）
+编译各种资源文件
+copy静态资源
+compile asset catalogs
+process info.plist
+link
+生成dSYM文件
+sign app
 
-
+编译原理编译器是把...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                
+                </div>
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    
+                </div>
+				
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" iOS 开发中的锁" href="/02/iOS-开发中的锁/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" iOS15适配" href="/26/iOS15适配/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+</article>
 
         
 
@@ -386,8 +328,6 @@ SDWebImage对UIButton，UIImageView，NSButton，UIView进行了拓展，并对�
 
 <section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
     <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
-    
-        <div class="sticky-area">
     
     
                 <aside id="krw-about" class="widget widget-kratos-about clearfix">
@@ -428,6 +368,8 @@ SDWebImage对UIButton，UIImageView，NSButton，UIView进行了拓展，并对�
     </div>
 </aside>
             
+                    <div class="sticky-area">
+                
                 
   <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
     <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
