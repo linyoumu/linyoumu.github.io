@@ -16,17 +16,22 @@
   
     <meta name="keywords" content="" />
   
-  <meta name="description" content="1、什么的ffmpeg？ffmpeg 是用C语言开发的，是一个用于音视频编解码的多媒体开源库，它为开发者提供了丰富了音视频处理的调用接口。ffmpeg官网 2、ffmpeg的用处可以运行在Linux、Mac、Windows是一个优秀的多媒体库，可用于多媒体格式的转换能够解码、编码、转码、复用、解复用、过滤音视频数据 3、ffmpeg安装与编译3.1 Mac中一键安装如果使用的是 Mac 电脑，可以">
+  <meta name="description" content="MAC平台上的FFmpeg的安装方式有三种，分别是通过ffmpeg静态库下载安装、通过Homebrew安装和下载源码编译安装，大家可以选择自己喜欢的方式来实现MAC平台的FFmpeg安装。  1、ffmpeg静态库下载安装打开FFmpeg官网，如下图所示。  解压下载完成的压缩文件，可以看到一个可执行文件，在终端执行它即可。  当然也是可以配置一个环境链接指向该可执行文件，这样便可以在任何地方执">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mac中ffmpeg的编译与安装">
 <meta property="og:url" content="http://example.com/09/Mac%E4%B8%ADffmpeg%E7%9A%84%E7%BC%96%E8%AF%91%E4%B8%8E%E5%AE%89%E8%A3%85/index.html">
 <meta property="og:site_name" content="欢迎来到我的个人博客">
-<meta property="og:description" content="1、什么的ffmpeg？ffmpeg 是用C语言开发的，是一个用于音视频编解码的多媒体开源库，它为开发者提供了丰富了音视频处理的调用接口。ffmpeg官网 2、ffmpeg的用处可以运行在Linux、Mac、Windows是一个优秀的多媒体库，可用于多媒体格式的转换能够解码、编码、转码、复用、解复用、过滤音视频数据 3、ffmpeg安装与编译3.1 Mac中一键安装如果使用的是 Mac 电脑，可以">
+<meta property="og:description" content="MAC平台上的FFmpeg的安装方式有三种，分别是通过ffmpeg静态库下载安装、通过Homebrew安装和下载源码编译安装，大家可以选择自己喜欢的方式来实现MAC平台的FFmpeg安装。  1、ffmpeg静态库下载安装打开FFmpeg官网，如下图所示。  解压下载完成的压缩文件，可以看到一个可执行文件，在终端执行它即可。  当然也是可以配置一个环境链接指向该可执行文件，这样便可以在任何地方执">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/flutter/8892640da9ee47f59fbe721da14285b1.png">
+<meta property="og:image" content="http://example.com/images/flutter/80b6faf7e8194309ba9b4284be847d2c.png">
+<meta property="og:image" content="http://example.com/images/flutter/0ada17b8c76a475482e391a9504d70f3.png">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/df3d08db2a954c8e88dcbbcbc7460cd5~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.image">
 <meta property="article:published_time" content="2022-04-09T02:48:39.000Z">
-<meta property="article:modified_time" content="2023-04-09T10:00:45.675Z">
+<meta property="article:modified_time" content="2023-04-09T10:15:41.021Z">
 <meta property="article:author" content="勿忘初心">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/flutter/8892640da9ee47f59fbe721da14285b1.png">
   
   <!-- 站点验证相关 -->
   
@@ -147,7 +152,7 @@
                     <i class="fa fa-edit"></i> 
                     
                     
-                        1139
+                        ~3.26K
                     
                     字
                 </li>
@@ -158,33 +163,80 @@
             
             <div id="expire-alert" class="alert alert-warning hidden" role="alert">
                 <div class="icon"><i class="fa fa-warning"></i></div>
-                <div class="text"><p>本文最后编辑于 <time datetime="1681034445675"></time> 前，其中的内容可能需要更新。</p></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1681035341021"></time> 前，其中的内容可能需要更新。</p></div>
             </div>
             
             
             
             <hr />
-            <div itemprop="articleBody"><h4 id="1、什么的ffmpeg？"><a href="#1、什么的ffmpeg？" class="headerlink" title="1、什么的ffmpeg？"></a>1、什么的ffmpeg？</h4><p>ffmpeg 是用C语言开发的，是一个用于音视频编解码的多媒体开源库，它为开发者提供了丰富了音视频处理的调用接口。ffmpeg官网</p>
-<h4 id="2、ffmpeg的用处"><a href="#2、ffmpeg的用处" class="headerlink" title="2、ffmpeg的用处"></a>2、ffmpeg的用处</h4><p>可以运行在Linux、Mac、Windows<br>是一个优秀的多媒体库，可用于多媒体格式的转换<br>能够解码、编码、转码、复用、解复用、过滤音视频数据</p>
-<h4 id="3、ffmpeg安装与编译"><a href="#3、ffmpeg安装与编译" class="headerlink" title="3、ffmpeg安装与编译"></a>3、ffmpeg安装与编译</h4><h5 id="3-1-Mac中一键安装"><a href="#3-1-Mac中一键安装" class="headerlink" title="3.1 Mac中一键安装"></a>3.1 Mac中一键安装</h5><p>如果使用的是 Mac 电脑，可以输入以下命令安装 ffmpeg</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install ffmpeg</span><br></pre></td></tr></table></figure>
+            <div itemprop="articleBody"><blockquote>
+<p>MAC平台上的FFmpeg的安装方式有三种，分别是通过ffmpeg静态库下载安装、通过Homebrew安装和下载源码编译安装，大家可以选择自己喜欢的方式来实现MAC平台的FFmpeg安装。</p>
+</blockquote>
+<h1 id="1、ffmpeg静态库下载安装"><a href="#1、ffmpeg静态库下载安装" class="headerlink" title="1、ffmpeg静态库下载安装"></a>1、ffmpeg静态库下载安装</h1><p>打开<a target="_blank" rel="noopener" href="http://ffmpeg.org/download.html#build-mac">FFmpeg官网</a>，如下图所示。</p>
+<p><img src="/../images/flutter/8892640da9ee47f59fbe721da14285b1.png" alt="image.png"></p>
+<p>解压下载完成的压缩文件，可以看到一个可执行文件，在终端执行它即可。</p>
+<p><img src="/../images/flutter/80b6faf7e8194309ba9b4284be847d2c.png" alt="image.png"></p>
+<p>当然也是可以配置一个环境链接指向该可执行文件，这样便可以在任何地方执行该文件。</p>
+<blockquote>
+<p>这种方式虽然简单快捷，但是很不利于我们对于ffmpeg的学习研究。</p>
+</blockquote>
+<h1 id="2、通过Homebrew方式安装"><a href="#2、通过Homebrew方式安装" class="headerlink" title="2、通过Homebrew方式安装"></a>2、通过Homebrew方式安装</h1><h3 id="2-1、安装Homebrew"><a href="#2-1、安装Homebrew" class="headerlink" title="2.1、安装Homebrew"></a>2.1、安装Homebrew</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/bin/bash -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
 
-<h5 id="3-2-通过clone-ffmpeg库进行编译安装"><a href="#3-2-通过clone-ffmpeg库进行编译安装" class="headerlink" title="3.2 通过clone ffmpeg库进行编译安装"></a>3.2 通过clone ffmpeg库进行编译安装</h5><p>第一步：clone<br>ffmpeg 源码地址：<a target="_blank" rel="noopener" href="https://github.com/FFmpeg/FFmpeg">https://github.com/FFmpeg/FFmpeg</a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com:FFmpeg/FFmpeg.git</span><br></pre></td></tr></table></figure>
+<p>根据提示输入密码，就可以一步一步安装成功，如果电脑上之前没有安装<code>xCode</code>，在命令行输入 <code>xcode-select --install</code> 安装 <code>CLT for Xcode</code> 即可，之后我们需要再次重新执行上述命令进行安装。</p>
+<p>以上是官方的安装方式，为避免翻墙受限的不必要问题，我们也可以通过设置镜像的方式来安装。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> HOMEBREW_BREW_GIT_REMOTE=<span class="string">&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git&quot;</span></span><br><span class="line"><span class="built_in">export</span> HOMEBREW_CORE_GIT_REMOTE=<span class="string">&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/<span class="variable">$homebrew</span>-core.git&quot;</span></span><br><span class="line">git <span class="built_in">clone</span> --depth=1 https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/install.git brew-install /bin/bash brew-install/install.sh</span><br><span class="line"><span class="built_in">rm</span> -rf brew-install</span><br></pre></td></tr></table></figure>
 
-<p>如果想查看 ffmpeg提供的一些工具，可以使用以下命令</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./configure --help</span><br><span class="line">./configure --list-decoders</span><br></pre></td></tr></table></figure>
+<p>如果你之前有安装过Homebrew，也没有关系，同样可以设置镜像配置，具体的参见这个<a href="https://link.juejin.cn/?target=https://mirror.tuna.tsinghua.edu.cn/help/homebrew/">网站</a>。</p>
+<h3 id="2-2、安装FFmpeg"><a href="#2-2、安装FFmpeg" class="headerlink" title="2.2、安装FFmpeg"></a>2.2、安装FFmpeg</h3><p>如果有通过Homebrew安装过ffmpeg，请预先执行<code>brew uninstall ffmpeg</code>指令卸载FFmpeg。</p>
+<p>执行如下指令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install ffmpeg</span><br></pre></td></tr></table></figure>
 
-<p>第二步：生成配置文件<br>在终端输入以下内容，可选择性的输入</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg git:(master) ./configure --prefix=/usr/local/Cellar/ffmpeg/5.0 --enable-shared --enable-pthreads --enable-version3 --cc=clang --host-cflags= --host-ldflags= --enable-nonfree --enable-libfdk-aac --enable-ffplay --enable-gpl --enable-libaom --enable-libwebp --enable-libx264 --enable-libx265 --disable-indev=jack --enable-videotoolbox --enable-filter=delogo --enable-debug --disable-optimizations --enable-libspeex --enable-hardcoded-tables</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install ffmpeg --HEAD</span><br></pre></td></tr></table></figure>
 
-<p>如果这一步出现了报错，例如：nasm&#x2F;yasm not found or too old. Use –disable-x86asm for a crippled build.</p>
-<p>解决方法：brew install yasm，之后再重新生成配置文件即可</p>
-<p>期间还遇到可能的报错一般是依赖库没有安装，按照提示解决即可</p>
-<p>第三步：编译与安装</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<p>两个指令都可以安装ffmpeg，两个都会检测ffmpeg的依赖包并自动安装上，安装需要一定的时间，请耐心等候。这里存在一个问题，就是<code>homebrew</code>从2.0版本开始，便不再提供针对ffmpeg的options的关联安装，如需要将options和ffmpeg关联起来的话，需要采用第三方的options仓库。所以如果你的homebrew版本是2.0后的话，上面两个指令是关联不了诸如<code>x264</code>,<code>fdk-aac</code>等音视频编解码器的。所以我们可以依靠三方仓库<a href="https://link.juejin.cn/?target=https://github.com/homebrew-ffmpeg/homebrew-ffmpeg">homebrew-ffmpeg</a>来实现options和ffmpeg的关联安装。</p>
+<p>（1）执行如下指令：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew tap homebrew-ffmpeg/ffmpeg</span><br><span class="line">brew install homebrew-ffmpeg/ffmpeg/ffmpeg</span><br></pre></td></tr></table></figure>
 
-<p>到此，ffmpeg编译与安装就大功告成啦。</p>
+<p>（2）执行如下命令，看此仓库支持哪些options。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew options homebrew-ffmpeg/ffmpeg/ffmpeg</span><br></pre></td></tr></table></figure>
+
+<p>（3）根据第2步获取的options，替换如下指令中option，然后执行。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install homebrew-ffmpeg/ffmpeg/ffmpeg --with-&lt;option1&gt; --with-&lt;option2&gt; ...</span><br></pre></td></tr></table></figure>
+
+<p>也可以执行如下指令安装所有的options。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install homebrew-ffmpeg/ffmpeg/ffmpeg $(brew options homebrew-ffmpeg/ffmpeg/ffmpeg --compact)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>通过Homebrew的方式安装FFmpeg同样是一种非常简洁方式，但同样也不是一种值得推荐的方式，因为我们无法查看和调试源码来学习研究FFmpeg。</p>
+</blockquote>
+<h1 id="3、源码编译安装"><a href="#3、源码编译安装" class="headerlink" title="3、源码编译安装"></a>3、源码编译安装</h1><h3 id="3-1、下载源码"><a href="#3-1、下载源码" class="headerlink" title="3.1、下载源码"></a>3.1、下载源码</h3><p>从官网下载源码，可以直接下载源码包，也可以通过<code>git</code>指令来克隆代码仓库。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">git clone git://source.ffmpeg.org/ffmpeg.git</span><br><span class="line">#或者码云的链接</span><br><span class="line">git clone https://gitee.com/mirrors/ffmpeg.git</span><br><span class="line"></span><br><span class="line">cd ffmpeg</span><br><span class="line"># 查看版本</span><br><span class="line">git branch -a</span><br><span class="line"># 选择版本</span><br><span class="line">git checkout remotes/origin/release/xxx</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../images/flutter/0ada17b8c76a475482e391a9504d70f3.png" alt="image.png"></p>
+<h3 id="3-2、编译源码"><a href="#3-2、编译源码" class="headerlink" title="3.2、编译源码"></a>3.2、编译源码</h3><p>在下载的源码目录下执行如下指令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/usr/local/ffmpeg \</span><br><span class="line">--enable-gpl \</span><br><span class="line">--enable-version3 \</span><br><span class="line">--enable-nonfree \</span><br><span class="line">--enable-postproc \</span><br><span class="line">--enable-libass \</span><br><span class="line">--enable-libcelt \</span><br><span class="line">--enable-libfdk-aac \</span><br><span class="line">--enable-libfreetype \</span><br><span class="line">--enable-libmp3lame \</span><br><span class="line">--enable-libopencore-amrnb \</span><br><span class="line">--enable-libopencore-amrwb \</span><br><span class="line">--enable-libopenjpeg \</span><br><span class="line">--enable-openssl \</span><br><span class="line">--enable-libopus \</span><br><span class="line">--enable-libspeex \</span><br><span class="line">--enable-libtheora \</span><br><span class="line">--enable-libvorbis \</span><br><span class="line">--enable-libvpx \</span><br><span class="line">--enable-libx264 \</span><br><span class="line">--enable-libxvid \</span><br><span class="line">--disable-static \</span><br><span class="line">--enable-shared</span><br></pre></td></tr></table></figure>
+
+<p>该指令是为了配置编译，其中<code>--prefix=/usr/local/ffmpeg</code>表示的是编译后的库文件存放地方，大家可以设置自己喜欢的路径。</p>
+<p>执行编译安装命令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make &amp;&amp;sudo make install</span><br></pre></td></tr></table></figure>
+
+<p>这个编译过程可能会出现类似于<code>libfdk_aac not found</code>或者<code>x264 not found</code>的错误，那是没有安装相关的依赖，这里我们可以通过homebrew来安装这些依赖。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew install fdk-aac</span><br><span class="line">brew install x264</span><br></pre></td></tr></table></figure>
+
+<p>当然，如果你的电脑环境配置不全的话，编译过程可能遇到的需要安装的错误会比较多，也没关系，出现什么样的依赖需要安装的，执行对应的指令便可以了。</p>
+<h3 id="3-3、配置环境变量"><a href="#3-3、配置环境变量" class="headerlink" title="3.3、配置环境变量"></a>3.3、配置环境变量</h3><p>上面的配置编译指令中，我们将编译后的库文件存放在了<code>/usr/local/ffmpeg</code>，执行指令<code>open /usr/local/ffmpeg</code>进入到该路径下,可以看到编译后的相关头文件和库文件，如下图所示。</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/df3d08db2a954c8e88dcbbcbc7460cd5~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.image" alt="image.png"></p>
+<p>执行如下指令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">touch</span> .bash_profile</span><br><span class="line">open .bash_profile</span><br></pre></td></tr></table></figure>
+
+<p>在打开的<code>bash_profile</code>文件中，添加如下语句。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> FFMPEG_HOME=/usr/local/ffmpeg</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$FFMPEG_HOME</span>/bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
+
+<p>到此为止，在Mac端上的FFmpeg安装便完成了。</p>
+<blockquote>
+<p>这种安装的方式虽然较为复杂，但是我们可以修改调试源码，很方便我们学习研究FFmpeg源码。</p>
+</blockquote>
 </div>
         </div>
         
@@ -252,8 +304,10 @@
             const twitterBase   = "https://twitter.com/intent/tweet?";
             const hostUrl       = "http://example.com/09/Mac%E4%B8%ADffmpeg%E7%9A%84%E7%BC%96%E8%AF%91%E4%B8%8E%E5%AE%89%E8%A3%85/";
             const title         = "「Mac中ffmpeg的编译与安装」";
-            const excerpt       = `1、什么的ffmpeg？ffmpeg 是用C语言开发的，是一个用于音视频编解码的多媒体开源库，它为开发者提供了丰富了音视频处理的调用接口。ffmpeg官网
-2、ffmpeg的用处可以运行在Linux、Mac、Windows是一个优秀的...`;
+            const excerpt       = `
+MAC平台上的FFmpeg的安装方式有三种，分别是通过ffmpeg静态库下载安装、通过Homebrew安装和下载源码编译安装，大家可以选择自己喜欢的方式来实现MAC平台的FFmpeg安装。
+
+1、ffmpeg静态库下载安装打开FFm...`;
             let _URL;
             switch (dest) {
                 case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
