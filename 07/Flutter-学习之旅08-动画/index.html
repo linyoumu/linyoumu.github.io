@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  
+  
+  <title>Flutter 学习之旅08 动画 | 欢迎来到我的个人博客</title>
+  <meta name="author" content="勿忘初心" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="" />
+  
+  <meta name="description" content="1 动画基础不管是什么视图框架，动画的实现原理都是相同的，即在一段时限的时间内，多次、快速地改变视图外观来实现连续播放的效果。 视图的一次改变称为一个动画帧，对应一次屏幕刷新，决定动画流畅度的一个重要指标就是帧率（Frame Per Second，FPS），即每秒的动画帧数。 对于人眼，动画帧率超过16FPS就认为是流畅的，超过32FPS基本就感受不到任何卡顿，为了保证良好的视觉体验需要帧率尽可能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flutter 学习之旅08 动画">
+<meta property="og:url" content="http://example.com/07/Flutter-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%97%8508-%E5%8A%A8%E7%94%BB/index.html">
+<meta property="og:site_name" content="欢迎来到我的个人博客">
+<meta property="og:description" content="1 动画基础不管是什么视图框架，动画的实现原理都是相同的，即在一段时限的时间内，多次、快速地改变视图外观来实现连续播放的效果。 视图的一次改变称为一个动画帧，对应一次屏幕刷新，决定动画流畅度的一个重要指标就是帧率（Frame Per Second，FPS），即每秒的动画帧数。 对于人眼，动画帧率超过16FPS就认为是流畅的，超过32FPS基本就感受不到任何卡顿，为了保证良好的视觉体验需要帧率尽可能">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/flutter/3d392478f9be9597568ded9fafb48b6e.png?imageView2/2/w/2560/h/7000">
+<meta property="og:image" content="http://example.com/images/flutter/76131b3f19c1672233b178569f483972.png?imageView2/2/w/2560/h/7000">
+<meta property="og:image" content="http://example.com/images/flutter/f093fb86c016dfab00e5c3477ab26766.png?imageView2/2/w/2560/h/7000">
+<meta property="article:published_time" content="2020-05-07T13:40:29.000Z">
+<meta property="article:modified_time" content="2023-04-09T06:48:46.550Z">
+<meta property="article:author" content="勿忘初心">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/flutter/3d392478f9be9597568ded9fafb48b6e.png?imageView2/2/w/2560/h/7000">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+    <link rel="stylesheet" href="/vendors/aplayer@1.10.1/dist/APlayer.min.css"></script>
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+    <script src="/vendors/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">欢迎来到我的个人博客</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>欢迎来到我的个人博客</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="http://example.com/07/Flutter-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%97%8508-%E5%8A%A8%E7%94%BB/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">Flutter 学习之旅08 动画</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2020-05-07T13:40:29.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2020-05-07</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">勿忘初心</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~12.78K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1681022926550"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            
+            <hr />
+            <div itemprop="articleBody"><h4 id="1-动画基础"><a href="#1-动画基础" class="headerlink" title="1 动画基础"></a><strong>1 动画基础</strong></h4><p>不管是什么视图框架，动画的实现原理都是相同的，即在一段时限的时间内，多次、快速地改变视图外观来实现连续播放的效果。</p>
+<p>视图的一次改变称为一个动画帧，对应一次屏幕刷新，决定动画流畅度的一个重要指标就是帧率（Frame Per Second，FPS），即每秒的动画帧数。</p>
+<p>对于人眼，动画帧率超过16FPS就认为是流畅的，超过32FPS基本就感受不到任何卡顿，为了保证良好的视觉体验需要帧率尽可能达到60FPS。</p>
+<p>Flutter框架是可以实现60FPS的，这和原生应用的帧率标准是基本持平的。</p>
+<h5 id="1-1-Animation"><a href="#1-1-Animation" class="headerlink" title="1.1 Animation"></a><strong>1.1 Animation</strong></h5><p>Animation是一个Flutter动画中的核心抽象类，主要用于保存动画的插值和状态，它本身与视图渲染没有任何关系。</p>
+<p><strong>Animation对象的状态有4种：</strong></p>
+<p><strong>1）dismissed：</strong>动画处于开始状态；</p>
+<p><strong>2）forward：</strong>动画正在正向执行；</p>
+<p><strong>3）reverse：</strong>动画正在反向执行；</p>
+<p><strong>4）completed：</strong>动画处于结束状态。</p>
+<p>Animation对象有Listeners和StatusListeners两个监听器两个监听器，可以用来监听动画的变化。</p>
+<p>如果需要监听动画每一帧以及执行状态的变化，可以使用addListener()和addStatusListener()。</p>
+<p>addListener()用于给Animation对象添加帧监听器，每一帧都会被调用，当帧监听器监听到状态发生改变后就会调用setState()来触发视图的重建。</p>
+<p>addStatusListener()用于给Animation对象添加动画状态改变监听器，动画开始、结束、正向或反向时就会调用状态改变的监听器。</p>
+<h5 id="1-2-AnimationController"><a href="#1-2-AnimationController" class="headerlink" title="1.2 AnimationController"></a><strong>1.2 AnimationController</strong></h5><p>AnimationController表示动画控制器，是一个特殊的Animation对象，主要用于控制动画的开始、结束、正向、反向等操作。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">AnimationController</span> controller = <span class="title class_">AnimationController</span> (</span><br><span class="line">  <span class="attr">duration</span>: <span class="keyword">const</span> <span class="title class_">Duration</span>(<span class="attr">milliseconds</span>: <span class="number">2000</span>),</span><br><span class="line">  <span class="attr">lowerBound</span>: <span class="number">10.0</span>,</span><br><span class="line">  <span class="attr">upperBound</span>: <span class="number">20.0</span>,</span><br><span class="line">  <span class="attr">vsync</span>: <span class="variable language_">this</span>,<span class="comment">//接收一个TickerProvider类型的对象，防止屏幕锁屏后继续执行动画造成资源浪费</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>使用AnimationController 创建的Animation动画对象，默认情况下不会启动，要让动画运行，需要调用AnimationController 的forward()方法。</p>
+<p><strong>TickerProvider是一个抽象类：</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">abstract <span class="keyword">class</span> <span class="title class_">TickerProvider</span> &#123;</span><br><span class="line">  <span class="title class_">Ticker</span> <span class="title function_">createTicker</span>(<span class="title class_">TickerCallback</span> onTick);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Flutter应用在启动时会绑定一个SchedulerBinding，通过SchedulerBinding可以给每一次屏幕刷新添加回调，而Ticker对象就是通过SchedulerBinding来实现屏幕刷新回调的，每次屏幕刷新都会调用TickerCallback 。</p>
+<p>在Flutter动画中，使用Ticker而不是Timer来驱动动画，可以有效防止屏幕外动画（如锁屏）带来的资源消耗。Flutter在屏幕刷新时会通知绑定的SchedulerBinding，而Ticker是受SchedulerBinding驱动的，锁屏后屏幕停止刷新，Ticker也就不会再被触发。</p>
+<p><strong>AnimationController 常用函数：</strong></p>
+<p><strong>1）forward()：</strong>开始播放动画；</p>
+<p><strong>2）stop()：</strong>停止动画播放；</p>
+<p><strong>3）reset()：</strong>重置动画为初始化状态；</p>
+<p><strong>4）reverse()：</strong>反向动画播放，必须正向动画播放完成后才有效；</p>
+<p><strong>5）repeat()：</strong>循环播放动画；</p>
+<p><strong>6）dispose()：</strong>销毁动画，释放动画占用资源。</p>
+<h5 id="1-3-Curve"><a href="#1-3-Curve" class="headerlink" title="1.3 Curve"></a><strong>1.3 Curve</strong></h5><p>Curve主要用来控制动画随时间的变化率，默认为均匀的线性变化。</p>
+<p>在Flutter应用开发中，可以通过CurvedAnimation来指定动画的曲线：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">CurvedAnimation</span> curve = <span class="title class_">CurvedAnimation</span> (</span><br><span class="line">  <span class="attr">parent</span>: controller,</span><br><span class="line">  <span class="attr">curve</span>: <span class="title class_">Curves</span>.<span class="property">easeIn</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Curves类定义的动画曲线：</strong></p>
+<p><strong>1）linear：</strong>匀速动画；</p>
+<p><strong>2）decelerate：</strong>匀减速动画；</p>
+<p><strong>3）ease：</strong>先加速后减速动画；</p>
+<p><strong>4）easeIn：</strong>先快后慢动画；</p>
+<p><strong>5）easeOut：</strong>先慢后快动画；</p>
+<p><strong>6）easeInOut：</strong>先慢，然后加速，最后减速动画。</p>
+<p><strong>示例代码：</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:flutter/material.dart&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">main</span>() =&gt; <span class="title function_">runApp</span>(<span class="title class_">CurvePage</span>());</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CurvePage</span> <span class="keyword">extends</span> <span class="title class_ inherited__">StatefulWidget</span> &#123;</span><br><span class="line">  <span class="title class_">State</span>&lt;<span class="title class_">StatefulWidget</span>&gt; <span class="title function_">createState</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">CurveState</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CurveState</span> <span class="keyword">extends</span> <span class="title class_ inherited__">State</span>&lt;<span class="title class_">CurvePage</span>&gt; <span class="keyword">with</span> <span class="title class_">SingleTickerProviderStateMixin</span>&#123;</span><br><span class="line">  <span class="title class_">CurvedAnimation</span> curve;</span><br><span class="line">  <span class="title class_">AnimationController</span> controller;</span><br><span class="line"></span><br><span class="line">  @override</span><br><span class="line">  <span class="keyword">void</span> <span class="title function_">initState</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>.<span class="title function_">initState</span>();</span><br><span class="line">    controller = <span class="title class_">AnimationController</span>(</span><br><span class="line">      <span class="attr">duration</span>: <span class="keyword">const</span> <span class="title class_">Duration</span>(<span class="attr">milliseconds</span>: <span class="number">5000</span>),</span><br><span class="line">      <span class="attr">vsync</span>: <span class="variable language_">this</span>,</span><br><span class="line">    );</span><br><span class="line">    curve = <span class="title class_">CurvedAnimation</span>(</span><br><span class="line">      <span class="attr">parent</span>: controller,</span><br><span class="line">      <span class="attr">curve</span>: <span class="title class_">Curves</span>.<span class="property">easeIn</span></span><br><span class="line">    )..<span class="title function_">addListener</span>(() &#123;</span><br><span class="line">      <span class="title function_">setState</span>(() &#123;&#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">    controller.<span class="title function_">forward</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @override</span><br><span class="line">  <span class="title class_">Widget</span> <span class="title function_">build</span>(<span class="params">BuildContext context</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">MaterialApp</span>(</span><br><span class="line">      <span class="attr">title</span>: <span class="string">&#x27;动画&#x27;</span>,</span><br><span class="line">      <span class="attr">home</span>: <span class="title class_">Scaffold</span>(</span><br><span class="line">        <span class="attr">appBar</span>: <span class="title class_">AppBar</span>(<span class="attr">title</span>: <span class="title class_">Text</span>(<span class="string">&#x27;动画&#x27;</span>)),</span><br><span class="line">        <span class="attr">body</span>: <span class="title class_">Center</span>(</span><br><span class="line">          <span class="attr">child</span>: <span class="title class_">Container</span>(</span><br><span class="line">            <span class="attr">margin</span>: <span class="title class_">EdgeInsets</span>.<span class="title function_">symmetric</span>(<span class="attr">vertical</span>: <span class="number">10</span>),</span><br><span class="line">            <span class="attr">height</span>: <span class="number">300</span> * curve.<span class="property">value</span>,</span><br><span class="line">            <span class="attr">width</span>: <span class="number">300</span> * curve.<span class="property">value</span>,</span><br><span class="line">            <span class="attr">child</span>: <span class="title class_">FlutterLogo</span>()</span><br><span class="line">          )</span><br><span class="line">        )</span><br><span class="line">      )</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @override</span><br><span class="line">  <span class="keyword">void</span> <span class="title function_">dispose</span>(<span class="params"></span>) &#123;</span><br><span class="line">    controller.<span class="title function_">dispose</span>();</span><br><span class="line">    <span class="variable language_">super</span>.<span class="title function_">dispose</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行上面的代码，动画会在5秒内执行先慢后快的非线性动画，图标慢慢变大。</p>
+<h5 id="1-4-Tween"><a href="#1-4-Tween" class="headerlink" title="1.4 Tween"></a><strong>1.4 Tween</strong></h5><p>默认情况下，AnimationController创建的动画对象的取值范围是[0.0, 1.0]，可以使用Tween来自定义范围。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Tween</span> doubleTween = <span class="title class_">Tween</span>&lt;double&gt;(<span class="attr">begin</span>: <span class="number">0.0</span>, <span class="attr">end</span>: <span class="number">100.0</span>);</span><br></pre></td></tr></table></figure>
+
+<p>Tween是一个无状态对象，它继承自Animatable<T>，Animatable是一个控制动画类型的类，定义了动画值的映射规则，需要传入begin和end两个参数。</p>
+<p>Animatable支持多取值类型，如数字、颜色等。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Tween</span> colorTween = <span class="title class_">ColorTween</span>(</span><br><span class="line">  <span class="attr">begin</span>: <span class="title class_">Colors</span>.<span class="property">white</span>,</span><br><span class="line">  <span class="attr">end</span>: <span class="title class_">Colors</span>.<span class="property">black</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>如果需要使用Tween对象，可以调用其animate()，然后传入一个控制器对象。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">AnimationController</span> controller = <span class="title class_">AnimationController</span>(</span><br><span class="line">  <span class="attr">duration</span>: <span class="keyword">const</span> <span class="title class_">Duration</span>(<span class="attr">milliseconds</span>: <span class="number">500</span>),</span><br><span class="line">  <span class="attr">vsync</span>: <span class="variable language_">this</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="title class_">Animation</span>&lt;int&gt; alpha = <span class="title class_">IntTween</span>(</span><br><span class="line">  <span class="attr">begin</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">end</span>: <span class="number">255</span></span><br><span class="line">).<span class="title function_">animate</span>(controller);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-动画组件"><a href="#2-动画组件" class="headerlink" title="2 动画组件"></a><strong>2 动画组件</strong></h4><h5 id="2-1-基础用法"><a href="#2-1-基础用法" class="headerlink" title="2.1 基础用法"></a><strong>2.1 基础用法</strong></h5><p>使用Animation和AnimationController实现心跳动画示例。</p>
+<p><strong>示例代码：</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:flutter/material.dart&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">main</span>() =&gt; <span class="title function_">runApp</span>(<span class="title class_">HeartAnimPage</span>());</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">HeartAnimPage</span> <span class="keyword">extends</span> <span class="title class_ inherited__">StatefulWidget</span> &#123;</span><br><span class="line">  <span class="title class_">HeartAnimPage</span>(&#123;<span class="title class_">Key</span> key&#125;): <span class="variable language_">super</span>(<span class="attr">key</span>: key);</span><br><span class="line">  _HeartAnimState <span class="title function_">createState</span>() =&gt; <span class="title function_">_HeartAnimState</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">_HeartAnimState</span> <span class="keyword">extends</span> <span class="title class_ inherited__">State</span>&lt;<span class="title class_">HeartAnimPage</span>&gt; <span class="keyword">with</span> <span class="title class_">SingleTickerProviderStateMixin</span> &#123;</span><br><span class="line">  <span class="title class_">AnimationController</span> controller;</span><br><span class="line">  <span class="title class_">Animation</span>&lt;double&gt; animation;</span><br><span class="line"></span><br><span class="line">  @override</span><br><span class="line">  <span class="keyword">void</span> <span class="title function_">initState</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>.<span class="title function_">initState</span>();</span><br><span class="line">    controller = <span class="title class_">AnimationController</span>(</span><br><span class="line">      <span class="attr">duration</span>: <span class="keyword">const</span> <span class="title class_">Duration</span>(<span class="attr">seconds</span>: <span class="number">1</span>),</span><br><span class="line">      <span class="attr">vsync</span>: <span class="variable language_">this</span></span><br><span class="line">    );</span><br><span class="line">    animation = <span class="title class_">CurvedAnimation</span>(</span><br><span class="line">      <span class="attr">parent</span>: controller,</span><br><span class="line">      <span class="attr">curve</span>: <span class="title class_">Curves</span>.<span class="property">easeInOut</span>,</span><br><span class="line">      <span class="attr">reverseCurve</span>: <span class="title class_">Curves</span>.<span class="property">easeOut</span></span><br><span class="line">    );</span><br><span class="line">    animation.<span class="title function_">addStatusListener</span>((status) &#123;</span><br><span class="line">      <span class="keyword">if</span> (status == <span class="title class_">AnimationStatus</span>.<span class="property">completed</span>) &#123;</span><br><span class="line">        controller.<span class="title function_">reverse</span>();</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (status == <span class="title class_">AnimationStatus</span>.<span class="property">dismissed</span>) &#123;</span><br><span class="line">        controller.<span class="title function_">forward</span>();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    animation = <span class="title class_">Tween</span>(<span class="attr">begin</span>: <span class="number">50.0</span>, <span class="attr">end</span>: <span class="number">120.0</span>).<span class="title function_">animate</span>(controller);</span><br><span class="line">    controller.<span class="title function_">forward</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @override</span><br><span class="line">  <span class="title class_">Widget</span> <span class="title function_">build</span>(<span class="params">BuildContext context</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">MaterialApp</span>(</span><br><span class="line">      <span class="attr">title</span>: <span class="string">&#x27;动画--基础用法&#x27;</span>,</span><br><span class="line">      <span class="attr">home</span>: <span class="title class_">Scaffold</span>(</span><br><span class="line">        <span class="attr">appBar</span>: <span class="title class_">AppBar</span>(<span class="attr">title</span>: <span class="title class_">Text</span>(<span class="string">&#x27;动画--基础用法&#x27;</span>)),</span><br><span class="line">        <span class="attr">body</span>: <span class="title class_">Center</span>(</span><br><span class="line">          <span class="attr">child</span>: <span class="title class_">AnimatedBuilder</span>(</span><br><span class="line">            <span class="attr">animation</span>: animation,</span><br><span class="line">            <span class="attr">builder</span>: (ctx, child) &#123;</span><br><span class="line">              <span class="keyword">return</span> <span class="title class_">Icon</span>(<span class="title class_">Icons</span>.<span class="property">favorite</span>, <span class="attr">color</span>: <span class="title class_">Colors</span>.<span class="property">red</span>, <span class="attr">size</span>: animation.<span class="property">value</span>);</span><br><span class="line">            &#125;,</span><br><span class="line">          )</span><br><span class="line">        )</span><br><span class="line">      )</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @override</span><br><span class="line">  <span class="keyword">void</span> <span class="title function_">dispose</span>(<span class="params"></span>) &#123;</span><br><span class="line">    controller.<span class="title function_">dispose</span>();</span><br><span class="line">    <span class="variable language_">super</span>.<span class="title function_">dispose</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例效果：</strong></p>
+<p><img src="/../images/flutter/3d392478f9be9597568ded9fafb48b6e.png?imageView2/2/w/2560/h/7000" alt="img"></p>
+<h5 id="2-2-AnimatedWidget"><a href="#2-2-AnimatedWidget" class="headerlink" title="2.2 AnimatedWidget"></a><strong>2.2 AnimatedWidget</strong></h5><p>Flutter官方提供了AnimatedWidget组件，用于简化动画开发中addListener()和setState()的调用流程。</p>
+<p>使用AnimatedWidget组件重构心跳动画的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:flutter/material.dart&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">main</span>() =&gt; <span class="title function_">runApp</span>(<span class="title class_">HeartAnimPage</span>());</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">HeartAnimPage</span> <span class="keyword">extends</span> <span class="title class_ inherited__">StatefulWidget</span> &#123;</span><br><span class="line">  <span class="title class_">HeartAnimPage</span>(&#123;<span class="title class_">Key</span> key&#125;): <span class="variable language_">super</span>(<span class="attr">key</span>: key);</span><br><span class="line">  _HeartAnimState <span class="title function_">createState</span>() =&gt; <span class="title function_">_HeartAnimState</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">_HeartAnimState</span> <span class="keyword">extends</span> <span class="title class_ inherited__">State</span>&lt;<span class="title class_">HeartAnimPage</span>&gt; <span class="keyword">with</span> <span class="title class_">SingleTickerProviderStateMixin</span> &#123;</span><br><span class="line">  <span class="title class_">AnimationController</span> controller;</span><br><span class="line">  <span class="title class_">Animation</span>&lt;double&gt; animation;</span><br><span class="line"></span><br><span class="line">  @override</span><br><span class="line">  <span class="keyword">void</span> <span class="title function_">initState</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>.<span class="title function_">initState</span>();</span><br><span class="line">    controller = <span class="title class_">AnimationController</span>(</span><br><span class="line">      <span class="attr">duration</span>: <span class="keyword">const</span> <span class="title class_">Duration</span>(<span class="attr">seconds</span>: <span class="number">1</span>),</span><br><span class="line">      <span class="attr">vsync</span>: <span class="variable language_">this</span></span><br><span class="line">    );</span><br><span class="line">    animation = <span class="title class_">CurvedAnimation</span>(</span><br><span class="line">      <span class="attr">parent</span>: controller,</span><br><span class="line">      <span class="attr">curve</span>: <span class="title class_">Curves</span>.<span class="property">easeInOut</span>,</span><br><span class="line">      <span class="attr">reverseCurve</span>: <span class="title class_">Curves</span>.<span class="property">easeOut</span></span><br><span class="line">    );</span><br><span class="line">    animation.<span class="title function_">addStatusListener</span>((status) &#123;</span><br><span class="line">      <span class="keyword">if</span> (status == <span class="title class_">AnimationStatus</span>.<span class="property">completed</span>) &#123;</span><br><span class="line">        controller.<span class="title function_">reverse</span>();</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (status == <span class="title class_">AnimationStatus</span>.<span class="property">dismissed</span>) &#123;</span><br><span class="line">        controller.<span class="title function_">forward</span>();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    animation = <span class="title class_">Tween</span>(<span class="attr">begin</span>: <span class="number">50.0</span>, <span class="attr">end</span>: <span class="number">120.0</span>).<span class="title function_">animate</span>(controller);</span><br><span class="line">    controller.<span class="title function_">forward</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @override</span><br><span class="line">  <span class="title class_">Widget</span> <span class="title function_">build</span>(<span class="params">BuildContext context</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">MaterialApp</span>(</span><br><span class="line">      <span class="attr">title</span>: <span class="string">&#x27;动画--AnimatedWidget&#x27;</span>,</span><br><span class="line">      <span class="attr">home</span>: <span class="title class_">Scaffold</span>(</span><br><span class="line">        <span class="attr">appBar</span>: <span class="title class_">AppBar</span>(<span class="attr">title</span>: <span class="title class_">Text</span>(<span class="string">&#x27;动画--AnimatedWidget&#x27;</span>)),</span><br><span class="line">        <span class="attr">body</span>: <span class="title class_">Center</span>(</span><br><span class="line">          <span class="attr">child</span>: <span class="title class_">HeatAnimatedWidget</span>(animation)</span><br><span class="line">        )</span><br><span class="line">      )</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @override</span><br><span class="line">  <span class="keyword">void</span> <span class="title function_">dispose</span>(<span class="params"></span>) &#123;</span><br><span class="line">    controller.<span class="title function_">dispose</span>();</span><br><span class="line">    <span class="variable language_">super</span>.<span class="title function_">dispose</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">HeatAnimatedWidget</span> <span class="keyword">extends</span> <span class="title class_ inherited__">AnimatedWidget</span> &#123;</span><br><span class="line">  <span class="title class_">HeatAnimatedWidget</span>(<span class="title class_">Animation</span> animation): <span class="variable language_">super</span>(<span class="attr">listenable</span>: animation);</span><br><span class="line"></span><br><span class="line">  @override</span><br><span class="line">  <span class="title class_">Widget</span> <span class="title function_">build</span>(<span class="params">BuildContext context</span>) &#123;</span><br><span class="line">    <span class="title class_">Animation</span> animation = listenable;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Icon</span>(<span class="title class_">Icons</span>.<span class="property">favorite</span>, <span class="attr">color</span>: <span class="title class_">Colors</span>.<span class="property">red</span>, <span class="attr">size</span>: animation.<span class="property">value</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>AnimatedWidget组件有效地将业务逻辑和功能组件分离，简化了动画操作的逻辑。</p>
+<h5 id="2-3-AnimatedBuilder"><a href="#2-3-AnimatedBuilder" class="headerlink" title="2.3 AnimatedBuilder"></a><strong>2.3 AnimatedBuilder</strong></h5><p>使用AnimatedBuilder组件， 系统只会重新构建动画组件自身，对父子组件不做任何处理，从而避免不必要的性能开销。</p>
+<p><strong>使用AnimatedBuilder组件还有以下优点：</strong></p>
+<p>1）不需要显示添加帧监听器以及调用setState()；</p>
+<p>2）缩小动画构建的范围，避免不必要的视图构建，从而提高视图渲染性能；</p>
+<p>3）可以封装一些常见的动画效果，从而提高代码的复用性。</p>
+<h4 id="3-转场动画"><a href="#3-转场动画" class="headerlink" title="3 转场动画"></a><strong>3 转场动画</strong></h4><p>在原生Android开发中，可以使用共享元素动画（Shared Element Transition，又称Hero Transition）来实现多个页面的切换动画。</p>
+<p>Hero指的是可以在路由（即Flutter页面）之间飞行的组件。</p>
+<p>在Flutter中，实现Hero动画效果至少需要两个路由，即源路由和目标路由，然后使用Hero组件包裹在需要动画控制的组件外面，同时为它们设置相同的tag属性。</p>
+<p><strong>Hero动画组件的构造函数：</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">Hero</span>(&#123;</span><br><span class="line">  <span class="title class_">Key</span> key,</span><br><span class="line">  @required <span class="variable language_">this</span>.<span class="property">tag</span>,<span class="comment">//Hero组件的标识，两个Hero组件就是通过tag标识关联起来的</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">createRectTween</span>,</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">flightShuttleBuilder</span>,</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">placeholderBuilder</span>,</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">transitionOnUserGestures</span> = <span class="literal">false</span>,</span><br><span class="line">  @required <span class="variable language_">this</span>.<span class="property">child</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例代码：</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:flutter/material.dart&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">main</span>() =&gt; <span class="title function_">runApp</span>(<span class="title class_">HeroPage</span>());</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">HeroPage</span> <span class="keyword">extends</span> <span class="title class_ inherited__">StatelessWidget</span> &#123;</span><br><span class="line">  @override</span><br><span class="line">  <span class="title class_">Widget</span> <span class="title function_">build</span>(<span class="params">BuildContext context</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">MaterialApp</span>(</span><br><span class="line">      <span class="attr">title</span>: <span class="string">&#x27;动画--转场动画&#x27;</span>,</span><br><span class="line">      <span class="attr">home</span>: <span class="title class_">HeroAPage</span>(),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">HeroAPage</span> <span class="keyword">extends</span> <span class="title class_ inherited__">StatelessWidget</span> &#123;</span><br><span class="line">  @override</span><br><span class="line">  <span class="title class_">Widget</span> <span class="title function_">build</span>(<span class="params">BuildContext context</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Scaffold</span>(</span><br><span class="line">      <span class="attr">appBar</span>: <span class="title class_">AppBar</span>(<span class="attr">title</span>: <span class="title class_">Text</span>(<span class="string">&#x27;第一个页面&#x27;</span>)),</span><br><span class="line">      <span class="attr">body</span>: <span class="title class_">Container</span>(</span><br><span class="line">        <span class="attr">child</span>: <span class="title class_">Center</span>(</span><br><span class="line">          <span class="attr">child</span>: <span class="title class_">GestureDetector</span>(</span><br><span class="line">            <span class="attr">child</span>: <span class="title class_">Hero</span>(</span><br><span class="line">              <span class="attr">tag</span>: <span class="string">&#x27;avatar&#x27;</span>,</span><br><span class="line">              <span class="attr">child</span>: <span class="title class_">Image</span>.<span class="title function_">asset</span>(</span><br><span class="line">                <span class="string">&#x27;images/wx.png&#x27;</span>,</span><br><span class="line">                 <span class="attr">width</span>: <span class="number">100</span>, </span><br><span class="line">                 <span class="attr">height</span>: <span class="number">100</span>, </span><br><span class="line">                 <span class="attr">fit</span>: <span class="title class_">BoxFit</span>.<span class="property">fill</span></span><br><span class="line">              ),</span><br><span class="line">            ),</span><br><span class="line">            <span class="attr">onTap</span>: () &#123;</span><br><span class="line">              <span class="title class_">Navigator</span>.<span class="title function_">push</span>(</span><br><span class="line">                context, </span><br><span class="line">                <span class="title class_">MaterialPageRoute</span>(<span class="attr">builder</span>: <span class="function">(<span class="params">BuildContext context</span>) =&gt;</span> <span class="title class_">HeroBPage</span>())</span><br><span class="line">              );</span><br><span class="line">            &#125;</span><br><span class="line">          )</span><br><span class="line">        )</span><br><span class="line">      )</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">HeroBPage</span> <span class="keyword">extends</span> <span class="title class_ inherited__">StatelessWidget</span> &#123;</span><br><span class="line">  @override</span><br><span class="line">  <span class="title class_">Widget</span> <span class="title function_">build</span>(<span class="params">BuildContext context</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Scaffold</span>(</span><br><span class="line">      <span class="attr">appBar</span>: <span class="title class_">AppBar</span>(<span class="attr">title</span>: <span class="title class_">Text</span>(<span class="string">&#x27;第二个页面&#x27;</span>)),</span><br><span class="line">      <span class="attr">body</span>: <span class="title class_">Container</span>(</span><br><span class="line">        <span class="attr">child</span>: <span class="title class_">Center</span>(</span><br><span class="line">          <span class="attr">child</span>: <span class="title class_">GestureDetector</span>(</span><br><span class="line">            <span class="attr">child</span>: <span class="title class_">Hero</span>(</span><br><span class="line">              <span class="attr">tag</span>: <span class="string">&#x27;avatar&#x27;</span>,</span><br><span class="line">              <span class="attr">child</span>: <span class="title class_">Image</span>.<span class="title function_">asset</span>(</span><br><span class="line">                <span class="string">&#x27;images/wx.png&#x27;</span>,</span><br><span class="line">                 <span class="attr">width</span>: <span class="number">300</span>, </span><br><span class="line">                 <span class="attr">height</span>: <span class="number">300</span>, </span><br><span class="line">                 <span class="attr">fit</span>: <span class="title class_">BoxFit</span>.<span class="property">fill</span></span><br><span class="line">              ),</span><br><span class="line">            ),</span><br><span class="line">            <span class="attr">onTap</span>: () &#123;</span><br><span class="line">              <span class="title class_">Navigator</span>.<span class="title function_">pop</span>(context);</span><br><span class="line">            &#125;</span><br><span class="line">          )</span><br><span class="line">        )</span><br><span class="line">      )</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例效果：</strong></p>
+<p><img src="/../images/flutter/76131b3f19c1672233b178569f483972.png?imageView2/2/w/2560/h/7000" alt="img"></p>
+<h4 id="4-交错动画"><a href="#4-交错动画" class="headerlink" title="4 交错动画"></a><strong>4 交错动画</strong></h4><p>在Flutter中，渐变、平移、缩放和旋转动画都属于基础动画，如果要实现一些复杂的动画效果，可以把这些基础动画组合起来形成一个动画序列或重叠动画，Flutter将这些动画序列或重叠动画称为交错动画。</p>
+<p><strong>在Flutter开发中，使用交错动画需要满足以下几点：</strong></p>
+<p>1）创建交错动画时需要创建多个动画对象；</p>
+<p>2）一个AnimationController动画控制器控制所有的动画对象；</p>
+<p>3）给每一个动画对象指定时间间隔，且动画的时间间隔为[0.0, 1.0]。</p>
+<p>使用交错动画实现Flutter图标缩放和渐变的动画示例。</p>
+<p><strong>示例代码：</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&#x27;package:flutter/material.dart&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">main</span>() =&gt; <span class="title function_">runApp</span>(<span class="title class_">ParallelWidget</span>());</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ParallelWidget</span> <span class="keyword">extends</span> <span class="title class_ inherited__">StatelessWidget</span> &#123;</span><br><span class="line">  @override</span><br><span class="line">  <span class="title class_">Widget</span> <span class="title function_">build</span>(<span class="params">BuildContext context</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">MaterialApp</span>(</span><br><span class="line">      <span class="attr">title</span>: <span class="string">&#x27;动画--交错动画&#x27;</span>,</span><br><span class="line">      <span class="attr">home</span>: <span class="title class_">ParallelPage</span>(),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ParallelPage</span> <span class="keyword">extends</span> <span class="title class_ inherited__">StatefulWidget</span> &#123;</span><br><span class="line">  @override</span><br><span class="line">  <span class="title class_">State</span>&lt;<span class="title class_">StatefulWidget</span>&gt; <span class="title function_">createState</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">ParallelState</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ParallelState</span> <span class="keyword">extends</span> <span class="title class_ inherited__">State</span>&lt;<span class="title class_">ParallelPage</span>&gt; <span class="keyword">with</span> <span class="title class_">TickerProviderStateMixin</span> &#123;</span><br><span class="line">  <span class="title class_">AnimationController</span> controller;</span><br><span class="line">  <span class="title class_">Animation</span>&lt;double&gt; animation;</span><br><span class="line"></span><br><span class="line">  @override</span><br><span class="line">  <span class="keyword">void</span> <span class="title function_">initState</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>.<span class="title function_">initState</span>();</span><br><span class="line">    controller = <span class="title class_">AnimationController</span>(</span><br><span class="line">      <span class="attr">vsync</span>: <span class="variable language_">this</span>,</span><br><span class="line">      <span class="attr">duration</span>: <span class="keyword">const</span> <span class="title class_">Duration</span>(<span class="attr">milliseconds</span>: <span class="number">3000</span>)</span><br><span class="line">    );</span><br><span class="line">    animation = <span class="title class_">CurvedAnimation</span>(</span><br><span class="line">      <span class="attr">parent</span>: controller,</span><br><span class="line">      <span class="attr">curve</span>: <span class="title class_">Curves</span>.<span class="property">bounceIn</span></span><br><span class="line">    );</span><br><span class="line">    animation.<span class="title function_">addStatusListener</span>((status) &#123;</span><br><span class="line">      <span class="keyword">if</span>(status == <span class="title class_">AnimationStatus</span>.<span class="property">completed</span>) &#123;</span><br><span class="line">        controller.<span class="title function_">reverse</span>();</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (status == <span class="title class_">AnimationStatus</span>.<span class="property">dismissed</span>) &#123;</span><br><span class="line">        controller.<span class="title function_">forward</span>();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    controller.<span class="title function_">forward</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @override</span><br><span class="line">  <span class="title class_">Widget</span> <span class="title function_">build</span>(<span class="params">BuildContext context</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">ParallelAnimatedWidget</span>(<span class="attr">animation</span>: animation);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @override</span><br><span class="line">  <span class="keyword">void</span> <span class="title function_">dispose</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>.<span class="title function_">dispose</span>();</span><br><span class="line">    controller.<span class="title function_">dispose</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ParallelAnimatedWidget</span> <span class="keyword">extends</span> <span class="title class_ inherited__">AnimatedWidget</span> &#123;</span><br><span class="line">  final _opacityTween = <span class="title class_">Tween</span>&lt;double&gt;(<span class="attr">begin</span>: <span class="number">0.1</span>, <span class="attr">end</span>: <span class="number">1.0</span>);</span><br><span class="line">  final _sizeTween = <span class="title class_">Tween</span>&lt;double&gt;(<span class="attr">begin</span>: <span class="number">0.0</span>, <span class="attr">end</span>: <span class="number">300.0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="title class_">ParallelAnimatedWidget</span>(&#123;<span class="title class_">Key</span> key, <span class="title class_">Animation</span>&lt;double&gt; animation&#125;): <span class="variable language_">super</span>(<span class="attr">key</span>: key, <span class="attr">listenable</span>: animation);</span><br><span class="line"></span><br><span class="line">  <span class="title class_">Widget</span> <span class="title function_">build</span>(<span class="params">BuildContext context</span>) &#123;</span><br><span class="line">    <span class="title class_">Animation</span>&lt;double&gt; animation = listenable;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Center</span>(</span><br><span class="line">      <span class="attr">child</span>: <span class="title class_">Opacity</span>(</span><br><span class="line">        <span class="attr">opacity</span>: _opacityTween.evaluate(animation),</span><br><span class="line">        <span class="attr">child</span>: <span class="title class_">Container</span>(</span><br><span class="line">          <span class="attr">margin</span>: <span class="title class_">EdgeInsets</span>.<span class="title function_">symmetric</span>(<span class="attr">vertical</span>: <span class="number">10.0</span>),</span><br><span class="line">          <span class="attr">height</span>: _sizeTween.evaluate(animation),</span><br><span class="line">          <span class="attr">width</span>: _sizeTween.evaluate(animation),</span><br><span class="line">          <span class="attr">child</span>: <span class="title class_">FlutterLogo</span>()</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例效果：</strong></p>
+<p><img src="/../images/flutter/f093fb86c016dfab00e5c3477ab26766.png?imageView2/2/w/2560/h/7000" alt="img"></p>
+</div>
+        </div>
+        
+            <div class="kratos-copyright text-center clearfix">
+                <h5 itemprop="copyrightNotice">本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+            </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+                <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                
+                
+                    <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                    <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/07/Flutter-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%97%8508-%E5%8A%A8%E7%94%BB/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/07/Flutter-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%97%8508-%E5%8A%A8%E7%94%BB/";
+            const title         = "「Flutter 学习之旅08 动画」";
+            const excerpt       = `1 动画基础不管是什么视图框架，动画的实现原理都是相同的，即在一段时限的时间内，多次、快速地改变视图外观来实现连续播放的效果。
+视图的一次改变称为一个动画帧，对应一次屏幕刷新，决定动画流畅度的一个重要指标就是帧率（Frame Per ...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                
+                </div>
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    
+                </div>
+				
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" iOS-AFNetworking底层框架" href="/26/iOS-AFNetworking底层框架/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" 组件化" href="/23/组件化/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center"></p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                78
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                6
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                12
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS%E7%9F%A5%E8%AF%86%E7%82%B9/">iOS知识点</a><span class="category-list-count">57</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF/">加密技术</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/Cocoapods/" style="font-size: 0.63em;">Cocoapods</a> <a href="/tags/Runloop/" style="font-size: 0.6em;">Runloop</a> <a href="/tags/Swift/" style="font-size: 0.73em;">Swift</a> <a href="/tags/UI%E6%8E%A7%E4%BB%B6/" style="font-size: 0.8em;">UI控件</a> <a href="/tags/ffmpeg/" style="font-size: 0.6em;">ffmpeg</a> <a href="/tags/git/" style="font-size: 0.63em;">git</a> <a href="/tags/runtime/" style="font-size: 0.67em;">runtime</a> <a href="/tags/%E5%8A%A0%E5%AF%86/" style="font-size: 0.6em;">加密</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 0.67em;">多线程</a> <a href="/tags/%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" style="font-size: 0.77em;">底层原理</a> <a href="/tags/%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6/" style="font-size: 0.7em;">开源框架</a> <a href="/tags/%E6%99%BA%E8%83%BD%E8%AE%BE%E5%A4%87/" style="font-size: 0.63em;">智能设备</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/17/XCode14-iOS16-%E9%80%82%E9%85%8D%E9%97%AE%E9%A2%98/"><i class="fa  fa-book"></i> XCode14 & iOS16 适配问题</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/26/objc%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/"><i class="fa  fa-book"></i> objc源码编译</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/08/git%E6%8A%A5%E9%94%99-Support-for-password-authentication-was-removed-on-August-13-2021/"><i class="fa  fa-book"></i> git报错#Support for password authentication was removed on August 13,2021</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/26/ios-%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93/"><i class="fa  fa-book"></i> iOS-离屏渲染</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/09/FFmpeg%E5%B8%B8%E8%A7%81%E6%8C%87%E4%BB%A4%E7%9A%84%E4%BD%BF%E7%94%A8/"><i class="fa  fa-book"></i> FFmpeg常见指令的使用</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  class="ap-lrc"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://t.me/CandyUnion"><i class="fa fa-telegram"></i></a></li>
+                        
+                        
+                        
+                        <li><a target="_blank" rel="me" href="https://nya.one/@Candinya"><i class="fa fa fa-share-alt-square"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/Candinya"><i class="fa fa-github"></i></a></li>
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2023 欢迎来到我的个人博客 版权所有.</li>
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+    <script defer src="/vendors/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="/vendors/meting@2.0.1/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="3204190542"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>
