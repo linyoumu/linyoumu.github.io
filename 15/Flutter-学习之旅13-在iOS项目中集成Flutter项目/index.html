@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  
+  
+  <title>Flutter 学习之旅13 在iOS项目中集成Flutter项目 | 欢迎来到我的个人博客</title>
+  <meta name="author" content="勿忘初心" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="" />
+  
+  <meta name="description" content="本文主要针对现有iOS项目想接入flutter，怎么接入flutter，如何进行项目管理，以及Native和flutter之间如何调用，如何调试来讲解的。 一、创建Flutter Module执行下面的命令创建Flutter Moudle 12cd some&#x2F;path&#x2F;flutter create --template module my_flutter  some&#x2F;path&#x2F;是你要存放工程的目录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flutter 学习之旅13 在iOS项目中集成Flutter项目">
+<meta property="og:url" content="http://example.com/15/Flutter-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%97%8513-%E5%9C%A8iOS%E9%A1%B9%E7%9B%AE%E4%B8%AD%E9%9B%86%E6%88%90Flutter%E9%A1%B9%E7%9B%AE/index.html">
+<meta property="og:site_name" content="欢迎来到我的个人博客">
+<meta property="og:description" content="本文主要针对现有iOS项目想接入flutter，怎么接入flutter，如何进行项目管理，以及Native和flutter之间如何调用，如何调试来讲解的。 一、创建Flutter Module执行下面的命令创建Flutter Moudle 12cd some&#x2F;path&#x2F;flutter create --template module my_flutter  some&#x2F;path&#x2F;是你要存放工程的目录">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1286243-2f4115e3276b0684?imageMogr2/auto-orient/strip%7CimageView2/2/w/850">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1286243-9edf6a41ad1fa96d?imageMogr2/auto-orient/strip%7CimageView2/2/w/800">
+<meta property="article:published_time" content="2021-05-15T07:56:11.000Z">
+<meta property="article:modified_time" content="2023-04-09T08:02:11.657Z">
+<meta property="article:author" content="勿忘初心">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/1286243-2f4115e3276b0684?imageMogr2/auto-orient/strip%7CimageView2/2/w/850">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+    <link rel="stylesheet" href="/vendors/aplayer@1.10.1/dist/APlayer.min.css"></script>
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+    <script src="/vendors/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">欢迎来到我的个人博客</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>欢迎来到我的个人博客</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="http://example.com/15/Flutter-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%97%8513-%E5%9C%A8iOS%E9%A1%B9%E7%9B%AE%E4%B8%AD%E9%9B%86%E6%88%90Flutter%E9%A1%B9%E7%9B%AE/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">Flutter 学习之旅13 在iOS项目中集成Flutter项目</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2021-05-15T07:56:11.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2021-05-15</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">勿忘初心</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~14.79K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1681027331657"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            
+            <hr />
+            <div itemprop="articleBody"><p>本文主要针对现有iOS项目想接入flutter，怎么接入flutter，如何进行项目管理，以及Native和flutter之间如何调用，如何调试来讲解的。</p>
+<h2 id="一、创建Flutter-Module"><a href="#一、创建Flutter-Module" class="headerlink" title="一、创建Flutter Module"></a>一、创建Flutter Module</h2><p>执行下面的命令创建Flutter Moudle</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd some/path/</span><br><span class="line">flutter create --<span class="keyword">template</span> <span class="keyword">module</span> my_flutter</span><br></pre></td></tr></table></figure>
+
+<p><code>some/path/</code>是你要存放工程的目录，然后创建flutter Module，这一步要注意，不要创建成flutter project项目了，执行命令后，控制台会打印：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Creating project my_flutter... androidx: <span class="literal">true</span></span><br><span class="line">  my_flutter/test/widget_test.dart (created)</span><br><span class="line">  my_flutter/my_flutter.iml (created)</span><br><span class="line">  my_flutter/.gitignore (created)</span><br><span class="line">  my_flutter/.metadata (created)</span><br><span class="line">  my_flutter/pubspec.yaml (created)</span><br><span class="line">  my_flutter/README.md (created)</span><br><span class="line">  my_flutter/lib/main.dart (created)</span><br><span class="line">  my_flutter/my_flutter_android.iml (created)</span><br><span class="line">  my_flutter/.idea/libraries/Flutter_for_Android.xml (created)</span><br><span class="line">  my_flutter/.idea/libraries/Dart_SDK.xml (created)</span><br><span class="line">  my_flutter/.idea/modules.xml (created)</span><br><span class="line">  my_flutter/.idea/workspace.xml (created)</span><br><span class="line">Running <span class="string">&quot;flutter pub get&quot;</span> <span class="keyword">in</span> my_flutter...                          1.8s</span><br><span class="line">Wrote 12 files.</span><br><span class="line"></span><br><span class="line">All <span class="keyword">done</span>!</span><br><span class="line">Your module code is <span class="keyword">in</span> my_flutter/lib/main.dart.</span><br></pre></td></tr></table></figure>
+
+<p>创建完成以后my_flutter文件结构如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">my_flutter/</span><br><span class="line">├── .ios/</span><br><span class="line">│   ├── Runner.xcworkspace</span><br><span class="line">│   └── Flutter/podhelper.rb</span><br><span class="line">├── lib/</span><br><span class="line">│   └── main.dart</span><br><span class="line">├── <span class="built_in">test</span>/</span><br><span class="line">└── pubspec.yaml</span><br></pre></td></tr></table></figure>
+
+<p>接下来可以在lib中添加代码逻辑，在pubspec.yaml中，添加依赖的packages和plugins。</p>
+<h2 id="二、集成方式"><a href="#二、集成方式" class="headerlink" title="二、集成方式"></a>二、集成方式</h2><h3 id="1-使用CocoaPods和Flutter-SDK集成"><a href="#1-使用CocoaPods和Flutter-SDK集成" class="headerlink" title="1.使用CocoaPods和Flutter SDK集成"></a>1.使用CocoaPods和Flutter SDK集成</h3><p>这个方案是针对高于<code>Flutter 1.8.4-pre.21</code>版本的SDK的混编方案，如果使用之前的SDK，请查看<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://github.com/flutter/flutter/wiki/Upgrading-Flutter-added-to-existing-iOS-Xcode-project">Upgrading Flutter added to existing iOS Xcode project</a>和<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://github.com/flutter/flutter/wiki/Add-Flutter-to-existing-apps">Add Flutter to existing apps</a></p>
+<h4 id="1-1-Podfile-中添加下面配置"><a href="#1-1-Podfile-中添加下面配置" class="headerlink" title="1.1 Podfile 中添加下面配置"></a>1.1 Podfile 中添加下面配置</h4><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">flutter_application_path = <span class="string">&#x27;../my_flutter&#x27;</span></span><br><span class="line">load File.<span class="keyword">join</span>(flutter_application_path, <span class="string">&#x27;.ios&#x27;</span>, <span class="string">&#x27;Flutter&#x27;</span>, <span class="string">&#x27;podhelper.rb&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><code>../my_flutter</code>是你flutter Moudle存放的目录，这里my_flutter存放在profile的上一级目录，所以这么写。</p>
+<h4 id="1-2-Podfile-target-中添加install-all-flutter-pods-flutter-application-path"><a href="#1-2-Podfile-target-中添加install-all-flutter-pods-flutter-application-path" class="headerlink" title="1.2 Podfile target 中添加install_all_flutter_pods(flutter_application_path)"></a>1.2 Podfile target 中添加install_all_flutter_pods(flutter_application_path)</h4><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">target <span class="string">&#x27;MyApp&#x27;</span> <span class="keyword">do</span></span><br><span class="line">  install_all_flutter_pods(flutter_application_path)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>这里的MyApp就是对应iOS项目的名称，存放到自己项目对应target中就好了。</p>
+<h4 id="1-3-pod-install"><a href="#1-3-pod-install" class="headerlink" title="1.3 pod install"></a>1.3 pod install</h4><p>在Podfile所在目录，执行pod install，如果没问题，会在你的项目中增加以下依赖：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Installing Flutter (<span class="number">1.0</span>.<span class="number">0</span>)</span><br><span class="line">Installing FlutterPluginRegistrant (<span class="number">0.0</span>.<span class="number">1</span>)</span><br><span class="line">Installing my_flutter (<span class="number">0.0</span>.<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>在执行pod install以后，如果没有增加上面👆的依赖，那么可能是工程有问题。</p>
+<p><strong>问题1.Profile中路径添加错误或者my_flutter是Flutter project，不是Flutter Moudle</strong><br>提示错误如下：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[!] Invalid `Podfile` file: cannot load such file -- ./my_flutter/.ios/Flutter/podhelper.rb.</span><br><span class="line"></span><br><span class="line"> <span class="meta">#  from /Users/Example/Podfile:10</span></span><br><span class="line"> <span class="meta">#  -------------------------------------------</span></span><br><span class="line"> <span class="meta">#</span></span><br><span class="line"> &gt;  load File.<span class="keyword">join</span>(flutter_application_path, <span class="string">&#x27;.ios&#x27;</span>, <span class="string">&#x27;Flutter&#x27;</span>, <span class="string">&#x27;podhelper.rb&#x27;</span>)</span><br><span class="line"> <span class="meta">#</span></span><br><span class="line"> <span class="meta">#  -------------------------------------------</span></span><br></pre></td></tr></table></figure>
+
+<p>这时候要检查下<code>flutter_application_path</code>是否正确，如果正确，查看下my_flutter是否是Flutter project，可以查看下<code>my_flutter</code>是否包含，<code>.iOS</code>这个文件，注意这是一个隐藏文件，先要在电脑中设置成显示隐藏你文件，再进行查看确认，如果包含则是Moudle，不包含则是project。</p>
+<p><strong>问题2.项目签名不对</strong></p>
+<p>在my_flutter目录下运行如下命令：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">open</span> -a Simulator</span><br><span class="line">flutter build ios</span><br></pre></td></tr></table></figure>
+
+<p>查看能否正确运行，如果提示以下错误，则是证书问题：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">It appears that your application still contains the <span class="keyword">default</span> signing identifier.</span><br><span class="line">Try replacing <span class="string">&#x27;com.example&#x27;</span> <span class="keyword">with</span> your signing id <span class="keyword">in</span> Xcode:</span><br><span class="line">  open ios/Runner.xcworkspace</span><br><span class="line">Encountered error <span class="keyword">while</span> building <span class="keyword">for</span> device.</span><br></pre></td></tr></table></figure>
+
+<p><strong>怎么解决这个问题？</strong></p>
+<p><strong>方法一：</strong></p>
+<ul>
+<li>1.找到my_flutter&#x2F;.ios，打开Runner.xcworkspace文件</li>
+<li>2.找到Signing &amp; Capabilities，将Signing证书配置正确就可以了(这里要配置Generic iOS Deveice)</li>
+</ul>
+<p><strong>方法二：</strong><br>使用如下命令，忽略签名：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flutter build ios --release --no-codesign</span><br></pre></td></tr></table></figure>
+
+<p>配置成功之后，再次运行<code>flutter build ios</code>，会打印如下信息：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Automatically signing iOS for device deployment using specified development team in Xcode project:</span><br><span class="line"><span class="number">56</span>XB5ELH9A</span><br><span class="line">Running Xcode build...</span><br><span class="line"> ├─Building Dart code...                                    <span class="number">78.1s</span></span><br><span class="line"> ├─Generating dSYM file...                                   <span class="number">0.1s</span></span><br><span class="line"> ├─Stripping debug symbols...                                <span class="number">0.0s</span></span><br><span class="line"> ├─Assembling Flutter resources...                           <span class="number">0.9s</span></span><br><span class="line"> └─Compiling, linking and signing...                         <span class="number">2.9s</span></span><br><span class="line">Xcode build done.                                           <span class="number">84.0s</span></span><br><span class="line">Built</span><br></pre></td></tr></table></figure>
+
+<p>然后再次pod install应该就可以成功了。</p>
+<h4 id="1-4-方案优缺点"><a href="#1-4-方案优缺点" class="headerlink" title="1.4 方案优缺点"></a>1.4 方案优缺点</h4><p><strong>优点：</strong></p>
+<ul>
+<li>1.功能配置简单，方便管理。</li>
+<li>2.使用CocoaPods便于集成。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>1.团队成员都必须配置flutter环境，否则编译不过</li>
+<li>2.Native代码和Flutter代码存放在一起，会变得复杂。</li>
+</ul>
+<h3 id="2-framework方式接入"><a href="#2-framework方式接入" class="headerlink" title="2.framework方式接入"></a>2.framework方式接入</h3><h4 id="2-1生成FrameWork"><a href="#2-1生成FrameWork" class="headerlink" title="2.1生成FrameWork"></a>2.1生成FrameWork</h4><p>首先切换到my_flutter所在目录，执行下列命令，生成framework</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flutter build ios-framework --output=../Flutter/</span><br></pre></td></tr></table></figure>
+
+<p>命令执行成功后，会在my_flutter同一级目录下，产生Flutter的文件，文件结构如下：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Flutter/</span><br><span class="line">├── Debug/</span><br><span class="line">│   ├── Flutter.framework</span><br><span class="line">│   ├── App.framework</span><br><span class="line">│   ├── FlutterPluginRegistrant.framework (only <span class="keyword">if</span> you have plugins <span class="keyword">with</span> iOS platform code)</span><br><span class="line">│   └── example_plugin.framework (each plugin <span class="keyword">is</span> a separate framework)</span><br><span class="line">├── Profile/</span><br><span class="line">│   ├── Flutter.framework</span><br><span class="line">│   ├── App.framework</span><br><span class="line">│   ├── FlutterPluginRegistrant.framework</span><br><span class="line">│   └── example_plugin.framework</span><br><span class="line">└── Release/</span><br><span class="line">    ├── Flutter.framework</span><br><span class="line">    ├── App.framework</span><br><span class="line">    ├── FlutterPluginRegistrant.framework</span><br><span class="line">    └── example_plugin.framework</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2配置frameWork路径"><a href="#2-2配置frameWork路径" class="headerlink" title="2.2配置frameWork路径"></a>2.2配置frameWork路径</h4><p>在项目中找到这个路径<code>build settings &gt; Build Phases &gt; Link Binary With Libraries</code><br>添加<code>$(PROJECT_DIR)/Flutter/Release/</code>到<code>Framework Search Paths</code></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1286243-2f4115e3276b0684?imageMogr2/auto-orient/strip%7CimageView2/2/w/850" alt="img"></p>
+<h4 id="2-3嵌入frameWork"><a href="#2-3嵌入frameWork" class="headerlink" title="2.3嵌入frameWork"></a>2.3嵌入frameWork</h4><p>在项目中找到这个路径<code>General &gt; Frameworks，Libraries and Embedded Content</code><br><code>app.Framework</code>和<code>Flutter.FrameWork</code>添加到项目中，就可以使用了。</p>
+<p><strong>问题1.Failed to find assets path for “flutter_assets”</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Failed to find assets path <span class="keyword">for</span> <span class="string">&quot;flutter_assets&quot;</span></span><br><span class="line">[<span class="meta">VERBOSE-2:engine.cc(114)</span>] Engine run configuration was invalid.</span><br></pre></td></tr></table></figure>
+
+<p>如果报上面的错误，则在my_flutter中运行以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">flutter clean</span><br><span class="line">flutter build ios</span><br></pre></td></tr></table></figure>
+
+<p><strong>问题2.dyld: Library not loaded: @rpath&#x2F;Flutter.framework&#x2F;Flutter</strong></p>
+<p>这个问题是说明嵌入frameWork有问题，可以检查一下，<code>Embed Framework和Link Binary With Libraries</code>。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/1286243-9edf6a41ad1fa96d?imageMogr2/auto-orient/strip%7CimageView2/2/w/800" alt="img"></p>
+<h4 id="2-4-方案优缺点"><a href="#2-4-方案优缺点" class="headerlink" title="2.4 方案优缺点"></a>2.4 方案优缺点</h4><p><strong>优点：</strong></p>
+<ul>
+<li>1.团队成员不依赖flutter环境</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>1.打包配置，比较麻烦，都需要手动操作。</li>
+</ul>
+<h3 id="3-使用Flutter-framework和CocoaPods集成-本地"><a href="#3-使用Flutter-framework和CocoaPods集成-本地" class="headerlink" title="3.使用Flutter framework和CocoaPods集成(本地)"></a>3.使用Flutter framework和CocoaPods集成(本地)</h3><h4 id="3-1生成frameWork"><a href="#3-1生成frameWork" class="headerlink" title="3.1生成frameWork"></a>3.1生成frameWork</h4><p>在Flutter v1.13.6之后版本，支持–cocoapods参数，可以使用下面命令。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flutter build ios-framework --cocoapods --output=../Flutter/</span><br></pre></td></tr></table></figure>
+
+<p>生成如下文件结构：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Flutter/</span><br><span class="line">├── Debug/</span><br><span class="line">│   ├── Flutter.podspec</span><br><span class="line">│   ├── App.framework</span><br><span class="line">│   ├── FlutterPluginRegistrant.framework</span><br><span class="line">│   └── example_plugin.framework (each plugin <span class="keyword">with</span> iOS platform code <span class="keyword">is</span> a separate framework)</span><br><span class="line">├── Profile/</span><br><span class="line">│   ├── Flutter.podspec</span><br><span class="line">│   ├── App.framework</span><br><span class="line">│   ├── FlutterPluginRegistrant.framework</span><br><span class="line">│   └── example_plugin.framework</span><br><span class="line">└── Release/</span><br><span class="line">    ├── Flutter.podspec</span><br><span class="line">    ├── App.framework</span><br><span class="line">    ├── FlutterPluginRegistrant.framework</span><br><span class="line">    └── example_plugin.framework</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-2配置profile文件"><a href="#3-2配置profile文件" class="headerlink" title="3.2配置profile文件"></a>3.2配置profile文件</h4><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod <span class="string">&#x27;Flutter&#x27;</span>, :<span class="function"><span class="params">podspec</span> =&gt;</span> <span class="string">&#x27;../Flutter/&#123;build_mode&#125;/Flutter.podspec&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-3-方案优缺点"><a href="#3-3-方案优缺点" class="headerlink" title="3.3 方案优缺点"></a>3.3 方案优缺点</h4><p><strong>优点：</strong></p>
+<ul>
+<li>1.团队成员不依赖flutter环境</li>
+<li>2.可以使用cocoapods集成管理。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>1.Flutter版本有限制</li>
+<li>2.每次需要自己打frmaework</li>
+</ul>
+<h3 id="4-使用Flutter-framework和CocoaPods集成-远程"><a href="#4-使用Flutter-framework和CocoaPods集成-远程" class="headerlink" title="4.使用Flutter framework和CocoaPods集成(远程)"></a>4.使用Flutter framework和CocoaPods集成(远程)</h3><h4 id="4-1创建一个CocoaPods私有库"><a href="#4-1创建一个CocoaPods私有库" class="headerlink" title="4.1创建一个CocoaPods私有库"></a>4.1创建一个CocoaPods私有库</h4><p>在my_flutter同级目录下，创建CocoaPods私有库</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>pod lib create <span class="title class_">MyFlutterFramework</span></span><br></pre></td></tr></table></figure>
+
+<p>终端执行代码：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"> xingkunkun:FlutterForFW admin$ pod lib create MyFlutterFramework</span><br><span class="line"> Cloning `https:<span class="comment">//github.com/CocoaPods/pod-template.git` into `MyFlutterFramework `.</span></span><br><span class="line">Configuring MyFlutter template.</span><br><span class="line">------------------------------</span><br><span class="line">To <span class="keyword">get</span> you started we need to ask a few questions, <span class="keyword">this</span> should only take a minute.</span><br><span class="line"></span><br><span class="line">What platform <span class="keyword">do</span> you want to use?? [ iOS / macOS ]</span><br><span class="line"> &gt; ios</span><br><span class="line">What language <span class="keyword">do</span> you want to use?? [ Swift / ObjC ]</span><br><span class="line"> &gt; objc</span><br><span class="line">Would you like to include a demo application <span class="keyword">with</span> your library? [ Yes / No ]</span><br><span class="line"> &gt; no</span><br><span class="line">Which testing frameworks will you use? [ Specta / Kiwi / None ]</span><br><span class="line"> &gt; none</span><br><span class="line">Would you like to <span class="keyword">do</span> view based testing? [ Yes / No ]</span><br><span class="line"> &gt; no</span><br><span class="line">What <span class="keyword">is</span> your <span class="class"><span class="keyword">class</span> <span class="title">prefix</span>?</span></span><br><span class="line"><span class="class"> &gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"><span class="title">Running</span> <span class="title">pod</span> <span class="title">install</span> <span class="title">on</span> <span class="title">your</span> <span class="title">new</span> <span class="title">library</span>.</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="4-2创建一个Flutter-Module"><a href="#4-2创建一个Flutter-Module" class="headerlink" title="4.2创建一个Flutter Module"></a>4.2创建一个Flutter Module</h4><ul>
+<li>1.创建Flutter Module步骤，</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flutter create --<span class="keyword">template</span> <span class="keyword">module</span> my_flutter</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>2.构建framework</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>flutter build ios --debug </span><br><span class="line"> 或者 </span><br><span class="line">flutter build ios --release --no-codesign（选择不需要证书）</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>3.检查.ios目录下<ul>
+<li>是否有Flutter–&gt;App.framework</li>
+<li>是否有Flutter–&gt;engine–&gt;Flutter.framework</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.ios</span>目录下</span><br><span class="line">Flutter--&gt;App<span class="selector-class">.framework</span></span><br><span class="line">Flutter--&gt;engine--&gt;Flutter<span class="selector-class">.framework</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="4-3将CocoaPods私有库集成到Native项目中"><a href="#4-3将CocoaPods私有库集成到Native项目中" class="headerlink" title="4.3将CocoaPods私有库集成到Native项目中"></a>4.3将CocoaPods私有库集成到Native项目中</h4><p>在MyFlutterFramework中创建ios_frameworks文件夹，并将<code>App.framework</code>和<code>Flutter.framework</code>拷贝进去。</p>
+<p>在MyFlutterFramework的podspec文件中，添加以下配置：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">s.static_framework = <span class="literal">true</span></span><br><span class="line">arr = Array.<span class="keyword">new</span></span><br><span class="line">arr.<span class="title function_ invoke__">push</span>(<span class="string">&#x27;ios_frameworks/*.framework&#x27;</span>)</span><br><span class="line">s.ios.vendored_frameworks = arr</span><br></pre></td></tr></table></figure>
+
+<p>之后在MyFlutterFramework的podfile同级目录中执行</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>pod install</span><br></pre></td></tr></table></figure>
+
+<p>在MyApp工程下的podfile文件中添加</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">platform <span class="symbol">:ios</span>, <span class="string">&#x27;8.0&#x27;</span></span><br><span class="line"></span><br><span class="line">target <span class="string">&#x27;MyApp&#x27;</span> <span class="keyword">do</span></span><br><span class="line">  <span class="comment"># Comment the next line if you don&#x27;t want to use dynamic frameworks</span></span><br><span class="line">  use_frameworks!</span><br><span class="line"></span><br><span class="line">  <span class="comment"># Pods for MyApp</span></span><br><span class="line">   pod <span class="string">&#x27;MyFlutterFramework&#x27;</span>, <span class="symbol">:path</span> =&gt; <span class="string">&#x27;../MyFlutterFramework&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>之后在MyApp的podfile同级目录中执行</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>pod install</span><br></pre></td></tr></table></figure>
+
+<p>这时在MyApp中，就可以找到<code>App.framework</code>和<code>Flutter.framework</code></p>
+<h4 id="4-4将MyFlutterFramework和my-flutter推送到远程仓库"><a href="#4-4将MyFlutterFramework和my-flutter推送到远程仓库" class="headerlink" title="4.4将MyFlutterFramework和my_flutter推送到远程仓库"></a>4.4将MyFlutterFramework和my_flutter推送到远程仓库</h4><ul>
+<li>1.MyFlutterFramework和my_flutter推送到远程仓库</li>
+<li>2.修改MyApp工程下的podfile，将<code>pod &#39;MyFlutterFramework&#39;</code>依赖修改为MyFlutterFramework远程连接。</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">platform <span class="symbol">:ios</span>, <span class="string">&#x27;8.0&#x27;</span></span><br><span class="line"></span><br><span class="line">target <span class="string">&#x27;MyApp&#x27;</span> <span class="keyword">do</span></span><br><span class="line">  <span class="comment"># Comment the next line if you don&#x27;t want to use dynamic frameworks</span></span><br><span class="line">  use_frameworks!</span><br><span class="line"></span><br><span class="line">  <span class="comment"># Pods for MyApp</span></span><br><span class="line">   pod <span class="string">&#x27;MyFlutterFramework&#x27;</span>, <span class="symbol">:git=&gt;<span class="string">&#x27;https://gitlab.com/MyFlutterFramework.git&#x27;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><ol>
+<li>如果MyFlutterFramework中的ios_frameworks不详推送到远程仓库，可以在gitignore文件中添加一下</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 忽略ios_frameworks中文件</span></span><br><span class="line">ios_frameworks</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-5-方案优缺点"><a href="#4-5-方案优缺点" class="headerlink" title="4.5 方案优缺点"></a>4.5 方案优缺点</h4><p><strong>优点：</strong></p>
+<ul>
+<li>1.团队成员不依赖flutter环境</li>
+<li>2.可以使用cocoapods集成管理。</li>
+<li>3.可以使用远程仓库共享和管理项目代码</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>1.每次重新构建，需要移动framework位置，比较繁琐，可以使用脚本解决。</li>
+</ul>
+<h2 id="三、Flutter与Native交互"><a href="#三、Flutter与Native交互" class="headerlink" title="三、Flutter与Native交互"></a>三、Flutter与Native交互</h2><p>Flutter 官方提供了一种 Platform Channel 的方案，用于 Dart 和平台之间相互通信。</p>
+<p>核心原理：</p>
+<ul>
+<li>Flutter应用通过Platform Channel将传递的数据编码成消息的形式，跨线程发送到该应用所在的宿主(Android或iOS)；</li>
+<li>宿主接收到Platform Channel的消息后，调用相应平台的API，也就是原生编程语言来执行相应方法；</li>
+<li>执行完成后将结果数据通过同样方式原路返回给应用程序的Flutter部分。</li>
+</ul>
+<p>Flutter提供了三种不同的Channel：</p>
+<ul>
+<li>BasicMessageChannel（主要是传递字符串和一些半结构体的数据）</li>
+<li>MethodChannel（用于传递方法调用）</li>
+<li>EventChannel（数据流的通信）</li>
+</ul>
+<p><strong>下面是使用Platform Channel进行通信</strong></p>
+<h3 id="1-Native-app主动与Flutter交互"><a href="#1-Native-app主动与Flutter交互" class="headerlink" title="1.Native app主动与Flutter交互"></a>1.Native app主动与Flutter交互</h3><p>交互主要分为三步：</p>
+<ul>
+<li>1.flutter注册MethodChannel</li>
+<li>2.flutter MethodChannel监听native消息</li>
+<li>3.native通过MethodChannel发送消息</li>
+</ul>
+<p><strong>Dart代码</strong></p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HomePage</span> <span class="keyword">extends</span> <span class="title">StatefulWidget</span> </span>&#123;</span><br><span class="line">  _HomePageState createState() =&gt; _HomePageState();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">_HomePageState</span> <span class="keyword">extends</span> <span class="title">State</span>&lt;<span class="title">HomePage</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">String</span> title = <span class="string">&#x27;Flutter to Native&#x27;</span>;</span><br><span class="line">  Color backGroundColor = Colors.red;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册一个通知</span></span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">const</span> MethodChannel methodChannel = <span class="keyword">const</span> MethodChannel(<span class="string">&#x27;com.pages.your/native_get&#x27;</span>);</span><br><span class="line"></span><br><span class="line">  _HomePageState()&#123;</span><br><span class="line">    <span class="comment">//Native调用Dart方法</span></span><br><span class="line">    methodChannel.setMethodCallHandler((MethodCall call)&#123;</span><br><span class="line">      <span class="keyword">if</span>(call.method  == <span class="string">&quot;NativeToFlutter&quot;</span>)&#123;</span><br><span class="line">        setState(() &#123;</span><br><span class="line">          title = call.arguments;</span><br><span class="line">          backGroundColor = Colors.yellow;</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> Future&lt;<span class="built_in">dynamic</span>&gt;.value();</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> Scaffold(</span><br><span class="line">      backgroundColor: backGroundColor,</span><br><span class="line">      body: Center(</span><br><span class="line">        child: GestureDetector(</span><br><span class="line">          behavior: HitTestBehavior.opaque,</span><br><span class="line">          child: <span class="keyword">new</span> Text(title),</span><br><span class="line">          onTap: ()&#123;</span><br><span class="line">            _iOSPushToVC();</span><br><span class="line">          &#125;,</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Native代码</strong></p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#import <span class="string">&quot;ViewController.h&quot;</span></span></span><br><span class="line"><span class="meta">#import <span class="string">&lt;Flutter/Flutter.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) FlutterMethodChannel *messageChannel;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="type">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="variable language_">super</span> viewDidLoad];</span><br><span class="line">    <span class="comment">// Do any additional setup after loading the view.</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">UIButton</span> *button = [<span class="built_in">UIButton</span> buttonWithType:<span class="built_in">UIButtonTypeCustom</span>];</span><br><span class="line">    [button addTarget:<span class="keyword">self</span> action:<span class="keyword">@selector</span>(pressOn) forControlEvents:<span class="built_in">UIControlEventTouchUpInside</span>];</span><br><span class="line">    [button setTitle:<span class="string">@&quot;加载Flutter&quot;</span> forState:<span class="built_in">UIControlStateNormal</span>];</span><br><span class="line">    [button setBackgroundColor:[<span class="built_in">UIColor</span> blueColor]];</span><br><span class="line">    button.frame = <span class="built_in">CGRectMake</span>((SCREEN_WIDTH<span class="number">-100</span>)/<span class="number">2</span>, <span class="number">100</span>, <span class="number">100</span>, <span class="number">60</span>);</span><br><span class="line">    [<span class="keyword">self</span>.view addSubview:button];</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="type">void</span>)pressOn</span><br><span class="line">&#123;</span><br><span class="line">    FlutterViewController *flutterViewController =[FlutterViewController new];</span><br><span class="line">    <span class="comment">//设置路由参数</span></span><br><span class="line">    [flutterViewController setInitialRoute:<span class="string">@&quot;route&quot;</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">NSString</span> *channelName = <span class="string">@&quot;com.pages.your/native_get&quot;</span>;<span class="comment">// 要与main.dart中一致</span></span><br><span class="line">    _messageChannel = [FlutterMethodChannel methodChannelWithName:channelName binaryMessenger:flutterViewController];</span><br><span class="line">    [<span class="keyword">self</span> nativeToFlutter];</span><br><span class="line">    [<span class="keyword">self</span> presentViewController:flutterViewController animated:<span class="literal">false</span> completion:<span class="literal">nil</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="type">void</span>)nativeToFlutter</span><br><span class="line">&#123;</span><br><span class="line">    sleep(<span class="number">5</span>);</span><br><span class="line">    [_messageChannel invokeMethod:<span class="string">@&quot;NativeToFlutter&quot;</span> arguments:<span class="string">@&quot;NativeToFlutter&quot;</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-Flutter主动与Native-app交互"><a href="#2-Flutter主动与Native-app交互" class="headerlink" title="2.Flutter主动与Native app交互"></a>2.Flutter主动与Native app交互</h3><p>交互主要分为以下几步：</p>
+<ul>
+<li>1.Native创建MethodChannel。</li>
+<li>2.Native添加HandleBlcok。</li>
+<li>3.Flutter发送消息。</li>
+</ul>
+<p><strong>Dart代码</strong></p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HomePage</span> <span class="keyword">extends</span> <span class="title">StatefulWidget</span> </span>&#123;</span><br><span class="line">  _HomePageState createState() =&gt; _HomePageState();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">_HomePageState</span> <span class="keyword">extends</span> <span class="title">State</span>&lt;<span class="title">HomePage</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">String</span> title = <span class="string">&#x27;Flutter to Native&#x27;</span>;</span><br><span class="line">  Color backGroundColor = Colors.red;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册一个通知</span></span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">const</span> MethodChannel methodChannel = <span class="keyword">const</span> MethodChannel(<span class="string">&#x27;com.pages.your/native_get&#x27;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">//Dart调用Native方法，并接收返回值。</span></span><br><span class="line">  _iOSPushToVC() <span class="keyword">async</span> &#123;</span><br><span class="line">    title = <span class="keyword">await</span> methodChannel.invokeMethod(<span class="string">&#x27;FlutterToNative&#x27;</span>);</span><br><span class="line">    setState(() &#123;</span><br><span class="line">      backGroundColor = Colors.green;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> Scaffold(</span><br><span class="line">        backgroundColor: backGroundColor,</span><br><span class="line">          body: Center(</span><br><span class="line">              child: GestureDetector(</span><br><span class="line">                behavior: HitTestBehavior.opaque,</span><br><span class="line">                child: <span class="keyword">new</span> Text(title),</span><br><span class="line">                onTap: ()&#123;</span><br><span class="line">                  _iOSPushToVC();</span><br><span class="line">                &#125;,</span><br><span class="line">              ),</span><br><span class="line">          ),</span><br><span class="line">        );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Native代码</strong></p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#import <span class="string">&quot;ViewController.h&quot;</span></span></span><br><span class="line"><span class="meta">#import <span class="string">&lt;Flutter/Flutter.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) FlutterMethodChannel *messageChannel;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="type">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="variable language_">super</span> viewDidLoad];</span><br><span class="line">    <span class="comment">// Do any additional setup after loading the view.</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">UIButton</span> *button = [<span class="built_in">UIButton</span> buttonWithType:<span class="built_in">UIButtonTypeCustom</span>];</span><br><span class="line">    [button addTarget:<span class="keyword">self</span> action:<span class="keyword">@selector</span>(pressOn) forControlEvents:<span class="built_in">UIControlEventTouchUpInside</span>];</span><br><span class="line">    [button setTitle:<span class="string">@&quot;加载Flutter&quot;</span> forState:<span class="built_in">UIControlStateNormal</span>];</span><br><span class="line">    [button setBackgroundColor:[<span class="built_in">UIColor</span> blueColor]];</span><br><span class="line">    button.frame = <span class="built_in">CGRectMake</span>((SCREEN_WIDTH<span class="number">-100</span>)/<span class="number">2</span>, <span class="number">100</span>, <span class="number">100</span>, <span class="number">60</span>);</span><br><span class="line">    [<span class="keyword">self</span>.view addSubview:button];</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="type">void</span>)pressOn</span><br><span class="line">&#123;</span><br><span class="line">    FlutterViewController *flutterViewController =[FlutterViewController new];</span><br><span class="line">    <span class="comment">//设置路由参数</span></span><br><span class="line">    [flutterViewController setInitialRoute:<span class="string">@&quot;route&quot;</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">NSString</span> *channelName = <span class="string">@&quot;com.pages.your/native_get&quot;</span>;<span class="comment">// 要与main.dart中一致</span></span><br><span class="line">    _messageChannel = [FlutterMethodChannel methodChannelWithName:channelName binaryMessenger:flutterViewController];</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    __<span class="keyword">weak</span> <span class="keyword">typeof</span>(<span class="keyword">self</span>) weakSelf = <span class="keyword">self</span>;</span><br><span class="line">    [_messageChannel setMethodCallHandler:^(FlutterMethodCall * _Nonnull call, FlutterResult  _Nonnull result)</span><br><span class="line">    &#123;</span><br><span class="line">        __<span class="keyword">strong</span> <span class="keyword">typeof</span>(<span class="keyword">self</span>) strongSelf = weakSelf;</span><br><span class="line">        <span class="keyword">if</span> ([call.method isEqualToString:<span class="string">@&quot;FlutterToNative&quot;</span>]) &#123;</span><br><span class="line">          <span class="keyword">if</span> (result) &#123;</span><br><span class="line">              result(<span class="string">@&quot;NativeBack&quot;</span>);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;];</span><br><span class="line">    </span><br><span class="line">    [<span class="keyword">self</span> presentViewController:flutterViewController animated:<span class="literal">false</span> completion:<span class="literal">nil</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+
+</div>
+        </div>
+        
+            <div class="kratos-copyright text-center clearfix">
+                <h5 itemprop="copyrightNotice">本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+            </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+                <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                
+                
+                    <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                    <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/15/Flutter-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%97%8513-%E5%9C%A8iOS%E9%A1%B9%E7%9B%AE%E4%B8%AD%E9%9B%86%E6%88%90Flutter%E9%A1%B9%E7%9B%AE/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/15/Flutter-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%97%8513-%E5%9C%A8iOS%E9%A1%B9%E7%9B%AE%E4%B8%AD%E9%9B%86%E6%88%90Flutter%E9%A1%B9%E7%9B%AE/";
+            const title         = "「Flutter 学习之旅13 在iOS项目中集成Flutter项目」";
+            const excerpt       = `本文主要针对现有iOS项目想接入flutter，怎么接入flutter，如何进行项目管理，以及Native和flutter之间如何调用，如何调试来讲解的。
+一、创建Flutter Module执行下面的命令创建Flutter Moud...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                
+                </div>
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    
+                </div>
+				
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" Flutter 学习之旅12 打包流程" href="/25/Flutter-学习之旅12-打包流程/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" SDWebImage源码分析" href="/27/SDWebImage源码分析/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center"></p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                84
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                6
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                12
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Flutter/">Flutter</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS%E7%9F%A5%E8%AF%86%E7%82%B9/">iOS知识点</a><span class="category-list-count">57</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF/">加密技术</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/Cocoapods/" style="font-size: 0.63em;">Cocoapods</a> <a href="/tags/Runloop/" style="font-size: 0.6em;">Runloop</a> <a href="/tags/Swift/" style="font-size: 0.73em;">Swift</a> <a href="/tags/UI%E6%8E%A7%E4%BB%B6/" style="font-size: 0.8em;">UI控件</a> <a href="/tags/ffmpeg/" style="font-size: 0.6em;">ffmpeg</a> <a href="/tags/git/" style="font-size: 0.63em;">git</a> <a href="/tags/runtime/" style="font-size: 0.67em;">runtime</a> <a href="/tags/%E5%8A%A0%E5%AF%86/" style="font-size: 0.6em;">加密</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 0.67em;">多线程</a> <a href="/tags/%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" style="font-size: 0.77em;">底层原理</a> <a href="/tags/%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6/" style="font-size: 0.7em;">开源框架</a> <a href="/tags/%E6%99%BA%E8%83%BD%E8%AE%BE%E5%A4%87/" style="font-size: 0.63em;">智能设备</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/17/XCode14-iOS16-%E9%80%82%E9%85%8D%E9%97%AE%E9%A2%98/"><i class="fa  fa-book"></i> XCode14 & iOS16 适配问题</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/26/objc%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/"><i class="fa  fa-book"></i> objc源码编译</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/08/git%E6%8A%A5%E9%94%99-Support-for-password-authentication-was-removed-on-August-13-2021/"><i class="fa  fa-book"></i> git报错#Support for password authentication was removed on August 13,2021</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/26/ios-%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93/"><i class="fa  fa-book"></i> iOS-离屏渲染</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/09/FFmpeg%E5%B8%B8%E8%A7%81%E6%8C%87%E4%BB%A4%E7%9A%84%E4%BD%BF%E7%94%A8/"><i class="fa  fa-book"></i> FFmpeg常见指令的使用</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  class="ap-lrc"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://t.me/CandyUnion"><i class="fa fa-telegram"></i></a></li>
+                        
+                        
+                        
+                        <li><a target="_blank" rel="me" href="https://nya.one/@Candinya"><i class="fa fa fa-share-alt-square"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/Candinya"><i class="fa fa-github"></i></a></li>
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2023 欢迎来到我的个人博客 版权所有.</li>
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+    <script defer src="/vendors/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="/vendors/meting@2.0.1/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="3204190542"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>
